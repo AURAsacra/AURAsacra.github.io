@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="it" data-theme="night">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <title>Aura Sacra — Widget Versetto Sacro</title>
+  <link rel="icon" type="image/png" href="./icons/favicon.png">
+  <link rel="apple-touch-icon" href="./icons/icon-192.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="./icons/icon-192.png">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="Versetto Sacro">
+  <meta name="theme-color" content="#141416">
+  <link rel="manifest" href="./manifest.json">
+  <link rel="stylesheet" href="./css/style.css">
+  <style>
+    body {
+      margin: 0;
+      padding: 16px;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      background: radial-gradient(circle at center, #1b1916 0%, #0d0c0b 100%);
+      color: #eedfc7;
+      font-family: var(--font-serif);
+      box-sizing: border-box;
+      user-select: none;
+    }
+
+    /* Container for the widget */
+    .widget-stage {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      margin: 16px 0;
+    }
+
+    /* iOS 17/18 Geometry and Styling */
+    .widget-card {
+      position: relative;
+      background: rgba(26, 25, 23, 0.95);
+      border: 1px solid rgba(198, 146, 20, 0.4);
+      border-radius: 26px;
+      box-shadow: 0 14px 40px rgba(0, 0, 0, 0.8), inset 0 0 15px rgba(198, 146, 20, 0.08);
+      overflow: hidden;
+      cursor: pointer;
+      transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.2s ease, border-color 0.2s ease;
+      box-sizing: border-box;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .widget-card:hover {
+      transform: translateY(-2px) scale(1.01);
+      border-color: rgba(255, 179, 0, 0.65);
+      box-shadow: 0 18px 50px rgba(0, 0, 0, 0.9), 0 0 20px rgba(198, 146, 20, 0.2);
+    }
+
+    /* 1. Small Widget: 2x2 (170x170 px) */
+    .widget-size-small {
+      width: 170px;
+      height: 170px;
+      padding: 14px;
+    }
+
+    /* 2. Medium Widget: 4x2 (350x170 px) */
+    .widget-size-medium {
+      width: 350px;
+      height: 170px;
+      padding: 16px 18px;
+    }
+
+    /* 3. Large Widget: 4x4 (350x350 px) */
+    .widget-size-large {
+      width: 350px;
+      height: 350px;
+      padding: 22px;
+    }
+
+    /* iOS 18 Tinted / Translucent Mode */
+    .widget-card.theme-tinted {
+      background: rgba(22, 20, 18, 0.65) !important;
+      backdrop-filter: blur(30px) saturate(180%);
+      -webkit-backdrop-filter: blur(30px) saturate(180%);
+      border: 1px solid rgba(255, 255, 255, 0.18) !important;
+    }
+
+    /* Light Mode */
+    .widget-card.theme-light {
+      background: #fbf9f4 !important;
+      color: #2b231c !important;
+      border: 1px solid rgba(185, 59, 44, 0.25) !important;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15) !important;
+    }
+    .widget-card.theme-light .widget-quote {
+      color: #2b231c !important;
+    }
+    .widget-card.theme-light .widget-ref {
+      color: #b93b2c !important;
+    }
+
+    /* Controls bar above widget */
+    .controls-pill {
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: 9999px;
+      padding: 4px;
+      display: flex;
+      gap: 4px;
+      margin-bottom: 12px;
+    }
+
+    .btn-tab {
+      background: transparent;
+      border: none;
+      color: #a89c8a;
+      padding: 6px 14px;
+      font-size: 11px;
+      font-weight: 600;
+      border-radius: 9999px;
+      cursor: pointer;
+      font-family: var(--font-sans);
+      transition: all 0.2s ease;
+    }
+
+    .btn-tab.active, .btn-tab:hover {
+      background: #c69214;
+      color: #141416;
+      font-weight: bold;
+    }
+
+    .btn-share {
+      background: rgba(198, 146, 20, 0.15);
+      border: 1px solid rgba(198, 146, 20, 0.4);
+      color: #ffb300;
+      border-radius: 8px;
+      padding: 4px 8px;
+      font-size: 11px;
+      font-weight: 600;
+      font-family: var(--font-sans);
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      transition: all 0.2s ease;
+    }
+
+    .btn-share:hover {
+      background: rgba(198, 146, 20, 0.35);
+      border-color: #ffb300;
+      transform: scale(1.05);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navigation header to return to main app -->
+  <div style="width: 100%; max-width: 420px; display: flex; align-items: center; justify-content: space-between; margin-bottom: 16px;">
+    <a href="./index.html" style="display: inline-flex; align-items: center; gap: 6px; font-size: 12px; font-family: var(--font-sans); color: #ffb300; text-decoration: none; font-weight: bold; background: rgba(198, 146, 20, 0.15); border: 1px solid rgba(198, 146, 20, 0.4); padding: 6px 14px; border-radius: 9999px; transition: all 0.2s;">
+      <span>←</span> <span>Aura Sacra App</span>
+    </a>
+    <span style="font-size: 11px; font-family: var(--font-sans); color: #a89c8a; font-weight: 600;">Widget Versetto</span>
+  </div>
+
+  <!-- Controls Bar: Size Selector -->
+  <div class="controls-pill">
+    <button class="btn-tab" data-size="small">Piccolo (2x2)</button>
+    <button class="btn-tab active" data-size="medium">Medio (4x2)</button>
+    <button class="btn-tab" data-size="large">Grande (4x4)</button>
+  </div>
+
+  <!-- Appearance Bar: Dark / Light / Tinted -->
+  <div style="display: flex; gap: 8px; margin-bottom: 14px; font-family: var(--font-sans); font-size: 11px;">
+    <button id="btn-theme-dark" class="btn-share" style="color: #eedfc7; border-color: #555;">🌙 Notte</button>
+    <button id="btn-theme-light" class="btn-share" style="color: #eedfc7; border-color: #555;">☀️ Pergamena</button>
+    <button id="btn-theme-tinted" class="btn-share" style="color: #eedfc7; border-color: #555;">✨ iOS 18 Tinted</button>
+    <button id="btn-random-verse" class="btn-share" style="color: #ffb300; border-color: #c69214;">🎲 Altro Versetto</button>
+  </div>
+
+  <!-- Widget Canvas Container -->
+  <div class="widget-stage">
+    
+    <div id="aura-widget-card" class="widget-card widget-size-medium" title="Tocca per aprire questo versetto nella Bibbia">
+      
+      <!-- Header row -->
+      <div style="display: flex; align-items: center; justify-content: space-between; gap: 8px;">
+        <div style="display: flex; align-items: center; gap: 6px;">
+          <img src="./icons/logo.png" alt="Aura Sacra" style="width: 18px; height: 18px; border-radius: 5px; border: 1px solid #c69214;">
+          <span id="widget-ref" class="widget-ref" style="font-family: var(--font-display); font-size: 12px; font-weight: bold; color: #ffb300; letter-spacing: 0.5px;">
+            Caricamento...
+          </span>
+        </div>
+        <span id="widget-badge" style="font-family: var(--font-sans); font-size: 9px; font-weight: 700; background: rgba(198, 146, 20, 0.2); color: #ffb300; padding: 2px 6px; border-radius: 6px; border: 1px solid rgba(198, 146, 20, 0.4);">
+          CEI
+        </span>
+      </div>
+
+      <!-- Main Quote Body -->
+      <div style="flex: 1; display: flex; align-items: center; justify-content: center; margin: 8px 0; overflow: hidden;">
+        <p id="widget-quote" class="widget-quote" style="margin: 0; font-size: 13px; line-height: 1.45; font-style: italic; color: #eedfc7; text-align: center; display: -webkit-box; -webkit-box-orient: vertical; overflow: hidden;">
+          «Il Signore è il mio pastore: non manco di nulla.»
+        </p>
+      </div>
+
+      <!-- Action Row -->
+      <div id="widget-action-row" style="display: flex; align-items: center; justify-content: space-between; gap: 8px;">
+        <span style="font-family: var(--font-sans); font-size: 10px; color: #a89c8a; display: flex; align-items: center; gap: 4px;">
+          <span>📖</span> <span id="widget-action-label">Tocca per leggere</span>
+        </span>
+        <button id="btn-widget-share" class="btn-share" title="Condividi versetto con scheda grafica">
+          <span>📤</span> <span>Condividi</span>
+        </button>
+      </div>
+
+    </div>
+
+  </div>
+
+  <p style="font-family: var(--font-sans); font-size: 11px; color: #888; max-width: 360px; text-align: center; margin-top: 12px;">
+    Toccando il widget verrai portato direttamente al versetto nella Bibbia, evidenziato con un alone dorato. Il pulsante <strong>Condividi</strong> genera la scheda artistica per WhatsApp e Instagram.
+  </p>
+
+  <!-- iOS-specific intuitive guide box -->
+  <div id="ios-guide-box" style="margin-top: 14px; background: rgba(36, 32, 28, 0.95); border: 1.5px solid rgba(198, 146, 20, 0.6); border-radius: 20px; padding: 12px 16px; max-width: 380px; box-shadow: 0 10px 30px rgba(0,0,0,0.7); text-align: left;">
+    <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 8px;">
+      <span style="font-size: 18px;">🍏</span>
+      <span style="font-family: var(--font-display); font-weight: bold; font-size: 12px; color: #ffb300;">Come impostarlo come Widget su iPhone:</span>
+    </div>
+    <div style="display: flex; flex-direction: column; gap: 7px; font-family: var(--font-sans); font-size: 11px; color: #eedfc7;">
+      <div style="display: flex; align-items: center; gap: 8px;">
+        <span style="background: rgba(198, 146, 20, 0.25); color: #ffb300; border-radius: 50%; width: 20px; height: 20px; flex-shrink: 0; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 10px;">1</span>
+        <span>In Safari, tocca in basso il tasto Condividi <strong style="color: #ffb300; font-size: 13px;">📤</strong></span>
+      </div>
+      <div style="display: flex; align-items: center; gap: 8px;">
+        <span style="background: rgba(198, 146, 20, 0.25); color: #ffb300; border-radius: 50%; width: 20px; height: 20px; flex-shrink: 0; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 10px;">2</span>
+        <span>Scorri e tocca <strong style="color: #fff;">«Aggiungi alla schermata Home»</strong></span>
+      </div>
+      <div style="display: flex; align-items: center; gap: 8px;">
+        <span style="background: rgba(198, 146, 20, 0.25); color: #ffb300; border-radius: 50%; width: 20px; height: 20px; flex-shrink: 0; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 10px;">3</span>
+        <span>Conferma <strong>«Aggiungi»</strong>: diventerà un widget a tutto schermo!</span>
+      </div>
+    </div>
+  </div>
+
+  <script type="module">
+    import { getRandomVerse, getDailyVerse } from './js/widget-verse.js';
+    import { initI18n } from './js/i18n.js';
+
+    await initI18n();
+
+    let currentVerse = null;
+    let currentSize = 'medium';
+    let currentTheme = 'dark';
+
+    const card = document.getElementById('aura-widget-card');
+    const refEl = document.getElementById('widget-ref');
+    const quoteEl = document.getElementById('widget-quote');
+    const badgeEl = document.getElementById('widget-badge');
+    const shareBtn = document.getElementById('btn-widget-share');
+    const actionRow = document.getElementById('widget-action-row');
+    const sizeBtns = document.querySelectorAll('.btn-tab');
+
+    async function loadVerse(random = false) {
+      currentVerse = random ? await getRandomVerse() : await getDailyVerse();
+      refEl.textContent = currentVerse.citation;
+      quoteEl.textContent = `«${currentVerse.text}»`;
+      badgeEl.textContent = currentVerse.versionLabel || 'BIBBIA';
+      applySizeStyles();
+    }
+
+    function applySizeStyles() {
+      card.className = `widget-card widget-size-${currentSize}`;
+      if (currentTheme === 'tinted') card.classList.add('theme-tinted');
+      if (currentTheme === 'light') card.classList.add('theme-light');
+
+      if (currentSize === 'small') {
+        quoteEl.style.webkitLineClamp = '3';
+        quoteEl.style.fontSize = '12px';
+        actionRow.style.display = 'none';
+      } else if (currentSize === 'medium') {
+        quoteEl.style.webkitLineClamp = '3';
+        quoteEl.style.fontSize = '13px';
+        actionRow.style.display = 'flex';
+      } else if (currentSize === 'large') {
+        quoteEl.style.webkitLineClamp = '8';
+        quoteEl.style.fontSize = '16px';
+        actionRow.style.display = 'flex';
+      }
+    }
+
+    // Switch Widget Size (Small 2x2, Medium 4x2, Large 4x4)
+    sizeBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        sizeBtns.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        currentSize = btn.getAttribute('data-size');
+        applySizeStyles();
+      });
+    });
+
+    // Theme Switchers
+    document.getElementById('btn-theme-dark').addEventListener('click', () => {
+      currentTheme = 'dark';
+      applySizeStyles();
+    });
+    document.getElementById('btn-theme-light').addEventListener('click', () => {
+      currentTheme = 'light';
+      applySizeStyles();
+    });
+    document.getElementById('btn-theme-tinted').addEventListener('click', () => {
+      currentTheme = 'tinted';
+      applySizeStyles();
+    });
+
+    // Random verse refresh
+    document.getElementById('btn-random-verse').addEventListener('click', () => {
+      loadVerse(true);
+    });
+
+    // Clicking the widget body opens the Bible reader and selects the verse
+    card.addEventListener('click', (e) => {
+      if (e.target.closest('#btn-widget-share')) return;
+      if (currentVerse && currentVerse.deepLink) {
+        window.location.href = currentVerse.deepLink;
+      }
+    });
+
+    // Clicking the Share button opens the Share Card modal directly
+    shareBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      if (currentVerse && currentVerse.shareLink) {
+        window.location.href = currentVerse.shareLink;
+      }
+    });
+
+    loadVerse(false);
+  </script>
+</body>
+</html>

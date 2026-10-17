@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="it" data-theme="dawn">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+  <meta http-equiv="Pragma" content="no-cache">
+  <meta http-equiv="Expires" content="0">
+  <title>Aura Sacra — Universal Christian Platform</title>
+
+  <meta name="google" content="notranslate">
+  <link rel="manifest" href="./manifest.json">
+  <link rel="icon" type="image/png" href="./icons/favicon.png">
+  <link rel="apple-touch-icon" href="./icons/icon-192.png">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="theme-color" content="#c69214">
+
+  <!-- Tailwind CSS Locale -->
+  <script src="./js/tailwindcss.js"></script>
+  <script>
+    if (typeof tailwind !== 'undefined') {
+      tailwind.config = {
+        darkMode: ['class', '[data-theme="night"]'],
+        theme: {
+          extend: {
+            colors: {
+              parchment: { light: '#fdfbf7', base: '#f6efe2', dark: '#241b16', night: '#151519' },
+              sacred: { gold: '#c69214', vermilion: '#b93b2c', blue: '#235789', amber: '#e5a93b' }
+            },
+            fontFamily: {
+              serif: ['EB Garamond', 'Georgia', 'serif'],
+              display: ['Cinzel', 'serif'],
+              sans: ['Inter', 'system-ui', 'sans-serif']
+            }
+          }
+        }
+      };
+    }
+  </script>
+
+  <!-- FontAwesome & Stili Generali -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="./css/style.css">
+</head>
+<body class="antialiased selection:bg-amber-200 selection:text-amber-900 pb-32 sm:pb-28 md:pb-6">
+
+  <div id="app" class="min-h-screen flex flex-col transition-colors duration-700">
+    <header id="navbar-container"></header>
+
+    <div class="flex-1 flex max-w-7xl w-full mx-auto px-3 sm:px-6 lg:px-8 py-4 gap-6">
+      <aside id="sidebar-container" class="hidden md:block w-64 flex-shrink-0"></aside>
+      <main id="main-content" class="flex-1 min-w-0 transition-opacity duration-300"></main>
+    </div>
+
+    <nav id="bottom-nav-container" class="md:hidden fixed z-40"></nav>
+    <div id="floating-candle-container" class="hidden md:block"></div>
+    <div id="modals-container"></div>
+  </div>
+
+  <!-- Entry Point ES Module & Cross-Platform PWA Auto-Updater (iOS Safari, Android, Desktop) -->
+  <script type="module" src="./js/app.js"></script>
+
+  <script>
+    (function () {
+      const CURRENT_VERSION = 'aura-sacra-v1.6.7';
+      let isReloading = false;
+
+      function triggerSafeReload() {
+        if (isReloading) return;
+        // Avoid infinite reload loops using sessionStorage guard
+        const lastReload = sessionStorage.getItem('aurasacra_sw_reload_ts');
+        const now = Date.now();
+        if (lastReload && now - Number(lastReload) < 4000) return;
+        isReloading = true;
+        sessionStorage.setItem('aurasacra_sw_reload_ts', String(now));
+        window.location.reload();
+      }
+
+      // 1. Purge outdated caches immediately from window.caches
+      if ('caches' in window) {
+        caches.keys().then((keys) => {
+          keys.forEach((k) => {
+            if (k !== CURRENT_VERSION) {
+              caches.delete(k);
+            }
+          });
+        }).catch(() => {});
+      }
+
+      // 2. Register & actively manage Service Worker across iOS Safari, Android, and Desktop
+      if ('serviceWorker' in navigator && (window.location.protocol === 'http:' || window.location.protocol === 'https:')) {
+        // Reload automatically when a new Service Worker takes control
+        navigator.serviceWorker.addEventListener('controllerchange', () => {
+          triggerSafeReload();
+        });
+
+        // Reload when the new Service Worker broadcasts SW_UPDATED
+        navigator.serviceWorker.addEventListener('message', (event) => {
+          if (event.data && event.data.type === 'SW_UPDATED') {
+            triggerSafeReload();
+          }
+        });
+
+        window.addEventListener('load', () => {
+          // updateViaCache: 'none' is critical on iOS Safari & Chrome so sw.js is never served from HTTP disk cache
+          navigator.serviceWorker.register('./sw.js', { updateViaCache: 'none' }).then((reg) => {
+            reg.update().catch(() => {});
+
+            if (reg.waiting) {
+              reg.waiting.postMessage({ type: 'SKIP_WAITING' });
+            }
+
+            reg.addEventListener('updatefound', () => {
+              const newWorker = reg.installing;
+              if (!newWorker) return;
+              newWorker.addEventListener('statechange', () => {
+                if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
+                  newWorker.postMessage({ type: 'SKIP_WAITING' });
+                }
+              });
+            });
+
+            // Re-check for updates whenever iOS Home Screen Web App or mobile browser tab returns to foreground
+            document.addEventListener('visibilitychange', () => {
+              if (document.visibilityState === 'visible') {
+                reg.update().catch(() => {});
+              }
+            });
+
+            window.addEventListener('pageshow', (e) => {
+              if (e.persisted) {
+                reg.update().catch(() => {});
+              }
+            });
+          }).catch((err) => console.log('SW registration note:', err));
+        });
+      }
+    })();
+  </script>
+</body>
+</html>

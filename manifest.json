@@ -1,0 +1,54 @@
+{
+  "name": "Aura Sacra — Universal Christian Platform",
+  "short_name": "Aura Sacra",
+  "description": "An ecumenical, 100% offline spiritual platform with Scripture, prayer journal, sacred circadian themes, and dialogue with Jesus.",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#141416",
+  "theme_color": "#c49a45",
+  "orientation": "any",
+  "icons": [
+    {
+      "src": "./icons/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "./icons/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Versetto del Giorno",
+      "short_name": "Bibbia",
+      "description": "Leggi e medita la Sacra Scrittura",
+      "url": "./index.html?tab=bible",
+      "icons": [{ "src": "./icons/icon-192.png", "sizes": "192x192" }]
+    },
+    {
+      "name": "Candela & Pioggia",
+      "short_name": "Candela",
+      "description": "Sessione di studio e preghiera con la candela sacra",
+      "url": "./index.html?tab=focus",
+      "icons": [{ "src": "./icons/icon-192.png", "sizes": "192x192" }]
+    },
+    {
+      "name": "Chat con Gesù",
+      "short_name": "Colloquio",
+      "description": "Dialogo spirituale fraterno con Cristo",
+      "url": "./index.html?tab=chat",
+      "icons": [{ "src": "./icons/icon-192.png", "sizes": "192x192" }]
+    },
+    {
+      "name": "Versetto Casuale",
+      "short_name": "Ispirazione",
+      "description": "Ricevi un versetto biblico casuale per la tua meditazione",
+      "url": "./index.html?tab=bible&random=1",
+      "icons": [{ "src": "./icons/icon-192.png", "sizes": "192x192" }]
+    }
+  ]
+}

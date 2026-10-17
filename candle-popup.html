@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="night">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Aura Sacra — Living Candle (Pop-up Focus)</title>
+  <link rel="icon" type="image/png" href="./icons/favicon.png">
+  <link rel="stylesheet" href="./css/style.css">
+  <style>
+    body {
+      margin: 0;
+      padding: 16px;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      background: radial-gradient(circle at center, #1e1b18 0%, #0d0c0b 100%);
+      color: #eedfc7;
+      user-select: none;
+      font-family: var(--font-serif);
+      overflow: hidden;
+      box-sizing: border-box;
+    }
+    .popup-card {
+      width: 100%;
+      max-width: 310px;
+      background: rgba(24, 24, 28, 0.96);
+      border: 1px solid rgba(198, 146, 20, 0.45);
+      border-radius: 20px;
+      padding: 18px;
+      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.85), inset 0 0 20px rgba(198, 146, 20, 0.06);
+      text-align: center;
+      box-sizing: border-box;
+    }
+    .btn-preset {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      color: #b5a48f;
+      border-radius: 6px;
+      padding: 3px 7px;
+      font-size: 11px;
+      font-family: var(--font-sans);
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .btn-preset:hover, .btn-preset.active {
+      border-color: #c69214;
+      background: rgba(198, 146, 20, 0.2);
+      color: #ffb300;
+      font-weight: bold;
+    }
+    .btn-step {
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      color: #e5a93b;
+      border-radius: 8px;
+      width: 32px;
+      height: 32px;
+      font-size: 13px;
+      font-weight: bold;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.15s;
+    }
+    .btn-step:hover {
+      background: rgba(198, 146, 20, 0.25);
+      border-color: #c69214;
+      transform: scale(1.05);
+    }
+    @keyframes pulseGlow {
+      0% { text-shadow: 0 0 8px rgba(255, 179, 0, 0.4); transform: scale(1); }
+      100% { text-shadow: 0 0 22px rgba(255, 179, 0, 1), 0 0 35px rgba(230, 81, 0, 0.8); transform: scale(1.04); }
+    }
+    .timer-completed {
+      animation: pulseGlow 1.2s infinite alternate ease-in-out;
+      color: #ffca28 !important;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="popup-card">
+    
+    <!-- Header -->
+    <div style="display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 8px; margin-bottom: 10px;">
+      <div style="display: flex; align-items: center; gap: 8px;">
+        <img src="./icons/logo.png" alt="Aura Sacra" style="width: 22px; height: 22px; border-radius: 6px; border: 1px solid #c69214;">
+        <span style="font-family: var(--font-display); font-size: 13px; font-weight: bold; color: #c69214; letter-spacing: 1px;">AURA SACRA</span>
+      </div>
+      <div style="display: flex; align-items: center; gap: 6px;">
+        <button id="btn-popup-pip" style="font-size: 10px; font-family: var(--font-sans); color: #c69214; background: rgba(198, 146, 20, 0.15); border: 1px solid rgba(198, 146, 20, 0.4); padding: 3px 8px; border-radius: 10px; font-weight: 600; cursor: pointer; display: flex; align-items: center; gap: 4px; transition: all 0.2s;" title="Pin always on top of all windows and apps (Picture-in-Picture)">
+          📌 <span id="pip-btn-text">Always-on-Top (PiP)</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Animated Living Flame -->
+    <div style="padding: 12px 0 8px 0;">
+      <div class="candle-wrapper" style="transform: scale(1.15); margin-bottom: 8px;">
+        <div class="candle-flame"></div>
+        <div class="candle-wick"></div>
+        <div class="candle-body"></div>
+      </div>
+      <p style="font-size: 12px; font-style: italic; color: #b5a48f; margin: 6px 0 0 0;">
+        «I am the light of the world» • John 8:12
+      </p>
+    </div>
+
+    <!-- Interactive Audio Unlock Message Banner -->
+    <div id="audio-unlock-banner" style="margin: 0 0 10px 0; background: rgba(59, 130, 246, 0.16); border: 1px solid rgba(59, 130, 246, 0.45); border-radius: 10px; padding: 7px 10px; font-size: 11px; color: #93c5fd; font-family: var(--font-sans); cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 6px; transition: all 0.3s; user-select: none;" title="Tocca per sbloccare l'audio della campana">
+      <span id="audio-unlock-icon" style="font-size: 13px;">🔔</span>
+      <span id="audio-unlock-text">Tocca qui per sbloccare l'audio della campana</span>
+    </div>
+
+    <!-- Timer Controls with Duration Modifiers -->
+    <div style="background: rgba(0,0,0,0.35); border-radius: 14px; padding: 12px; margin-bottom: 12px; border: 1px solid rgba(255,255,255,0.08);">
+      
+      <!-- Modifier Row (-5m, Display, +5m) -->
+      <div style="display: flex; align-items: center; justify-content: center; gap: 12px; margin-bottom: 8px;">
+        <button id="btn-popup-sub5" class="btn-step" title="Subtract 5 minutes">-5</button>
+        
+        <div id="popup-timer-display" style="font-family: monospace; font-size: 34px; font-weight: bold; color: #ffb300; letter-spacing: 2px; min-width: 120px; transition: all 0.3s;">
+          25:00
+        </div>
+        
+        <button id="btn-popup-add5" class="btn-step" title="Add 5 minutes">+5</button>
+      </div>
+
+      <!-- Presets Row (5m, 15m, 25m, 45m, 60m) -->
+      <div style="display: flex; align-items: center; justify-content: center; gap: 4px; margin-bottom: 10px;">
+        <button class="btn-preset" data-min="5">5m</button>
+        <button class="btn-preset" data-min="15">15m</button>
+        <button class="btn-preset active" data-min="25">25m</button>
+        <button class="btn-preset" data-min="45">45m</button>
+        <button class="btn-preset" data-min="60">60m</button>
+      </div>
+
+      <!-- Action Buttons (Start / Pause, Reset) -->
+      <div style="display: flex; align-items: center; justify-content: center; gap: 8px;">
+        <button id="btn-popup-toggle" style="flex: 1; background: #b93b2c; color: white; border: none; border-radius: 8px; padding: 8px 14px; font-size: 13px; font-weight: bold; cursor: pointer; box-shadow: 0 2px 8px rgba(185,59,44,0.4); transition: background 0.2s;">
+          Start
+        </button>
+        <button id="btn-popup-reset" style="background: #2a2a2e; color: #ccc; border: 1px solid #444; border-radius: 8px; padding: 8px 14px; font-size: 13px; cursor: pointer; transition: background 0.2s;">
+          Reset
+        </button>
+      </div>
+
+      <!-- In-Card Completion Banner -->
+      <div id="popup-completion-banner" style="display: none; background: rgba(198, 146, 20, 0.22); border: 1px solid #c69214; border-radius: 10px; padding: 8px 10px; margin-top: 10px; font-size: 11px; color: #ffb300; font-weight: bold; line-height: 1.4;">
+        🔔 <span id="popup-completion-text">Sessione completata! Gloria a Dio.</span>
+      </div>
+    </div>
+
+    <!-- Procedural Rain Sound Controller -->
+    <div style="display: flex; align-items: center; justify-content: space-between; gap: 8px; padding-top: 8px; border-top: 1px solid rgba(255,255,255,0.08);">
+      <button id="btn-popup-rain" style="background: transparent; border: 1px solid #444; color: #ddd; border-radius: 8px; padding: 6px 10px; font-size: 11px; cursor: pointer; display: flex; align-items: center; gap: 5px; font-family: var(--font-sans);">
+        🌧️ <span id="rain-text">Rain: Off</span>
+      </button>
+
+      <input type="range" id="popup-rain-vol" min="0" max="1" step="0.05" value="0.5" style="width: 80px; accent-color: #3b82f6; cursor: pointer;" title="Rain Volume">
+    </div>
+
+  </div>
+
+  <script type="module">
+    import { toggleRain, isPlayingRain, setRainVolume, unlockAudio, isAudioUnlocked } from './js/audio-engine.js';
+    import { initI18n, t } from './js/i18n.js';
+    import {
+      subscribeCandleTimer,
+      startCandleTimer,
+      pauseCandleTimer,
+      toggleCandleTimer,
+      resetCandleTimer,
+      setCandleTimerPreset,
+      adjustCandleTimer,
+      onCandleTimerFinished,
+      getTimerState
+    } from './js/candle-timer.js';
+
+    await initI18n();
+
+    const display = document.getElementById('popup-timer-display');
+    const toggleBtn = document.getElementById('btn-popup-toggle');
+    const resetBtn = document.getElementById('btn-popup-reset');
+    const sub5Btn = document.getElementById('btn-popup-sub5');
+    const add5Btn = document.getElementById('btn-popup-add5');
+    const presetBtns = document.querySelectorAll('.btn-preset');
+    const rainBtn = document.getElementById('btn-popup-rain');
+    const rainText = document.getElementById('rain-text');
+    const rainVol = document.getElementById('popup-rain-vol');
+    const pipBtn = document.getElementById('btn-popup-pip');
+    const pipBtnText = document.getElementById('pip-btn-text');
+    const completionBanner = document.getElementById('popup-completion-banner');
+    const completionText = document.getElementById('popup-completion-text');
+    const audioUnlockBanner = document.getElementById('audio-unlock-banner');
+    const audioUnlockText = document.getElementById('audio-unlock-text');
+    const audioUnlockIcon = document.getElementById('audio-unlock-icon');
+
+    // Audio unlock banner state manager
+    function refreshAudioBanner(unlocked, justClicked = false) {
+      if (!audioUnlockBanner) return;
+      if (unlocked) {
+        audioUnlockBanner.style.background = 'rgba(34, 197, 94, 0.18)';
+        audioUnlockBanner.style.borderColor = 'rgba(34, 197, 94, 0.55)';
+        audioUnlockBanner.style.color = '#86efac';
+        if (audioUnlockIcon) audioUnlockIcon.textContent = '✓';
+        if (audioUnlockText) audioUnlockText.textContent = t('focus.unlockAudioSuccess', '✓ Audio sbloccato e attivo');
+        setTimeout(() => {
+          audioUnlockBanner.style.opacity = '0';
+          audioUnlockBanner.style.maxHeight = '0';
+          audioUnlockBanner.style.padding = '0';
+          audioUnlockBanner.style.margin = '0';
+          audioUnlockBanner.style.border = 'none';
+          audioUnlockBanner.style.overflow = 'hidden';
+        }, justClicked ? 2200 : 1200);
+      } else {
+        audioUnlockBanner.style.display = 'flex';
+        if (audioUnlockIcon) audioUnlockIcon.textContent = '🔔';
+        if (audioUnlockText) audioUnlockText.textContent = t('focus.unlockAudioPrompt', 'Tocca qui per sbloccare l\'audio della campana');
+      }
+    }
+
+    if (isAudioUnlocked()) {
+      refreshAudioBanner(true);
+    } else {
+      refreshAudioBanner(false);
+    }
+
+    // Direct click on the unlock message banner unlocks AudioContext and plays a subtle chime
+    if (audioUnlockBanner) {
+      audioUnlockBanner.addEventListener('click', async () => {
+        const ok = await unlockAudio(true);
+        refreshAudioBanner(ok, true);
+      });
+    }
+
+    // Any first user gesture in the window (Start button, presets, background click) also unlocks audio
+    const autoUnlockGesture = async () => {
+      const ok = await unlockAudio(false);
+      if (ok) {
+        refreshAudioBanner(true);
+        ['click', 'touchstart', 'keydown'].forEach(evt => {
+          window.removeEventListener(evt, autoUnlockGesture);
+        });
+      }
+    };
+    ['click', 'touchstart', 'keydown'].forEach(evt => {
+      window.addEventListener(evt, autoUnlockGesture, { passive: true });
+    });
+
+    // Apply i18n initial texts
+    if (pipBtn) pipBtn.title = t('focus.pipTooltip', 'Pin always on top of all windows and apps (Picture-in-Picture)');
+    if (pipBtnText) pipBtnText.textContent = t('focus.pipBtn', 'Always-on-Top (PiP)');
+    if (sub5Btn) sub5Btn.title = t('focus.sub5Tooltip', 'Subtract 5 minutes');
+    if (add5Btn) add5Btn.title = t('focus.add5Tooltip', 'Add 5 minutes');
+    if (resetBtn) resetBtn.textContent = t('focus.reset', 'Reset');
+    if (rainVol) rainVol.title = t('focus.volume', 'Volume:');
+
+    function update(state) {
+      if (!state) state = getTimerState();
+      const seconds = state.remainingSeconds;
+      const m = Math.floor(seconds / 60);
+      const s = seconds % 60;
+      display.textContent = `${String(m).padStart(2, '0')}:${String(s).padStart(2, '0')}`;
+      toggleBtn.textContent = state.running ? t('focus.pause', 'Pause') : t('focus.start', 'Start');
+      toggleBtn.style.background = state.running ? '#d97706' : '#b93b2c';
+
+      presetBtns.forEach(btn => {
+        const min = parseInt(btn.getAttribute('data-min'));
+        if (min * 60 === state.initialSeconds) {
+          btn.classList.add('active');
+        } else {
+          btn.classList.remove('active');
+        }
+      });
+
+      if (state.running) {
+        if (completionBanner) completionBanner.style.display = 'none';
+        display.classList.remove('timer-completed');
+      }
+    }
+
+    // Subscribe to centralized candle timer: keeps ticking accurately regardless of window activation/deactivation
+    subscribeCandleTimer((state) => {
+      update(state);
+    });
+
+    toggleBtn.addEventListener('click', () => {
+      toggleCandleTimer();
+    });
+
+    resetBtn.addEventListener('click', () => {
+      resetCandleTimer();
+      if (completionBanner) completionBanner.style.display = 'none';
+      display.classList.remove('timer-completed');
+    });
+
+    sub5Btn.addEventListener('click', () => {
+      adjustCandleTimer(-5 * 60);
+    });
+
+    add5Btn.addEventListener('click', () => {
+      adjustCandleTimer(5 * 60);
+    });
+
+    presetBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        const min = parseInt(btn.getAttribute('data-min'));
+        setCandleTimerPreset(min);
+        if (completionBanner) completionBanner.style.display = 'none';
+        display.classList.remove('timer-completed');
+      });
+    });
+
+    // Handle timer completion:
+    // The monastic bell sound triggers immediately at 0s, resonating BEFORE any message prompt
+    onCandleTimerFinished(() => {
+      if (completionBanner) {
+        if (completionText) {
+          completionText.textContent = t('focus.sessionFinished', 'Aura Sacra: Session finished! Praise God for your labor and rest a moment.');
+        }
+        completionBanner.style.display = 'block';
+      }
+      display.classList.add('timer-completed');
+
+      // Delay modal prompt by 1.8 seconds so monastic bell chime rings and reverberates first
+      setTimeout(() => {
+        alert(t('focus.sessionFinished', 'Aura Sacra: Session finished! Praise God for your labor and rest a moment.'));
+        if (completionBanner) completionBanner.style.display = 'none';
+        display.classList.remove('timer-completed');
+        resetCandleTimer();
+      }, 1800);
+    });
+
+    rainBtn.addEventListener('click', () => {
+      const active = toggleRain();
+      rainText.textContent = active ? t('focus.rainActive', 'Rain: Active') : t('focus.rainOff', 'Rain: Off');
+      rainBtn.style.borderColor = active ? '#3b82f6' : '#444';
+      rainBtn.style.color = active ? '#60a5fa' : '#ddd';
+    });
+
+    rainVol.addEventListener('input', (e) => {
+      setRainVolume(parseFloat(e.target.value));
+    });
+
+    // Document Picture-in-Picture for Always-on-top foreground pinning
+    if (pipBtn) {
+      if ('documentPictureInPicture' in window) {
+        pipBtn.addEventListener('click', async () => {
+          try {
+            const pipWin = await window.documentPictureInPicture.requestWindow({
+              width: 330,
+              height: 520
+            });
+
+            // Copy stylesheets
+            [...document.styleSheets].forEach((sheet) => {
+              try {
+                if (sheet.href) {
+                  const link = document.createElement('link');
+                  link.rel = 'stylesheet';
+                  link.href = sheet.href;
+                  pipWin.document.head.appendChild(link);
+                } else if (sheet.cssRules) {
+                  const style = document.createElement('style');
+                  style.textContent = [...sheet.cssRules].map(r => r.cssText).join('\n');
+                  pipWin.document.head.appendChild(style);
+                }
+              } catch (e) {
+                if (sheet.href) {
+                  const link = document.createElement('link');
+                  link.rel = 'stylesheet';
+                  link.href = sheet.href;
+                  pipWin.document.head.appendChild(link);
+                }
+              }
+            });
+
+            const card = document.querySelector('.popup-card');
+            pipWin.document.body.appendChild(card);
+            pipWin.document.body.style.margin = '0';
+            pipWin.document.body.style.padding = '14px';
+            pipWin.document.body.style.minHeight = '100vh';
+            pipWin.document.body.style.display = 'flex';
+            pipWin.document.body.style.alignItems = 'center';
+            pipWin.document.body.style.justifyContent = 'center';
+            pipWin.document.body.style.background = 'radial-gradient(circle at center, #1e1b18 0%, #0d0c0b 100%)';
+            pipWin.document.body.style.color = '#eedfc7';
+            pipWin.document.body.style.boxSizing = 'border-box';
+            pipWin.document.body.style.overflow = 'hidden';
+
+            pipBtn.style.display = 'none';
+
+            // Auto-unlock audio on click inside PiP
+            pipWin.addEventListener('click', autoUnlockGesture, { passive: true });
+
+            // When PiP gains focus or is reactivated, keep display up to date
+            pipWin.addEventListener('focus', () => {
+              update(getTimerState());
+            });
+
+            // When PiP closes, return card to main body and update UI
+            pipWin.addEventListener('pagehide', () => {
+              document.body.appendChild(card);
+              pipBtn.style.display = 'inline-flex';
+              update(getTimerState());
+            });
+          } catch (err) {
+            console.warn('PiP error in popup:', err);
+          }
+        });
+      } else {
+        pipBtn.title = t('focus.pipNotSupported', 'In this browser Always-on-top PiP is not supported. Use Chrome or Edge.');
+      }
+    }
+
+    update(getTimerState());
+  </script>
+</body>
+</html>

@@ -1,0 +1,350 @@
+// Desktop Always-on-top Floating Living Candle Widget for Aura Sacra
+import { icons } from '../icons.js';
+import { toggleRain, isPlayingRain, setRainVolume, getRainVolume, unlockAudio } from '../audio-engine.js';
+import { t } from '../i18n.js';
+import {
+  subscribeCandleTimer,
+  toggleCandleTimer,
+  resetCandleTimer,
+  setCandleTimerPreset,
+  adjustCandleTimer,
+  onCandleTimerFinished,
+  getTimerState
+} from '../candle-timer.js';
+
+let isMinimized = false;
+
+export function renderFloatingCandle(container, pipWin = null) {
+  let unsubscribeTimer = null;
+  let unsubscribeCompletion = null;
+
+  function render() {
+    if (unsubscribeTimer) {
+      unsubscribeTimer();
+      unsubscribeTimer = null;
+    }
+    if (unsubscribeCompletion) {
+      unsubscribeCompletion();
+      unsubscribeCompletion = null;
+    }
+
+    if (isMinimized && !pipWin) {
+      container.innerHTML = `
+        <div class="floating-candle-widget minimized cursor-pointer hover:scale-105 transition" id="btn-maximize-candle" title="${t('floatingCandle.openTooltip', 'Open Sacred Candle & Rain Focus')}">
+          <div class="candle-wrapper scale-90">
+            <div class="candle-flame"></div>
+            <div class="candle-wick"></div>
+            <div class="candle-body"></div>
+          </div>
+        </div>
+      `;
+      const maxBtn = container.querySelector('#btn-maximize-candle');
+      if (maxBtn) {
+        maxBtn.addEventListener('click', () => {
+          isMinimized = false;
+          render();
+        });
+      }
+      return;
+    }
+
+    const currentState = getTimerState();
+    const minutes = Math.floor(currentState.remainingSeconds / 60);
+    const seconds = currentState.remainingSeconds % 60;
+    const formattedTime = `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
+    const rainActive = isPlayingRain();
+    const volume = getRainVolume();
+
+    container.innerHTML = `
+      <div class="floating-candle-widget w-72 p-4 border border-amber-600/30 bg-[var(--bg-card)]/95 backdrop-blur-md shadow-2xl rounded-2xl select-none">
+        
+        <!-- Header: Controls & Always-on-top Detach -->
+        <div class="flex items-center justify-between pb-2 border-b border-stone-200 dark:border-stone-800">
+          <div class="flex items-center gap-1.5">
+            <span class="text-amber-500">${icons.flame('w-4 h-4')}</span>
+            <span class="text-xs font-bold uppercase tracking-wider font-display text-[var(--accent-vermilion)]">${t('floatingCandle.candle', 'Candle')}</span>
+          </div>
+          <div class="flex items-center gap-1.5">
+            ${pipWin ? `
+              <span class="text-[10px] text-amber-500 font-sans font-semibold bg-amber-500/15 border border-amber-500/30 px-2 py-0.5 rounded-full flex items-center gap-1">
+                <span>📌</span>
+                <span>${t('floatingCandle.pipActive', 'In Foreground')}</span>
+              </span>
+            ` : `
+              <button id="btn-open-external-popup" class="text-[11px] text-amber-500 hover:text-amber-400 px-2.5 py-1 rounded-md bg-amber-500/10 border border-amber-500/30 flex items-center gap-1 font-sans font-semibold cursor-pointer transition hover:bg-amber-500/20" title="${t('floatingCandle.detachTooltip', 'Detach as Always-on-Top floating window (Picture-in-Picture)')}">
+                <span>📌</span>
+                <span>${t('floatingCandle.pip', 'Always-on-Top')}</span>
+              </button>
+              <button id="btn-minimize-candle" class="text-stone-400 hover:text-stone-200 p-1 cursor-pointer" title="${t('floatingCandle.minimize', 'Minimize')}">
+                ${icons.minimize('w-4 h-4')}
+              </button>
+            `}
+          </div>
+        </div>
+
+        <!-- Center: Living Candle Flame -->
+        <div class="py-3 flex flex-col items-center justify-center">
+          <div class="candle-wrapper mb-2">
+            <div class="candle-flame"></div>
+            <div class="candle-wick"></div>
+            <div class="candle-body"></div>
+          </div>
+          <p class="text-[11px] italic text-[var(--text-muted)] text-center mt-1">
+            «Lux in Tenebris Lucet»
+          </p>
+        </div>
+
+        <!-- Timer Controls with Modifier Buttons -->
+        <div class="bg-[var(--bg-secondary)] rounded-xl p-3 text-center border border-stone-200 dark:border-stone-800 space-y-2">
+          
+          <div class="flex items-center justify-center gap-3">
+            <button id="btn-timer-sub5" class="w-7 h-7 rounded-lg border border-stone-300 dark:border-stone-700 hover:border-amber-600 text-xs font-bold text-[var(--text-secondary)] flex items-center justify-center cursor-pointer transition active:scale-95" title="${t('floatingCandle.sub5', 'Subtract 5 minutes')}">
+              -5
+            </button>
+
+            <div id="candle-timer-display" class="text-2xl font-mono font-bold tracking-widest text-[var(--accent-gold)] min-w-[90px] transition-all">
+              ${formattedTime}
+            </div>
+
+            <button id="btn-timer-add5" class="w-7 h-7 rounded-lg border border-stone-300 dark:border-stone-700 hover:border-amber-600 text-xs font-bold text-[var(--text-secondary)] flex items-center justify-center cursor-pointer transition active:scale-95" title="${t('floatingCandle.add5', 'Add 5 minutes')}">
+              +5
+            </button>
+          </div>
+
+          <!-- Presets -->
+          <div class="flex items-center justify-center gap-1">
+            <button class="candle-preset px-1.5 py-0.5 rounded text-[10px] font-sans border cursor-pointer ${currentState.initialSeconds === 300 ? 'border-amber-600 bg-amber-600/10 text-amber-500 font-bold' : 'border-stone-300 dark:border-stone-700 text-[var(--text-muted)] hover:border-amber-500'}" data-min="5">5m</button>
+            <button class="candle-preset px-1.5 py-0.5 rounded text-[10px] font-sans border cursor-pointer ${currentState.initialSeconds === 900 ? 'border-amber-600 bg-amber-600/10 text-amber-500 font-bold' : 'border-stone-300 dark:border-stone-700 text-[var(--text-muted)] hover:border-amber-500'}" data-min="15">15m</button>
+            <button class="candle-preset px-1.5 py-0.5 rounded text-[10px] font-sans border cursor-pointer ${currentState.initialSeconds === 1500 ? 'border-amber-600 bg-amber-600/10 text-amber-500 font-bold' : 'border-stone-300 dark:border-stone-700 text-[var(--text-muted)] hover:border-amber-500'}" data-min="25">25m</button>
+            <button class="candle-preset px-1.5 py-0.5 rounded text-[10px] font-sans border cursor-pointer ${currentState.initialSeconds === 2700 ? 'border-amber-600 bg-amber-600/10 text-amber-500 font-bold' : 'border-stone-300 dark:border-stone-700 text-[var(--text-muted)] hover:border-amber-500'}" data-min="45">45m</button>
+            <button class="candle-preset px-1.5 py-0.5 rounded text-[10px] font-sans border cursor-pointer ${currentState.initialSeconds === 3600 ? 'border-amber-600 bg-amber-600/10 text-amber-500 font-bold' : 'border-stone-300 dark:border-stone-700 text-[var(--text-muted)] hover:border-amber-500'}" data-min="60">60m</button>
+          </div>
+          
+          <div class="flex items-center justify-center gap-2 pt-1">
+            <button id="btn-toggle-timer" class="flex-1 py-1 px-3 rounded-lg ${currentState.running ? 'bg-amber-700 hover:bg-amber-800' : 'bg-amber-600 hover:bg-amber-700'} text-white text-xs font-bold flex items-center justify-center gap-1 shadow-sm cursor-pointer transition active:scale-95">
+              ${currentState.running ? icons.pause('w-3.5 h-3.5') : icons.play('w-3.5 h-3.5')}
+              <span id="btn-toggle-timer-text">${currentState.running ? t('floatingCandle.pause', 'Pause') : t('floatingCandle.start', 'Start')}</span>
+            </button>
+            <button id="btn-reset-timer" class="py-1 px-2.5 rounded-lg border border-stone-300 dark:border-stone-700 text-xs text-[var(--text-muted)] hover:text-[var(--text-primary)] cursor-pointer">
+              ${t('floatingCandle.reset', 'Reset')}
+            </button>
+          </div>
+        </div>
+
+        <!-- Offline Rain Sound Controller -->
+        <div class="mt-3 pt-3 border-t border-stone-200 dark:border-stone-800 flex items-center justify-between gap-2">
+          <button id="btn-toggle-rain" class="flex items-center gap-1.5 text-xs font-medium px-2.5 py-1.5 rounded-lg border transition cursor-pointer ${
+            rainActive 
+              ? 'border-blue-500 bg-blue-500/10 text-blue-500' 
+              : 'border-stone-300 dark:border-stone-700 text-[var(--text-secondary)] hover:border-blue-400'
+          }">
+            ${icons.rain('w-4 h-4')}
+            <span id="rain-label-text">${rainActive ? t('floatingCandle.rainPlaying', 'Rain Playing') : t('floatingCandle.gentleRain', 'Gentle Rain')}</span>
+          </button>
+
+          <input type="range" id="slider-rain-volume" min="0" max="1" step="0.05" value="${volume}" class="w-20 accent-blue-500 cursor-pointer" title="${t('floatingCandle.rainVolume', 'Rain volume')}">
+        </div>
+
+      </div>
+    `;
+
+    // Elements
+    const timeDisplay = container.querySelector('#candle-timer-display');
+    const toggleBtn = container.querySelector('#btn-toggle-timer');
+    const toggleBtnText = container.querySelector('#btn-toggle-timer-text');
+    const resetBtn = container.querySelector('#btn-reset-timer');
+    const sub5Btn = container.querySelector('#btn-timer-sub5');
+    const add5Btn = container.querySelector('#btn-timer-add5');
+    const presetBtns = container.querySelectorAll('.candle-preset');
+    const extPopupBtn = container.querySelector('#btn-open-external-popup');
+    const minBtn = container.querySelector('#btn-minimize-candle');
+    const rainBtn = container.querySelector('#btn-toggle-rain');
+    const rainLabelText = container.querySelector('#rain-label-text');
+    const rainSlider = container.querySelector('#slider-rain-volume');
+
+    // Update UI dynamically on each timer tick without re-rendering entire markup
+    function updateDisplay(state) {
+      if (!timeDisplay) return;
+      const m = Math.floor(state.remainingSeconds / 60);
+      const s = state.remainingSeconds % 60;
+      timeDisplay.textContent = `${String(m).padStart(2, '0')}:${String(s).padStart(2, '0')}`;
+
+      if (toggleBtn && toggleBtnText) {
+        toggleBtnText.textContent = state.running ? t('floatingCandle.pause', 'Pause') : t('floatingCandle.start', 'Start');
+        toggleBtn.className = `flex-1 py-1 px-3 rounded-lg ${state.running ? 'bg-amber-700 hover:bg-amber-800' : 'bg-amber-600 hover:bg-amber-700'} text-white text-xs font-bold flex items-center justify-center gap-1 shadow-sm cursor-pointer transition active:scale-95`;
+        const iconSpan = toggleBtn.querySelector('svg');
+        if (iconSpan) {
+          iconSpan.outerHTML = state.running ? icons.pause('w-3.5 h-3.5') : icons.play('w-3.5 h-3.5');
+        }
+      }
+
+      presetBtns.forEach(btn => {
+        const min = parseInt(btn.getAttribute('data-min'));
+        if (min * 60 === state.initialSeconds) {
+          btn.className = 'candle-preset px-1.5 py-0.5 rounded text-[10px] font-sans border cursor-pointer border-amber-600 bg-amber-600/10 text-amber-500 font-bold';
+        } else {
+          btn.className = 'candle-preset px-1.5 py-0.5 rounded text-[10px] font-sans border cursor-pointer border-stone-300 dark:border-stone-700 text-[var(--text-muted)] hover:border-amber-500';
+        }
+      });
+    }
+
+    // Subscribe to centralized candle timer
+    unsubscribeTimer = subscribeCandleTimer((state) => {
+      updateDisplay(state);
+    });
+
+    // Handle session completion: monastic bell chime strikes first, followed by message prompt
+    unsubscribeCompletion = onCandleTimerFinished(() => {
+      if (document.visibilityState === 'visible' && !pipWin) {
+        setTimeout(() => {
+          alert(t('floatingCandle.completeAlert', 'Aura Sacra: Contemplation / Work session completed! Take a gentle rest.'));
+          resetCandleTimer();
+        }, 1800);
+      }
+    });
+
+    // Event listeners
+    if (toggleBtn) {
+      toggleBtn.addEventListener('click', () => {
+        unlockAudio().catch(() => {});
+        toggleCandleTimer();
+      });
+    }
+
+    if (resetBtn) {
+      resetBtn.addEventListener('click', () => {
+        resetCandleTimer();
+      });
+    }
+
+    if (sub5Btn) {
+      sub5Btn.addEventListener('click', () => {
+        adjustCandleTimer(-5 * 60);
+      });
+    }
+
+    if (add5Btn) {
+      add5Btn.addEventListener('click', () => {
+        adjustCandleTimer(5 * 60);
+      });
+    }
+
+    presetBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        const min = parseInt(btn.getAttribute('data-min'));
+        setCandleTimerPreset(min);
+      });
+    });
+
+    if (minBtn) {
+      minBtn.addEventListener('click', () => {
+        isMinimized = true;
+        render();
+      });
+    }
+
+    if (extPopupBtn) {
+      extPopupBtn.addEventListener('click', async () => {
+        // 1. Try Document Picture-in-Picture API (OS-level Always-on-Top)
+        if ('documentPictureInPicture' in window) {
+          try {
+            const pipWindow = await window.documentPictureInPicture.requestWindow({
+              width: 320,
+              height: 480
+            });
+
+            // Propagate theme
+            const currentTheme = document.documentElement.getAttribute('data-theme') || 'night';
+            pipWindow.document.documentElement.setAttribute('data-theme', currentTheme);
+            pipWindow.document.title = 'Aura Sacra — Living Candle';
+
+            // Copy stylesheets
+            [...document.styleSheets].forEach((sheet) => {
+              try {
+                if (sheet.href) {
+                  const link = document.createElement('link');
+                  link.rel = 'stylesheet';
+                  link.href = sheet.href;
+                  pipWindow.document.head.appendChild(link);
+                } else if (sheet.cssRules) {
+                  const style = document.createElement('style');
+                  style.textContent = [...sheet.cssRules].map(r => r.cssText).join('\n');
+                  pipWindow.document.head.appendChild(style);
+                }
+              } catch (e) {
+                if (sheet.href) {
+                  const link = document.createElement('link');
+                  link.rel = 'stylesheet';
+                  link.href = sheet.href;
+                  pipWindow.document.head.appendChild(link);
+                }
+              }
+            });
+
+            // PiP body styling
+            pipWindow.document.body.style.margin = '0';
+            pipWindow.document.body.style.padding = '12px';
+            pipWindow.document.body.style.background = 'radial-gradient(circle at center, #1e1b18 0%, #0d0c0b 100%)';
+            pipWindow.document.body.style.display = 'flex';
+            pipWindow.document.body.style.alignItems = 'center';
+            pipWindow.document.body.style.justifyContent = 'center';
+            pipWindow.document.body.style.minHeight = '100vh';
+            pipWindow.document.body.style.boxSizing = 'border-box';
+            pipWindow.document.body.style.overflow = 'hidden';
+
+            const pipContent = pipWindow.document.createElement('div');
+            pipContent.style.width = '100%';
+            pipContent.style.maxWidth = '290px';
+            pipWindow.document.body.appendChild(pipContent);
+
+            isMinimized = true;
+            render();
+
+            renderFloatingCandle(pipContent, pipWindow);
+
+            pipWindow.addEventListener('pagehide', () => {
+              isMinimized = false;
+              render();
+            });
+            return;
+          } catch (err) {
+            console.warn('Document Picture-in-Picture error, falling back to window.open:', err);
+          }
+        }
+
+        // Fallback for browsers without Document PiP (Safari, Firefox)
+        const w = 340;
+        const h = 500;
+        const left = Math.max(0, (window.screen?.width || 1200) - w - 40);
+        const top = 80;
+        window.open(
+          './candle-popup.html',
+          'AuraSacraCandlePopup',
+          `popup=1,width=${w},height=${h},left=${left},top=${top},menubar=no,toolbar=no,location=no,status=no,resizable=yes`
+        );
+      });
+    }
+
+    if (rainBtn) {
+      rainBtn.addEventListener('click', () => {
+        const active = toggleRain();
+        if (rainLabelText) {
+          rainLabelText.textContent = active ? t('floatingCandle.rainPlaying', 'Rain Playing') : t('floatingCandle.gentleRain', 'Gentle Rain');
+        }
+        rainBtn.className = `flex items-center gap-1.5 text-xs font-medium px-2.5 py-1.5 rounded-lg border transition cursor-pointer ${
+          active 
+            ? 'border-blue-500 bg-blue-500/10 text-blue-500' 
+            : 'border-stone-300 dark:border-stone-700 text-[var(--text-secondary)] hover:border-blue-400'
+        }`;
+      });
+    }
+
+    if (rainSlider) {
+      rainSlider.addEventListener('input', (e) => {
+        setRainVolume(parseFloat(e.target.value));
+      });
+    }
+  }
+
+  render();
+}
