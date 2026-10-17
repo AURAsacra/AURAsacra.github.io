@@ -1,6 +1,20 @@
-// Authentic Multilingual Scripture Book Titles & Canonical Reference Localization\n// Supports all 9 Christian Traditions & Languages: it, ro, la, es, fr, de, pt, ru, en\n// Sourced directly from authentic ecclesiastical Bible archives (CEI, Sinodală, Vulgata, Reina-Valera, Segond, Luther, Almeida, Synodal, KJV)
-\nexport const VERSION_BY_LANG = {\n  it: 'cei',\n  ro: 'sinodala',\n  la: 'vulgata',\n  es: 'reina',\n  fr: 'segond',\n  de: 'luther',\n  pt: 'almeida',\n  ru: 'synodal',\n  en: 'kjv'\n};
-\nexport const SYNC_BOOK_TITLES = {
+// Authentic Multilingual Scripture Book Titles & Canonical Reference Localization
+// Supports all 9 Christian Traditions & Languages: it, ro, la, es, fr, de, pt, ru, en
+// Sourced directly from authentic ecclesiastical Bible archives (CEI, Sinodală, Vulgata, Reina-Valera, Segond, Luther, Almeida, Synodal, KJV)
+
+export const VERSION_BY_LANG = {
+  it: 'cei',
+  ro: 'sinodala',
+  la: 'vulgata',
+  es: 'reina',
+  fr: 'segond',
+  de: 'luther',
+  pt: 'almeida',
+  ru: 'synodal',
+  en: 'kjv'
+};
+
+export const SYNC_BOOK_TITLES = {
   "cei": {
     "gen": "Genesi",
     "exod": "Esodo",
@@ -718,7 +732,8 @@
     "rev": "Revelation"
   }
 };
-\n// Inverted lookup index for robust parsing of citations in any language
+
+// Inverted lookup index for robust parsing of citations in any language
 const TITLE_TO_BOOK_ID = [];
 for (const [ver, books] of Object.entries(SYNC_BOOK_TITLES)) {
   for (const [bid, title] of Object.entries(books)) {
