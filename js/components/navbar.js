@@ -19,17 +19,17 @@ export function renderNavbar(container, state, onNavigate, onOpenModal) {
           </div>
         </div>
 
-        <!-- Right Action Group: SOS, Language, Settings (About Us on sm+) -->
-        <div class="flex items-center gap-1.5 sm:gap-2.5 flex-shrink-0">
+        <!-- Right Action Group: About Us, SOS, Language, Settings -->
+        <div class="flex items-center gap-1 sm:gap-2.5 flex-shrink-0">
           
-          <!-- 0. About Us Button (Hidden on tiny mobile screens to prevent crowding) -->
-          <button id="btn-nav-about" class="hidden sm:flex items-center justify-center gap-1.5 px-3 py-1.5 rounded-xl border transition shadow-sm text-xs sm:text-sm font-medium cursor-pointer flex-shrink-0 ${
+          <!-- 0. About Us Button (Visible on all screens) -->
+          <button id="btn-nav-about" class="flex items-center justify-center gap-1 sm:gap-1.5 px-2 sm:px-3 py-1.5 rounded-xl border transition shadow-sm text-xs sm:text-sm font-medium cursor-pointer flex-shrink-0 h-8 sm:h-9 ${
             state && state.activeTab === 'about'
               ? 'bg-amber-600 text-white border-amber-600 font-bold'
               : 'border-amber-600/50 bg-[var(--bg-card)] text-[var(--accent-vermilion)] hover:border-amber-600 hover:bg-amber-500/10'
           }" title="${t('nav.about', 'About Us')}">
-            ${icons.about ? icons.about('w-4 h-4') : icons.cross('w-4 h-4')}
-            <span class="font-sans font-semibold">${t('nav.about', 'About Us')}</span>
+            ${icons.about ? icons.about('w-3.5 h-3.5 sm:w-4 sm:h-4') : icons.cross('w-3.5 h-3.5 sm:w-4 sm:h-4')}
+            <span class="nav-about-text font-sans font-semibold text-[11px] sm:text-xs">${t('nav.about', 'About Us')}</span>
           </button>
 
           <!-- 1. SOS Peace & Temptation Shield Button -->

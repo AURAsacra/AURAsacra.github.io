@@ -111,6 +111,13 @@ img, video {
   }
 }
 
+/* Hide navbar about text on ultra-narrow displays (< 375px) while keeping icon visible */
+@media (max-width: 374px) {
+  .nav-about-text {
+    display: none;
+  }
+}
+
 /* Critical fallback dimensions for icons and common sizing classes */
 svg {
   display: inline-block;
