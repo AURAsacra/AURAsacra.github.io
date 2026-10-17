@@ -1,5 +1,7 @@
 // Complete Canonical Holy Scriptures for Aura Sacra (King James Version - English)
 // All 66 Canonical Books • 1,189 Chapters • 31,102 Verses • 100% Offline
+import { SYNC_BOOK_TITLES } from './bible-books-i18n.js';
+
 export const BIBLE_BOOKS = [
   {
     "id": "gen",
@@ -3801,7 +3803,17 @@ export function getChapterFromBible(versionId, bookId, chapterNum) {
 
 export function getLoadedBibleBooks(versionId) {
   const v = versionId || 'kjv';
-  return LOADED_BIBLE_BOOKS[v] || BIBLE_BOOKS;
+  if (LOADED_BIBLE_BOOKS[v]) {
+    return LOADED_BIBLE_BOOKS[v];
+  }
+  const titles = SYNC_BOOK_TITLES[v];
+  if (titles) {
+    return BIBLE_BOOKS.map((b) => ({
+      ...b,
+      title: titles[b.id] || b.title
+    }));
+  }
+  return BIBLE_BOOKS;
 }
 
 // Automatically start background loading on initial script execution

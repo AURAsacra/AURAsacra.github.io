@@ -9,6 +9,7 @@ import {
 } from '../data/promises.js';
 import { icons } from '../icons.js';
 import { t, getLanguage } from '../i18n.js';
+import { localizeScriptureCitation } from '../data/bible-books-i18n.js';
 
 export function renderJarPromisesModal(container, onClose, onOpenShareCard) {
   let selectedCategory = null;
@@ -135,7 +136,8 @@ export function renderJarPromisesModal(container, onClose, onOpenShareCard) {
       shareCardBtn.addEventListener('click', () => {
         onClose();
         const cleanRef = drawnPromise.ref.split('/')[0].trim();
-        onOpenShareCard(displayVerse, `${cleanRef} • ${displayVersion}`);
+        const localizedRef = localizeScriptureCitation(cleanRef, currentLang);
+        onOpenShareCard(displayVerse, `${localizedRef} • ${displayVersion}`);
       });
     }
   }

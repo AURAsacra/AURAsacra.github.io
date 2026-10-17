@@ -1,6 +1,6 @@
 // Aura Sacra Service Worker - 100% Offline & Airplane Mode Resilient
 // Cross-platform auto-update support for iOS Safari Web App, Android PWA & Desktop
-const CACHE_NAME = 'aura-sacra-v1.6.9';
+const CACHE_NAME = 'aura-sacra-v1.7.0';
 const ASSETS_TO_CACHE = [
   './',
   './index.html',
@@ -33,6 +33,7 @@ const ASSETS_TO_CACHE = [
   './data/bible-almeida.json',
   './data/bible-synodal.json',
   './js/data/scriptures.js',
+  './js/data/bible-books-i18n.js',
   './js/data/scripture-archives.js',
   './js/data/penance.js',
   './js/data/penance-i18n.js',

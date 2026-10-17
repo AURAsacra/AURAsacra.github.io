@@ -1,35 +1,43 @@
 // Shareable Parchment Card Modal for WhatsApp, Telegram, iMessage, and Socials
 import { generateParchmentCard, shareOrDownloadCard } from '../card-generator.js';
-import { BIBLE_BOOKS, SCRIPTURE_TEXTS, ensureFullBibleLoaded } from '../data/scriptures.js';
+import { BIBLE_BOOKS, ensureFullBibleLoaded, getChapterFromBible, getLoadedBibleBooks } from '../data/scriptures.js';
+import { getActiveBibleVersion } from '../widget-verse.js';
+import { parseScriptureReference } from '../data/bible-books-i18n.js';
 import { icons } from '../icons.js';
 import { t } from '../i18n.js';
 
 export async function renderShareCardModal(container, initialQuote = '', initialCitation = '', onClose) {
-  await ensureFullBibleLoaded();
+  const activeVersion = await getActiveBibleVersion();
+  await ensureFullBibleLoaded(activeVersion);
+  const activeBooks = getLoadedBibleBooks(activeVersion) || BIBLE_BOOKS;
 
-  let quote = initialQuote || 'Blessed are the poor in spirit: for theirs is the kingdom of heaven.';
-  let citation = initialCitation || 'Matthew 5:3';
-  let previewDataUrl = null;
-  let isGenerating = false;
+  // Robustly identify book, chapter, and verse from initialCitation (supporting all 9 languages)
+  const parsed = parseScriptureReference(initialCitation);
+  let activeBookId = parsed.bookId || 'matt';
+  let activeChapter = parsed.chapter || 5;
+  let activeVerseNum = parsed.verse || 1;
 
-  // Identify active book and chapter from initialCitation
-  let activeBookId = 'matt';
-  let activeChapter = 5;
-  let activeVerseNum = 3;
+  // Ensure citation is cleanly localized to the user's active Bible translation
+  const initialBook = activeBooks.find((b) => b.id === activeBookId) || BIBLE_BOOKS.find((b) => b.id === activeBookId) || BIBLE_BOOKS[0];
+  let citation = initialCitation || `${initialBook.title} ${activeChapter}:${activeVerseNum}`;
+  let quote = initialQuote;
 
-  for (const b of BIBLE_BOOKS) {
-    if (citation.toLowerCase().includes(b.title.toLowerCase()) || citation.toLowerCase().includes(b.id.toLowerCase())) {
-      activeBookId = b.id;
-      const match = citation.match(/(\d+):(\d+)/);
-      if (match) {
-        activeChapter = parseInt(match[1], 10);
-        activeVerseNum = parseInt(match[2], 10);
-      } else if (b.chapters?.length) {
-        activeChapter = b.chapters[0];
-      }
-      break;
+  // If initialCitation was provided, make sure the book title part is localized in the active language
+  if (initialCitation && initialBook) {
+    const match = initialCitation.match(/(\d+):(\d+)/);
+    if (match) {
+      citation = `${initialBook.title} ${match[1]}:${match[2]}`;
     }
   }
+
+  if (!quote) {
+    const chData = getChapterFromBible(activeVersion, activeBookId, activeChapter);
+    const vObj = chData?.verses?.find((v) => v.v === activeVerseNum);
+    quote = vObj?.text || vObj?.en || 'Beati i poveri in spirito, perché di essi è il regno dei cieli.';
+  }
+
+  let previewDataUrl = null;
+  let isGenerating = false;
 
   async function updatePreview() {
     isGenerating = true;
@@ -40,13 +48,13 @@ export async function renderShareCardModal(container, initialQuote = '', initial
   }
 
   function render() {
-    const book = BIBLE_BOOKS.find((b) => b.id === activeBookId) || BIBLE_BOOKS[2];
+    const book = activeBooks.find((b) => b.id === activeBookId) || activeBooks[0] || BIBLE_BOOKS[0];
     const availableChapters = book.chapters || [1];
     if (!availableChapters.includes(activeChapter)) {
       activeChapter = availableChapters[0];
     }
-    const chapterData = SCRIPTURE_TEXTS[activeBookId]?.[activeChapter] || {
-      title: `Chapter ${activeChapter}`,
+    const chapterData = getChapterFromBible(activeVersion, activeBookId, activeChapter) || {
+      title: `${book.title} ${activeChapter}`,
       verses: []
     };
     const isPsalm = book.id === 'ps';
@@ -60,7 +68,7 @@ export async function renderShareCardModal(container, initialQuote = '', initial
       'Apostolic & Epistles': [],
       'Apocalypse': []
     };
-    BIBLE_BOOKS.forEach((b) => {
+    activeBooks.forEach((b) => {
       const groupKey = testamentGroups[b.testament] !== undefined ? b.testament : 'Gospels';
       testamentGroups[groupKey].push(b);
     });
@@ -131,9 +139,9 @@ export async function renderShareCardModal(container, initialQuote = '', initial
                 ${Object.entries(testamentGroups)
                   .filter(([_, books]) => books.length > 0)
                   .map(
-                    ([group, books]) => `
+                    ([group, bList]) => `
                   <optgroup label="${testamentI18nMap[group] || group}">
-                    ${books
+                    ${bList
                       .map(
                         (b) => `
                       <option value="${b.id}" ${b.id === activeBookId ? 'selected' : ''}>
@@ -160,8 +168,8 @@ export async function renderShareCardModal(container, initialQuote = '', initial
             <!-- Clickable Verse Pills (numero:numero) -->
             <div class="flex flex-wrap gap-1.5 max-h-28 overflow-y-auto p-2 bg-[var(--bg-card)] rounded-xl border border-stone-300 dark:border-stone-800/80 notranslate" translate="no">
               ${chapterData.verses.map((v) => {
-                const verseRef = `${book.title} ${isPsalm ? '' : activeChapter + ':'}${isPsalm ? activeChapter + ':' : ''}${v.v}`;
-                const isCurrent = citation.includes(`${activeChapter}:${v.v}`) || (activeVerseNum === v.v && citation.includes(book.title));
+                const verseRef = `${book.title} ${activeChapter}:${v.v}`;
+                const isCurrent = activeVerseNum === v.v;
                 return `
                   <button class="modal-verse-chip px-2.5 py-1 rounded-lg text-xs font-mono font-bold transition flex items-center gap-1 notranslate cursor-pointer ${
                     isCurrent
@@ -197,15 +205,14 @@ export async function renderShareCardModal(container, initialQuote = '', initial
 
     container.querySelector('#modal-select-book').addEventListener('change', (e) => {
       activeBookId = e.target.value;
-      const targetBook = BIBLE_BOOKS.find((b) => b.id === activeBookId);
+      const targetBook = activeBooks.find((b) => b.id === activeBookId);
       activeChapter = targetBook?.chapters?.[0] || 1;
-      const targetChapterData = SCRIPTURE_TEXTS[activeBookId]?.[activeChapter];
+      const targetChapterData = getChapterFromBible(activeVersion, activeBookId, activeChapter);
       if (targetChapterData && targetChapterData.verses.length > 0) {
         const firstV = targetChapterData.verses[0];
         activeVerseNum = firstV.v;
-        quote = firstV.text || firstV.en;
-        const psalmPrefix = targetBook.id === 'ps';
-        citation = `${targetBook.title} ${psalmPrefix ? '' : activeChapter + ':'}${psalmPrefix ? activeChapter + ':' : ''}${firstV.v}`;
+        quote = firstV.text || firstV.en || '';
+        citation = `${targetBook.title} ${activeChapter}:${firstV.v}`;
         updatePreview();
       } else {
         render();
@@ -214,13 +221,12 @@ export async function renderShareCardModal(container, initialQuote = '', initial
 
     container.querySelector('#modal-select-chapter').addEventListener('change', (e) => {
       activeChapter = parseInt(e.target.value, 10);
-      const targetChapterData = SCRIPTURE_TEXTS[activeBookId]?.[activeChapter];
+      const targetChapterData = getChapterFromBible(activeVersion, activeBookId, activeChapter);
       if (targetChapterData && targetChapterData.verses.length > 0) {
         const firstV = targetChapterData.verses[0];
         activeVerseNum = firstV.v;
-        quote = firstV.text || firstV.en;
-        const psalmPrefix = book.id === 'ps';
-        citation = `${book.title} ${psalmPrefix ? '' : activeChapter + ':'}${psalmPrefix ? activeChapter + ':' : ''}${firstV.v}`;
+        quote = firstV.text || firstV.en || '';
+        citation = `${book.title} ${activeChapter}:${firstV.v}`;
         updatePreview();
       } else {
         render();
@@ -233,8 +239,8 @@ export async function renderShareCardModal(container, initialQuote = '', initial
         const verseObj = chapterData.verses.find((v) => v.v === vNum);
         if (verseObj) {
           activeVerseNum = vNum;
-          quote = verseObj.text || verseObj.en;
-          citation = `${book.title} ${isPsalm ? '' : activeChapter + ':'}${isPsalm ? activeChapter + ':' : ''}${vNum}`;
+          quote = verseObj.text || verseObj.en || '';
+          citation = `${book.title} ${activeChapter}:${vNum}`;
           updatePreview();
         }
       });

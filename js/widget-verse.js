@@ -2,7 +2,7 @@
 // Random & Daily Scripture Verse Provider for Aura Sacra Widgets and Notifications
 // Provides canonical verses in the user's chosen Bible translation with deep linking and sharing.
 
-import { BIBLE_BOOKS, ensureFullBibleLoaded, getChapterFromBible } from './data/scriptures.js';
+import { BIBLE_BOOKS, ensureFullBibleLoaded, getChapterFromBible, getLoadedBibleBooks } from './data/scriptures.js';
 import { SUPPORTED_BIBLES, getDefaultBibleForLanguage } from './data/scripture-archives.js';
 import { getSetting } from './db.js';
 import { getLanguage } from './i18n.js';
@@ -56,7 +56,8 @@ export async function getVerseData(target = null, versionId = null) {
   await ensureFullBibleLoaded(activeVersion);
 
   const vTarget = target || CORE_WIDGET_VERSES[Math.floor(Math.random() * CORE_WIDGET_VERSES.length)];
-  const book = BIBLE_BOOKS.find((b) => b.id === vTarget.book) || { id: vTarget.book, title: vTarget.book };
+  const allBooks = getLoadedBibleBooks(activeVersion) || BIBLE_BOOKS;
+  const book = allBooks.find((b) => b.id === vTarget.book) || BIBLE_BOOKS.find((b) => b.id === vTarget.book) || { id: vTarget.book, title: vTarget.book };
   const chapterData = getChapterFromBible(activeVersion, vTarget.book, vTarget.chapter);
 
   let verseText = '';
@@ -72,8 +73,7 @@ export async function getVerseData(target = null, versionId = null) {
     verseText = '«Il Signore è il mio pastore: non manco di nulla.»';
   }
 
-  const isPsalm = book.id === 'ps';
-  const citation = `${book.title} ${isPsalm ? '' : vTarget.chapter + ':'}${isPsalm ? vTarget.chapter + ':' : ''}${vTarget.verse}`;
+  const citation = `${book.title} ${vTarget.chapter}:${vTarget.verse}`;
   const versionInfo = SUPPORTED_BIBLES.find((b) => b.id === activeVersion) || { label: activeVersion.toUpperCase(), name: activeVersion };
 
   return {

@@ -359,8 +359,8 @@ export async function renderBibleReader(container, onOpenShareCard, deepLinkOpti
                     </button>
 
                     <!-- Clickable Verse Reference Badge (Nome Numero:Numero) to send card directly -->
-                    <button class="verse-ref-click-btn font-mono text-xs font-bold text-amber-700 dark:text-amber-400 bg-amber-500/10 hover:bg-amber-600 hover:text-white px-2 py-0.5 rounded-lg border border-amber-600/30 transition shadow-xs flex items-center gap-1 flex-shrink-0 mt-0.5 cursor-pointer notranslate" translate="no" data-verse-num="${verse.v}" title="${book.title} ${isPsalm ? '' : activeChapter + ':'}${isPsalm ? activeChapter + ':' : ''}${verse.v}">
-                      <span>${book.title} ${isPsalm ? '' : activeChapter + ':'}${isPsalm ? activeChapter + ':' : ''}${verse.v}</span>
+                    <button class="verse-ref-click-btn font-mono text-xs font-bold text-amber-700 dark:text-amber-400 bg-amber-500/10 hover:bg-amber-600 hover:text-white px-2 py-0.5 rounded-lg border border-amber-600/30 transition shadow-xs flex items-center gap-1 flex-shrink-0 mt-0.5 cursor-pointer notranslate" translate="no" data-verse-num="${verse.v}" title="${book.title} ${activeChapter}:${verse.v}">
+                      <span>${book.title} ${activeChapter}:${verse.v}</span>
                     </button>
                     
                     <!-- Verse Body -->
@@ -402,7 +402,7 @@ export async function renderBibleReader(container, onOpenShareCard, deepLinkOpti
                     <!-- Single Verse Share Card Button -->
                     <button class="share-single-verse-btn flex items-center gap-1 text-xs text-amber-600 hover:text-amber-700 font-sans font-medium cursor-pointer" data-verse-text="${encodeURIComponent(
                       verseText
-                    )}" data-ref="${book.title} ${isPsalm ? '' : activeChapter + ':'}${isPsalm ? activeChapter + ':' : ''}${verse.v}">
+                    )}" data-ref="${book.title} ${activeChapter}:${verse.v}">
                       ${icons.share('w-3.5 h-3.5')}
                       <span>${t('reader.shareCard', 'Share Card')}</span>
                     </button>
@@ -628,7 +628,7 @@ export async function renderBibleReader(container, onOpenShareCard, deepLinkOpti
         const vObj = chapterData.verses.find((v) => v.v === vNum);
         if (vObj) {
           const text = vObj.text || vObj.en;
-          const ref = `${book.title} ${isPsalm ? '' : activeChapter + ':'}${isPsalm ? activeChapter + ':' : ''}${vNum}`;
+          const ref = `${book.title} ${activeChapter}:${vNum}`;
           onOpenShareCard(text, ref);
         }
       });
@@ -719,12 +719,12 @@ export async function renderBibleReader(container, onOpenShareCard, deepLinkOpti
 
     if (deepLinkOptions.autoShare) {
       setTimeout(() => {
-        const book = BIBLE_BOOKS.find((b) => b.id === activeBookId) || BIBLE_BOOKS[0];
-        const chapterData = SCRIPTURE_TEXTS[activeBookId]?.[activeChapter];
+        const allBooks = getLoadedBibleBooks(activeBibleVersion) || BIBLE_BOOKS;
+        const book = allBooks.find((b) => b.id === activeBookId) || allBooks[0];
+        const chapterData = getChapterFromBible(activeBibleVersion, activeBookId, activeChapter) || SCRIPTURE_TEXTS[activeBookId]?.[activeChapter];
         const vObj = chapterData?.verses?.find((v) => v.v === deepLinkOptions.initialVerse);
         if (vObj) {
-          const isPsalm = book.id === 'ps';
-          const ref = `${book.title} ${isPsalm ? '' : activeChapter + ':'}${isPsalm ? activeChapter + ':' : ''}${deepLinkOptions.initialVerse}`;
+          const ref = `${book.title} ${activeChapter}:${deepLinkOptions.initialVerse}`;
           onOpenShareCard(vObj.text || vObj.en, ref);
         }
       }, 350);
