@@ -1,6 +1,6 @@
 // Aura Sacra Service Worker - 100% Offline & Airplane Mode Resilient
 // Cross-platform auto-update support for iOS Safari Web App, Android PWA & Desktop
-const CACHE_NAME = 'aura-sacra-v1.6.8';
+const CACHE_NAME = 'aura-sacra-v1.6.9';
 const ASSETS_TO_CACHE = [
   './',
   './index.html',
@@ -126,11 +126,6 @@ self.addEventListener('activate', (event) => {
           try {
             client.postMessage({ type: 'SW_UPDATED', version: CACHE_NAME });
           } catch (e) {}
-          try {
-            if ('navigate' in client && client.url) {
-              await client.navigate(client.url);
-            }
-          } catch (e) {}
         }
       }
     })()
@@ -153,11 +148,31 @@ self.addEventListener('fetch', (event) => {
     return;
   }
 
-  // Network-First for HTML, JS, CSS, and manifest so updates on iPhone Safari, Android & Desktop
-  // appear immediately when online, while falling back seamlessly to Cache in Airplane Mode.
+  // 1. Navigation requests (HTML documents): network-first with graceful offline fallback
+  if (event.request.mode === 'navigate') {
+    event.respondWith(
+      fetch(event.request)
+        .then((networkResponse) => {
+          if (networkResponse && networkResponse.status === 200) {
+            const cloned = networkResponse.clone();
+            caches.open(CACHE_NAME).then((cache) => {
+              cache.put(event.request, cloned);
+            });
+            return networkResponse;
+          }
+          return caches.match(event.request).then((cached) => cached || networkResponse);
+        })
+        .catch(() => {
+          return caches.match('./index.html').then((navResponse) => {
+            return navResponse || caches.match('./') || new Response('Offline Resource Unavailable', { status: 503, statusText: 'Service Unavailable' });
+          });
+        })
+    );
+    return;
+  }
+
+  // 2. Code & markup subresources (.js, .css, .html, manifest.json): network-first
   const isCodeOrMarkup =
-    event.request.mode === 'navigate' ||
-    url.pathname.endsWith('/') ||
     url.pathname.endsWith('.html') ||
     url.pathname.endsWith('.js') ||
     url.pathname.endsWith('.css') ||
@@ -165,10 +180,7 @@ self.addEventListener('fetch', (event) => {
 
   if (isCodeOrMarkup) {
     event.respondWith(
-      // IMPORTANT for Safari/WebKit: pass event.request.url (string) instead of event.request (object)
-      // when specifying { cache: 'no-cache' }, because Safari throws a TypeError if RequestInit
-      // is passed alongside a Request object whose mode is 'navigate'.
-      fetch(event.request.url, { cache: 'no-cache', credentials: 'same-origin' })
+      fetch(event.request)
         .then((networkResponse) => {
           if (networkResponse && networkResponse.status === 200) {
             const cloned = networkResponse.clone();
@@ -182,9 +194,6 @@ self.addEventListener('fetch', (event) => {
         .catch(() => {
           return caches.match(event.request, { ignoreSearch: true }).then((cached) => {
             if (cached) return cached;
-            if (event.request.mode === 'navigate') {
-              return caches.match('./index.html').then((navResponse) => navResponse || caches.match('./'));
-            }
             return new Response('Offline Resource Unavailable', { status: 503, statusText: 'Service Unavailable' });
           });
         })
