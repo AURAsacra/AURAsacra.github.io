@@ -243,10 +243,6 @@ export async function renderBibleReader(container, onOpenShareCard, deepLinkOpti
 
             <!-- Scripture Archive Status & Selection Badge -->
             <div class="flex items-center justify-between sm:justify-end gap-2 flex-shrink-0 flex-wrap">
-              <button id="btn-random-verse" type="button" class="text-xs font-sans font-semibold text-amber-700 dark:text-amber-300 hover:text-white bg-amber-500/15 hover:bg-amber-600 border border-amber-600/40 px-2.5 py-1.5 rounded-lg transition shadow-xs cursor-pointer flex items-center gap-1.5 flex-shrink-0" title="${t('reader.randomVerseTooltip', 'Apri un capitolo casuale della Scrittura per la meditazione')}">
-                <span>🎲</span>
-                <span class="font-medium">${t('reader.randomVerse', 'Capitolo Casuale')}</span>
-              </button>
               <button id="btn-toggle-select-all" class="text-xs font-sans font-medium text-amber-600 hover:text-amber-700 px-2.5 py-1.5 rounded-lg border border-amber-600/40 hover:bg-amber-600/10 transition cursor-pointer flex-shrink-0">
                 ${selectedCount === chapterData.verses.length ? t('reader.deselectAll', 'Deselect All') : t('reader.selectChapter', 'Select Chapter')}
               </button>
@@ -551,21 +547,7 @@ export async function renderBibleReader(container, onOpenShareCard, deepLinkOpti
       });
     }
 
-    // 5. Random Scripture Chapter Feature (Direct Sacred Texts function)
-    const randomVerseBtn = container.querySelector('#btn-random-verse');
-    if (randomVerseBtn) {
-      randomVerseBtn.addEventListener('click', async () => {
-        const randTarget = CORE_WIDGET_VERSES[Math.floor(Math.random() * CORE_WIDGET_VERSES.length)];
-        activeBookId = randTarget.book;
-        activeChapter = randTarget.chapter;
-        selectedVerses.clear(); // Only set random chapter, no verse is pre-selected
-        activeHighlights = await getHighlights(activeBookId, activeChapter);
-        await updateView();
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-      });
-    }
-
-    // 5b. Select All / Deselect All
+    // 5. Select All / Deselect All
     const selectAllBtn = container.querySelector('#btn-toggle-select-all');
     if (selectAllBtn) {
       selectAllBtn.addEventListener('click', async () => {
