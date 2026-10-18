@@ -246,7 +246,6 @@ export const TRANSLATIONS = {
       highlightAll: 'Highlight all:',
       remove: 'Remove',
       clear: 'Clear',
-      canonicalArchive: 'Canonical Archive',
       verse: 'Verse',
       verses: 'Verses',
       palette: {
@@ -759,7 +758,6 @@ export const TRANSLATIONS = {
       highlightAll: 'Evidenzia tutti:',
       remove: 'Rimuovi',
       clear: 'Azzera',
-      canonicalArchive: 'Archivio Canonico',
       verse: 'Versetto',
       verses: 'Versetti',
       palette: {
@@ -1262,7 +1260,6 @@ export const TRANSLATIONS = {
       highlightAll: 'Evidențiază toate:',
       remove: 'Elimină',
       clear: 'Curăță',
-      canonicalArchive: 'Arhivă Canonică',
       verse: 'Verset',
       verses: 'Versete',
       palette: {
@@ -1724,7 +1721,6 @@ export const TRANSLATIONS = {
       highlightAll: 'Surligner tout:',
       remove: 'Supprimer',
       clear: 'Effacer',
-      canonicalArchive: 'Archive Canonique',
       verse: 'Verset',
       verses: 'Versets',
       palette: {
@@ -2186,7 +2182,6 @@ export const TRANSLATIONS = {
       highlightAll: 'Resaltar todos:',
       remove: 'Quitar',
       clear: 'Borrar',
-      canonicalArchive: 'Archivo Canónico',
       verse: 'Versículo',
       verses: 'Versículos',
       palette: {
@@ -2648,7 +2643,6 @@ export const TRANSLATIONS = {
       highlightAll: 'Destacar todos:',
       remove: 'Remover',
       clear: 'Limpar',
-      canonicalArchive: 'Arquivo Canônico',
       verse: 'Versículo',
       verses: 'Versículos',
       palette: {
@@ -3110,7 +3104,6 @@ export const TRANSLATIONS = {
       highlightAll: 'Alle markieren:',
       remove: 'Entfernen',
       clear: 'Löschen',
-      canonicalArchive: 'Kanonisches Archiv',
       verse: 'Vers',
       verses: 'Verse',
       palette: {
@@ -3571,7 +3564,6 @@ export const TRANSLATIONS = {
       highlightAll: 'Выделить все:',
       remove: 'Удалить',
       clear: 'Сбросить',
-      canonicalArchive: 'Канонический Архив',
       verse: 'Стих',
       verses: 'Стихи',
       palette: {
@@ -4033,7 +4025,6 @@ export const TRANSLATIONS = {
       highlightAll: 'Omnia illustra:',
       remove: 'Removere',
       clear: 'Delere',
-      canonicalArchive: 'Archivum Canonicum',
       verse: 'Versus',
       verses: 'Versus',
       palette: {

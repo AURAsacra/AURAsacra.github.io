@@ -160,9 +160,7 @@ export async function renderBibleReader(container, onOpenShareCard, deepLinkOpti
       activeChapter = availableChapters[0];
     }
 
-    const currentBibleObj = SUPPORTED_BIBLES.find((b) => b.id === activeBibleVersion) || SUPPORTED_BIBLES[0];
     const archivalChapter = getArchivalChapter(activeBibleVersion, activeBookId, activeChapter);
-    const isArchivalCustom = !!archivalChapter;
 
     const currentChapterIndex = availableChapters.indexOf(activeChapter);
     const chapterData = archivalChapter || SCRIPTURE_TEXTS[activeBookId]?.[activeChapter] || {
@@ -227,7 +225,7 @@ export async function renderBibleReader(container, onOpenShareCard, deepLinkOpti
             <!-- Version & Canon Selectors with Icon -->
             <div class="flex flex-wrap sm:flex-nowrap items-center gap-2 flex-1 min-w-0">
               <span class="text-amber-600 flex-shrink-0">${icons.book('w-5 h-5')}</span>
-              <select id="select-bible-version" class="flex-1 min-w-[130px] bg-[var(--bg-secondary)] border border-stone-300 dark:border-stone-700 rounded-xl px-2.5 py-2 text-xs font-semibold text-[var(--text-primary)] focus:outline-none focus:border-amber-600 cursor-pointer shadow-sm truncate notranslate" translate="no" title="${t('reader.canonicalArchive', 'Historic Canonical Scripture Archive')}">
+              <select id="select-bible-version" class="flex-1 min-w-[130px] bg-[var(--bg-secondary)] border border-stone-300 dark:border-stone-700 rounded-xl px-2.5 py-2 text-xs font-semibold text-[var(--text-primary)] focus:outline-none focus:border-amber-600 cursor-pointer shadow-sm truncate notranslate" translate="no" title="${t('nav.bible', 'Bible')}">
                 ${SUPPORTED_BIBLES.map((b) => `
                   <option value="${b.id}" ${b.id === activeBibleVersion ? 'selected' : ''}>
                     ${b.flag} ${b.label} — ${b.name}
@@ -242,7 +240,7 @@ export async function renderBibleReader(container, onOpenShareCard, deepLinkOpti
               </select>
             </div>
 
-            <!-- Scripture Archive Status, Audio Bible & Selection Badge -->
+            <!-- Audio Bible & Selection Badge -->
             <div class="flex items-center justify-between sm:justify-end gap-2 flex-shrink-0 flex-wrap">
               <button id="btn-audio-bible-chapter" class="flex items-center gap-1.5 text-xs font-sans font-semibold text-white bg-amber-600 hover:bg-amber-700 active:bg-amber-800 px-3 py-1.5 rounded-xl shadow-sm transition transform active:scale-95 cursor-pointer flex-shrink-0" title="${t('reader.listenChapter', 'Ascolta questo capitolo con Audio-Bibbia')}">
                 ${icons.speaker('w-3.5 h-3.5')}
@@ -251,10 +249,6 @@ export async function renderBibleReader(container, onOpenShareCard, deepLinkOpti
               <button id="btn-toggle-select-all" class="text-xs font-sans font-medium text-amber-600 hover:text-amber-700 px-2.5 py-1.5 rounded-lg border border-amber-600/40 hover:bg-amber-600/10 transition cursor-pointer flex-shrink-0">
                 ${selectedCount === chapterData.verses.length ? t('reader.deselectAll', 'Deselect All') : t('reader.selectChapter', 'Select Chapter')}
               </button>
-              <div class="flex items-center gap-1.5 text-xs font-sans text-[var(--text-muted)] bg-[var(--bg-secondary)] px-2.5 py-1.5 rounded-xl border border-stone-300 dark:border-stone-700 notranslate flex-shrink-0" translate="no">
-                <span class="w-2 h-2 rounded-full ${isArchivalCustom ? 'bg-emerald-500' : 'bg-amber-500'}"></span>
-                <span class="truncate max-w-[150px] sm:max-w-none">${isArchivalCustom ? `${currentBibleObj.label} ${t('reader.canonicalArchive', 'Archive')}` : `KJV ${t('reader.canonicalArchive', 'Archive')}`}</span>
-              </div>
             </div>
 
           </div>
