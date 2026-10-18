@@ -346,7 +346,7 @@ export const TRANSLATIONS = {
       inhaleGrace: 'Inhale Grace',
       holdPeace: 'Rest in His Peace',
       exhaleTemptation: 'Exhale Temptation',
-      imFeelingBetter: 'I Feel Peace Now • Return'
+      imFeelingBetter: 'I Feel Peace Now • Return',
       inhale: 'Inhale Grace',
       hold: 'Rest in His Peace',
       exhale: 'Exhale Temptation',
@@ -381,7 +381,7 @@ export const TRANSLATIONS = {
       deleteTooltip: 'Delete prayer',
       deleteConfirm: 'Delete this prayer?',
       inputPlaceholder: 'Write a prayer to God (press Enter to place in your journal)...',
-      sendToGod: 'Send to God'
+      sendToGod: 'Send to God',
       listen: 'Listen',
       listenPrayer: 'Listen to this prayer',
       prayerTitle: 'Journal Prayer',
@@ -885,7 +885,7 @@ export const TRANSLATIONS = {
       inhaleGrace: 'Inspira Grazia',
       holdPeace: 'Resta nella Sua Pace',
       exhaleTemptation: 'Espira la Tentazione',
-      imFeelingBetter: 'Ho ritrovato la Pace • Torna'
+      imFeelingBetter: 'Ho ritrovato la Pace • Torna',
       inhale: 'Inspira Grazia',
       hold: 'Resta nella Sua Pace',
       exhale: 'Espira la Tentazione',
@@ -920,7 +920,7 @@ export const TRANSLATIONS = {
       deleteTooltip: 'Elimina preghiera',
       deleteConfirm: 'Eliminare questa preghiera?',
       inputPlaceholder: 'Scrivi una preghiera a Dio (premi Invio per inserirla nel diario)...',
-      sendToGod: 'Offri a Dio'
+      sendToGod: 'Offri a Dio',
       listen: 'Ascolta',
       listenPrayer: 'Ascolta questa preghiera',
       prayerTitle: 'Preghiera del Diario',
@@ -1387,7 +1387,7 @@ export const TRANSLATIONS = {
       inhaleGrace: 'Inspiră Har',
       holdPeace: 'Odihnește-te în Pacea Sa',
       exhaleTemptation: 'Expiră Ispita',
-      imFeelingBetter: 'Am dobândit Pace • Încheie'
+      imFeelingBetter: 'Am dobândit Pace • Încheie',
       inhale: 'Inspiră Har',
       hold: 'Odihnește-te în Pacea Sa',
       exhale: 'Expiră Ispita',
@@ -1422,7 +1422,7 @@ export const TRANSLATIONS = {
       deleteTooltip: 'Șterge rugăciunea',
       deleteConfirm: 'Ștergi această rugăciune?',
       inputPlaceholder: 'Scrie o rugăciune către Dumnezeu (apasă Enter pentru a o așeza în jurnal)...',
-      sendToGod: 'Închină lui Dumnezeu'
+      sendToGod: 'Închină lui Dumnezeu',
       listen: 'Ascultă',
       listenPrayer: 'Ascultă această rugăciune',
       prayerTitle: 'Rugăciune din Jurnal',
@@ -1872,7 +1872,7 @@ export const TRANSLATIONS = {
       inhaleGrace: 'Inspirez la Grâce',
       holdPeace: 'Demeurez dans Sa Paix',
       exhaleTemptation: 'Expirez la Tentation',
-      imFeelingBetter: 'J\'ai retrouvé la Paix • Retour'
+      imFeelingBetter: 'J\'ai retrouvé la Paix • Retour',
       inhale: 'Inspirez la Grâce',
       hold: 'Demeurez dans Sa Paix',
       exhale: 'Expirez la Tentation',
@@ -1907,7 +1907,7 @@ export const TRANSLATIONS = {
       deleteTooltip: 'Supprimer la prière',
       deleteConfirm: 'Supprimer cette prière ?',
       inputPlaceholder: 'Écrivez une prière à Dieu (appuyez sur Entrée pour la déposer)...',
-      sendToGod: 'Offrir à Dieu'
+      sendToGod: 'Offrir à Dieu',
       listen: 'Écouter',
       listenPrayer: 'Écouter cette prière',
       prayerTitle: 'Prière du Journal',
@@ -2357,7 +2357,7 @@ export const TRANSLATIONS = {
       inhaleGrace: 'Inhala Gracia',
       holdPeace: 'Permanece en Su Paz',
       exhaleTemptation: 'Exhala la Tentación',
-      imFeelingBetter: 'He hallado Paz • Regresar'
+      imFeelingBetter: 'He hallado Paz • Regresar',
       inhale: 'Inhala Gracia',
       hold: 'Permanece en Su Paz',
       exhale: 'Exhala la Tentación',
@@ -2392,7 +2392,7 @@ export const TRANSLATIONS = {
       deleteTooltip: 'Eliminar oración',
       deleteConfirm: '¿Eliminar esta oración?',
       inputPlaceholder: 'Escribe una oración a Dios (presiona Enter para guardarla en tu diario)...',
-      sendToGod: 'Ofrecer a Dios'
+      sendToGod: 'Ofrecer a Dios',
       listen: 'Escuchar',
       listenPrayer: 'Escuchar esta oración',
       prayerTitle: 'Oración del Diario',
@@ -2842,7 +2842,7 @@ export const TRANSLATIONS = {
       inhaleGrace: 'Inspira Graça',
       holdPeace: 'Descansa na Sua Paz',
       exhaleTemptation: 'Expira a Tentação',
-      imFeelingBetter: 'Encontrei a Paz • Voltar'
+      imFeelingBetter: 'Encontrei a Paz • Voltar',
       inhale: 'Inspira Graça',
       hold: 'Descansa na Sua Paz',
       exhale: 'Expira a Tentação',
@@ -2877,7 +2877,7 @@ export const TRANSLATIONS = {
       deleteTooltip: 'Eliminar oração',
       deleteConfirm: 'Eliminar esta oração?',
       inputPlaceholder: 'Escreve uma oração a Deus (prime Enter para colocar no diário)...',
-      sendToGod: 'Oferecer a Deus'
+      sendToGod: 'Oferecer a Deus',
       listen: 'Ouvir',
       listenPrayer: 'Ouvir esta oração',
       prayerTitle: 'Oração do Diário',
@@ -3327,7 +3327,7 @@ export const TRANSLATIONS = {
       inhaleGrace: 'Atme Gnade ein',
       holdPeace: 'Raste in Seinem Frieden',
       exhaleTemptation: 'Atme Versuchung aus',
-      imFeelingBetter: 'Ich habe Frieden • Zurück'
+      imFeelingBetter: 'Ich habe Frieden • Zurück',
       inhale: 'Atme Gnade ein',
       hold: 'Raste in Seinem Frieden',
       exhale: 'Atme Versuchung aus',
@@ -3362,7 +3362,7 @@ export const TRANSLATIONS = {
       deleteTooltip: 'Gebet löschen',
       deleteConfirm: 'Dieses Gebet löschen?',
       inputPlaceholder: 'Schreibe ein Gebet zu Gott (drücke Enter zum Eintragen)...',
-      sendToGod: 'Gott darbringen'
+      sendToGod: 'Gott darbringen',
       listen: 'Anhören',
       listenPrayer: 'Dieses Gebet anhören',
       prayerTitle: 'Tagebuch-Gebet',
@@ -3811,7 +3811,7 @@ export const TRANSLATIONS = {
       inhaleGrace: 'Вдохни Благодать',
       holdPeace: 'Пребудь в Его Мире',
       exhaleTemptation: 'Выдохни Искушение',
-      imFeelingBetter: 'Обрел Мир • Вернуться'
+      imFeelingBetter: 'Обрел Мир • Вернуться',
       inhale: 'Вдохни Благодать',
       hold: 'Пребудь в Его Мире',
       exhale: 'Выдохни Искушение',
@@ -3846,7 +3846,7 @@ export const TRANSLATIONS = {
       deleteTooltip: 'Удалить молитву',
       deleteConfirm: 'Удалить эту молитву?',
       inputPlaceholder: 'Напишите молитву к Богу (нажмите Enter для сохранения)...',
-      sendToGod: 'Вознести к Богу'
+      sendToGod: 'Вознести к Богу',
       listen: 'Слушать',
       listenPrayer: 'Слушать эту молитву',
       prayerTitle: 'Молитва из Дневника',
@@ -4296,7 +4296,7 @@ export const TRANSLATIONS = {
       inhaleGrace: 'Trahe Gratiam',
       holdPeace: 'Mane in Pace Eius',
       exhaleTemptation: 'Effla Tentationem',
-      imFeelingBetter: 'Pacem recepi • Revertere'
+      imFeelingBetter: 'Pacem recepi • Revertere',
       inhale: 'Trahe Gratiam',
       hold: 'Mane in Pace Eius',
       exhale: 'Effla Tentationem',
@@ -4331,7 +4331,7 @@ export const TRANSLATIONS = {
       deleteTooltip: 'Dele precem',
       deleteConfirm: 'Delere hanc precem?',
       inputPlaceholder: 'Scribe precem ad Deum (preme Enter ad inserendum)...',
-      sendToGod: 'Deo offer'
+      sendToGod: 'Deo offer',
       listen: 'Audi',
       listenPrayer: 'Hanc orationem audire',
       prayerTitle: 'Oratio Diarii',

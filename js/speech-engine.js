@@ -272,8 +272,8 @@ export function cleanTextForSpeech(text) {
   return text
     .replace(/^\[\d+\]\s*/, '')     // Remove leading verse brackets [1]
     .replace(/<[^>]+>/g, '')        // Remove HTML tags (e.g. <strong>, <span>)
-    .replace(/[\u{1F300}-\u{1F9FF}\u{2600}-\u{26FF}\u{2700}-\u{27BF}]/gu, '') // Remove emojis (📖, 🕊️, etc.)
-    .replace(/[•·—–«»"']/g, ' ')   // Replace bullets, dashes and quotes for smooth cadence
+    .replace(/[\uD800-\uDBFF][\uDC00-\uDFFF]|[\u2600-\u27BF]/g, '') // Remove emojis safely without u-flag dependency
+    .replace(/[•·—–«»"]/g, ' ')     // Replace bullets, dashes and quotes for smooth cadence
     .replace(/\s+/g, ' ')
     .trim();
 }

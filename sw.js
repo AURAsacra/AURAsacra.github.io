@@ -1,6 +1,6 @@
 // Aura Sacra Service Worker - 100% Offline & Airplane Mode Resilient
 // Cross-platform auto-update support for iOS Safari Web App, Android PWA & Desktop
-const CACHE_NAME = 'aura-sacra-v1.8.7';
+const CACHE_NAME = 'aura-sacra-v1.8.8';
 const ASSETS_TO_CACHE = [
   './',
   './index.html',
