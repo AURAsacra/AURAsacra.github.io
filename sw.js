@@ -1,6 +1,6 @@
 // Aura Sacra Service Worker - 100% Offline & Airplane Mode Resilient
 // Cross-platform auto-update support for iOS Safari Web App, Android PWA & Desktop
-const CACHE_NAME = 'aura-sacra-v1.7.2';
+const CACHE_NAME = 'aura-sacra-v1.8.4';
 const ASSETS_TO_CACHE = [
   './',
   './index.html',
@@ -19,6 +19,7 @@ const ASSETS_TO_CACHE = [
   './js/circadian.js',
   './js/schedule.js',
   './js/audio-engine.js',
+  './js/speech-engine.js',
   './js/ai-engine.js',
   './js/card-generator.js',
   './js/github-feedback.js',
@@ -57,6 +58,7 @@ const ASSETS_TO_CACHE = [
   './js/components/saints-view.js',
   './js/components/focus-mode.js',
   './js/components/floating-candle.js',
+  './js/components/audio-player.js',
   './js/components/share-card.js',
   './js/components/settings-modal.js',
   './js/components/api-key-modal.js',
@@ -144,8 +146,8 @@ self.addEventListener('fetch', (event) => {
 
   const url = new URL(event.request.url);
 
-  // Never intercept Google Gemini generative language API (live model inference)
-  if (url.hostname.includes('generativelanguage.googleapis.com')) {
+  // Never intercept Google Gemini generative language API or Google TTS audio stream
+  if (url.hostname.includes('generativelanguage.googleapis.com') || url.hostname.includes('translate.google.com')) {
     return;
   }
 

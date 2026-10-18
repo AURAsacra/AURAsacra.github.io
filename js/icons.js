@@ -266,6 +266,43 @@ export const icons = {
       <path d="m4 10 8-4 8 4"/>
       <path d="M6 9v12h12V9"/>
       <path d="M10 21v-5a2 2 0 0 1 4 0v5"/>
+    </svg>`,
+
+  speaker: (cls = "w-5 h-5") => `
+    <svg class="${cls}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/>
+      <path d="M15.54 8.46a5 5 0 0 1 0 7.07"/>
+      <path d="M19.07 4.93a10 10 0 0 1 0 14.14"/>
+    </svg>`,
+
+  speakerMute: (cls = "w-5 h-5") => `
+    <svg class="${cls}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/>
+      <line x1="23" y1="9" x2="17" y2="15"/>
+      <line x1="17" y1="9" x2="23" y2="15"/>
+    </svg>`,
+
+  stop: (cls = "w-5 h-5") => `
+    <svg class="${cls}" viewBox="0 0 24 24" fill="currentColor">
+      <rect x="5" y="5" width="14" height="14" rx="2"/>
+    </svg>`,
+
+  skipBack: (cls = "w-5 h-5") => `
+    <svg class="${cls}" viewBox="0 0 24 24" fill="currentColor">
+      <polygon points="19 20 9 12 19 4 19 20"/>
+      <rect x="5" y="4" width="2.5" height="16" rx="0.5"/>
+    </svg>`,
+
+  skipForward: (cls = "w-5 h-5") => `
+    <svg class="${cls}" viewBox="0 0 24 24" fill="currentColor">
+      <polygon points="5 4 15 12 5 20 5 4"/>
+      <rect x="16.5" y="4" width="2.5" height="16" rx="0.5"/>
+    </svg>`,
+
+  headphones: (cls = "w-5 h-5") => `
+    <svg class="${cls}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M3 18v-6a9 9 0 0 1 18 0v6"/>
+      <path d="M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3zM3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3z"/>
     </svg>`
 };
 

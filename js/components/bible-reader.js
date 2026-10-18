@@ -5,6 +5,7 @@ import { icons } from '../icons.js';
 import { getHighlights, saveHighlight, removeHighlight, getSetting, saveSetting } from '../db.js';
 import { getLanguage, t, onLanguageChange } from '../i18n.js';
 import { CORE_WIDGET_VERSES } from '../widget-verse.js';
+import { playVerses, stop, getSpeechState } from '../speech-engine.js';
 
 let activeBookId = 'matt';
 let activeChapter = 5;
@@ -241,8 +242,12 @@ export async function renderBibleReader(container, onOpenShareCard, deepLinkOpti
               </select>
             </div>
 
-            <!-- Scripture Archive Status & Selection Badge -->
+            <!-- Scripture Archive Status, Audio Bible & Selection Badge -->
             <div class="flex items-center justify-between sm:justify-end gap-2 flex-shrink-0 flex-wrap">
+              <button id="btn-audio-bible-chapter" class="flex items-center gap-1.5 text-xs font-sans font-semibold text-white bg-amber-600 hover:bg-amber-700 active:bg-amber-800 px-3 py-1.5 rounded-xl shadow-sm transition transform active:scale-95 cursor-pointer flex-shrink-0" title="${t('reader.listenChapter', 'Ascolta questo capitolo con Audio-Bibbia')}">
+                ${icons.speaker('w-3.5 h-3.5')}
+                <span id="btn-audio-bible-chapter-label">${t('reader.listenChapter', 'Ascolta')}</span>
+              </button>
               <button id="btn-toggle-select-all" class="text-xs font-sans font-medium text-amber-600 hover:text-amber-700 px-2.5 py-1.5 rounded-lg border border-amber-600/40 hover:bg-amber-600/10 transition cursor-pointer flex-shrink-0">
                 ${selectedCount === chapterData.verses.length ? t('reader.deselectAll', 'Deselect All') : t('reader.selectChapter', 'Select Chapter')}
               </button>
@@ -399,13 +404,21 @@ export async function renderBibleReader(container, onOpenShareCard, deepLinkOpti
                       }
                     </div>
 
-                    <!-- Single Verse Share Card Button -->
-                    <button class="share-single-verse-btn flex items-center gap-1 text-xs text-amber-600 hover:text-amber-700 font-sans font-medium cursor-pointer" data-verse-text="${encodeURIComponent(
-                      verseText
-                    )}" data-ref="${book.title} ${activeChapter}:${verse.v}">
-                      ${icons.share('w-3.5 h-3.5')}
-                      <span>${t('reader.shareCard', 'Share Card')}</span>
-                    </button>
+                    <div class="flex items-center gap-2">
+                      <!-- Single Verse Audio Button -->
+                      <button class="listen-single-verse-btn flex items-center gap-1 text-xs text-amber-700 dark:text-amber-400 hover:text-amber-600 font-sans font-medium cursor-pointer" data-verse-num="${verse.v}" title="${t('reader.listenFromHere', 'Ascolta da questo versetto')}">
+                        ${icons.speaker('w-3.5 h-3.5')}
+                        <span>${t('reader.listen', 'Ascolta')}</span>
+                      </button>
+
+                      <!-- Single Verse Share Card Button -->
+                      <button class="share-single-verse-btn flex items-center gap-1 text-xs text-amber-600 hover:text-amber-700 font-sans font-medium cursor-pointer" data-verse-text="${encodeURIComponent(
+                        verseText
+                      )}" data-ref="${book.title} ${activeChapter}:${verse.v}">
+                        ${icons.share('w-3.5 h-3.5')}
+                        <span>${t('reader.shareCard', 'Share Card')}</span>
+                      </button>
+                    </div>
 
                   </div>
 
@@ -445,6 +458,12 @@ export async function renderBibleReader(container, onOpenShareCard, deepLinkOpti
                 <button type="button" class="batch-remove-hl-btn text-[10px] text-red-500 hover:underline ml-1 font-sans cursor-pointer" title="${t('reader.removeHlTooltip', 'Remove highlights from selected verses')}">${t('reader.clear', 'Clear')}</button>
               </div>
 
+              <!-- Listen to Selection -->
+              <button id="btn-listen-selection" class="bg-[var(--bg-secondary)] border border-amber-600/60 hover:bg-amber-500/10 text-amber-700 dark:text-amber-400 px-3 py-1.5 rounded-xl text-xs font-bold flex items-center gap-1.5 transition active:scale-95 cursor-pointer" title="${t('reader.listenSelection', 'Ascolta i versetti selezionati')}">
+                ${icons.speaker('w-3.5 h-3.5')}
+                <span>${t('reader.listen', 'Ascolta')}</span>
+              </button>
+
               <!-- Share Selection as Card -->
               <button id="btn-share-selection-card" class="bg-amber-600 hover:bg-amber-700 text-white px-3.5 py-1.5 rounded-xl text-xs font-bold flex items-center gap-1.5 transition shadow-md active:scale-95 cursor-pointer">
                 ${icons.share('w-3.5 h-3.5')}
@@ -469,6 +488,7 @@ export async function renderBibleReader(container, onOpenShareCard, deepLinkOpti
     const versionSelect = container.querySelector('#select-bible-version');
     if (versionSelect) {
       versionSelect.addEventListener('change', async (e) => {
+        stop();
         activeBibleVersion = e.target.value;
         await saveSetting('preferred_bible_version', activeBibleVersion);
         await ensureFullBibleLoaded(activeBibleVersion);
@@ -481,6 +501,7 @@ export async function renderBibleReader(container, onOpenShareCard, deepLinkOpti
     const canonSelect = container.querySelector('#select-bible-canon');
     if (canonSelect) {
       canonSelect.addEventListener('change', async (e) => {
+        stop();
         activeCanon = e.target.value;
         const allAvailableBooks = getLoadedBibleBooks(activeBibleVersion) || BIBLE_BOOKS;
         const currentActiveBooks = filterBooksByCanon(allAvailableBooks, activeCanon);
@@ -495,6 +516,7 @@ export async function renderBibleReader(container, onOpenShareCard, deepLinkOpti
 
     // 1. Book Selector Change
     container.querySelector('#select-bible-book').addEventListener('change', async (e) => {
+      stop();
       activeBookId = e.target.value;
       const allAvailableBooks = getLoadedBibleBooks(activeBibleVersion) || BIBLE_BOOKS;
       const currentActiveBooks = filterBooksByCanon(allAvailableBooks, activeCanon);
@@ -507,6 +529,7 @@ export async function renderBibleReader(container, onOpenShareCard, deepLinkOpti
 
     // 2. Chapter Selector Change
     container.querySelector('#select-bible-chapter').addEventListener('change', async (e) => {
+      stop();
       activeChapter = parseInt(e.target.value, 10);
       selectedVerses.clear();
       activeHighlights = await getHighlights(activeBookId, activeChapter);
@@ -517,6 +540,7 @@ export async function renderBibleReader(container, onOpenShareCard, deepLinkOpti
     const prevBtn = container.querySelector('#btn-prev-chapter');
     if (prevBtn) {
       prevBtn.addEventListener('click', async () => {
+        stop();
         if (currentChapterIndex > 0) {
           activeChapter = availableChapters[currentChapterIndex - 1];
         } else if (currentBookIndex > 0) {
@@ -534,6 +558,7 @@ export async function renderBibleReader(container, onOpenShareCard, deepLinkOpti
     const nextBtn = container.querySelector('#btn-next-chapter');
     if (nextBtn) {
       nextBtn.addEventListener('click', async () => {
+        stop();
         if (currentChapterIndex < availableChapters.length - 1) {
           activeChapter = availableChapters[currentChapterIndex + 1];
         } else if (currentBookIndex < activeBooks.length - 1) {
@@ -701,6 +726,64 @@ export async function renderBibleReader(container, onOpenShareCard, deepLinkOpti
         await updateView();
       });
     });
+
+    // 11. Audio-Bibbia Chapter Playback Handler
+    const audioChapterBtn = container.querySelector('#btn-audio-bible-chapter');
+    if (audioChapterBtn) {
+      audioChapterBtn.addEventListener('click', async () => {
+        const state = getSpeechState();
+        const currentTitle = `${book.title} ${isPsalm ? '' : `${chapterLabel} `}${activeChapter}`;
+        if (state && (state.status === 'playing' || state.status === 'paused') && state.title === currentTitle) {
+          const { togglePlayPause } = await import('../speech-engine.js');
+          togglePlayPause();
+        } else {
+          let startIdx = 0;
+          if (selectedVerses.size > 0) {
+            const minSelected = Math.min(...selectedVerses);
+            const foundIdx = chapterData.verses.findIndex((v) => v.v === minSelected);
+            if (foundIdx >= 0) startIdx = foundIdx;
+          }
+          await playVerses({
+            title: currentTitle,
+            verses: chapterData.verses,
+            startIndex: startIdx,
+            bibleVersionId: activeBibleVersion
+          });
+        }
+      });
+    }
+
+    // 12. Audio-Bibbia Single Verse Handler
+    container.querySelectorAll('.listen-single-verse-btn').forEach((btn) => {
+      btn.addEventListener('click', async (e) => {
+        e.stopPropagation();
+        const vNum = parseInt(btn.getAttribute('data-verse-num'), 10);
+        const targetIdx = chapterData.verses.findIndex((v) => v.v === vNum);
+        const currentTitle = `${book.title} ${isPsalm ? '' : `${chapterLabel} `}${activeChapter}`;
+        await playVerses({
+          title: currentTitle,
+          verses: chapterData.verses,
+          startIndex: targetIdx >= 0 ? targetIdx : 0,
+          bibleVersionId: activeBibleVersion
+        });
+      });
+    });
+
+    // 13. Audio-Bibbia Selection Handler
+    const listenSelectionBtn = container.querySelector('#btn-listen-selection');
+    if (listenSelectionBtn) {
+      listenSelectionBtn.addEventListener('click', async () => {
+        const sortedSelected = [...selectedVerses].sort((a, b) => a - b);
+        const selectedList = chapterData.verses.filter((v) => selectedVerses.has(v.v));
+        if (selectedList.length === 0) return;
+        await playVerses({
+          title: currentCitationRange,
+          verses: selectedList,
+          startIndex: 0,
+          bibleVersionId: activeBibleVersion
+        });
+      });
+    }
   }
 
   await updateView();

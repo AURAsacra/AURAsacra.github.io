@@ -10,6 +10,7 @@ import {
 import { icons } from '../icons.js';
 import { t, getLanguage } from '../i18n.js';
 import { localizeScriptureCitation } from '../data/bible-books-i18n.js';
+import { playText, APP_LANG_MAP } from '../speech-engine.js';
 
 export function renderJarPromisesModal(container, onClose, onOpenShareCard) {
   let selectedCategory = null;
@@ -93,12 +94,17 @@ export function renderJarPromisesModal(container, onClose, onOpenShareCard) {
               </div>
 
               <!-- Action Buttons -->
-              <div class="flex items-center justify-between gap-3 pt-2">
-                <button id="btn-draw-again" class="flex-1 py-2 px-3 rounded-xl border border-stone-300 dark:border-stone-700 text-xs font-medium text-[var(--text-secondary)] hover:border-amber-600 transition cursor-pointer">
+              <div class="flex items-center justify-between gap-2 pt-2">
+                <button id="btn-draw-again" class="flex-1 py-2 px-2.5 rounded-xl border border-stone-300 dark:border-stone-700 text-xs font-medium text-[var(--text-secondary)] hover:border-amber-600 transition cursor-pointer truncate">
                   ← ${t('promises.drawAnother', 'Draw Another Promise')}
                 </button>
 
-                <button id="btn-share-drawn-card" class="flex-1 py-2 px-3 rounded-xl bg-amber-600 hover:bg-amber-700 text-white text-xs font-bold shadow-md transition flex items-center justify-center gap-1.5 cursor-pointer">
+                <button id="btn-listen-promise" class="py-2 px-3 rounded-xl border border-amber-600/60 hover:bg-amber-500/10 text-amber-700 dark:text-amber-400 text-xs font-bold transition flex items-center justify-center gap-1.5 cursor-pointer flex-shrink-0" title="${t('promises.listen', 'Ascolta')}">
+                  ${icons.speaker('w-4 h-4')}
+                  <span>${t('promises.listen', 'Ascolta')}</span>
+                </button>
+
+                <button id="btn-share-drawn-card" class="flex-1 py-2 px-2.5 rounded-xl bg-amber-600 hover:bg-amber-700 text-white text-xs font-bold shadow-md transition flex items-center justify-center gap-1.5 cursor-pointer truncate">
                   ${icons.share('w-4 h-4')}
                   <span>${t('promises.shareCard', 'Share Card')}</span>
                 </button>
@@ -128,6 +134,18 @@ export function renderJarPromisesModal(container, onClose, onOpenShareCard) {
       drawAgainBtn.addEventListener('click', () => {
         drawnPromise = null;
         render();
+      });
+    }
+
+    const listenPromiseBtn = container.querySelector('#btn-listen-promise');
+    if (listenPromiseBtn && drawnPromise) {
+      listenPromiseBtn.addEventListener('click', async () => {
+        const fullPromiseSpeech = `${drawnPromise.ref.split('/')[0].trim()}. ${displayVerse}. ${displayReflection}. ${displayPrayer}`;
+        await playText({
+          title: `${t('nav.promises', 'Vaso delle Promesse')} • ${drawnPromise.ref.split('/')[0].trim()}`,
+          text: fullPromiseSpeech,
+          langTag: APP_LANG_MAP[currentLang] || 'it-IT'
+        });
       });
     }
 

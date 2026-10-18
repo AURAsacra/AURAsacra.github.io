@@ -2,7 +2,8 @@
 // Each entry without a newline is an independent prayer container. Auto-scrolls to the bottom on opening.
 import { icons } from '../icons.js';
 import { getJournalEntries, addJournalEntry, deleteJournalEntry, markJournalEntrySentToJesus } from '../db.js';
-import { t } from '../i18n.js';
+import { t, getLanguage } from '../i18n.js';
+import { playText, APP_LANG_MAP } from '../speech-engine.js';
 
 export async function renderPrayerJournal(container, onBringPrayerToJesus) {
   let entries = await getJournalEntries();
@@ -63,6 +64,12 @@ export async function renderPrayerJournal(container, onBringPrayerToJesus) {
                   </span>
 
                   <div class="flex items-center gap-2">
+                    <!-- Listen Button -->
+                    <button class="btn-listen-prayer flex items-center gap-1.5 px-2.5 py-1 rounded-lg border border-stone-300 dark:border-stone-700 hover:border-amber-600/50 hover:bg-amber-500/10 text-stone-600 dark:text-stone-300 hover:text-amber-600 text-xs font-medium transition cursor-pointer" data-text="${encodeURIComponent(entry.text)}" title="${t('journal.listenPrayer', 'Ascolta questa preghiera')}">
+                      ${icons.speaker('w-3.5 h-3.5')}
+                      <span>${t('journal.listen', 'Ascolta')}</span>
+                    </button>
+
                     <!-- Bring to Jesus Button -->
                     <button class="btn-bring-jesus flex items-center gap-1.5 px-3 py-1 rounded-lg border border-amber-600/40 bg-amber-600/10 hover:bg-amber-600/20 text-amber-600 text-xs font-medium transition cursor-pointer" data-text="${encodeURIComponent(entry.text)}" data-id="${entry.id}">
                       ${icons.message('w-3.5 h-3.5')}
@@ -134,6 +141,19 @@ export async function renderPrayerJournal(container, onBringPrayerToJesus) {
         const id = btn.getAttribute('data-id');
         await markJournalEntrySentToJesus(id);
         onBringPrayerToJesus(text);
+      });
+    });
+
+    // Listen to prayer audio handler
+    container.querySelectorAll('.btn-listen-prayer').forEach((btn) => {
+      btn.addEventListener('click', async () => {
+        const text = decodeURIComponent(btn.getAttribute('data-text'));
+        const currentLang = getLanguage();
+        await playText({
+          title: t('journal.prayerTitle', 'Preghiera del Diario'),
+          text,
+          langTag: APP_LANG_MAP[currentLang] || 'it-IT'
+        });
       });
     });
 

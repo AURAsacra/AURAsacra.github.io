@@ -9,6 +9,7 @@
   <title>Aura Sacra — Universal Christian Platform</title>
 
   <meta name="google" content="notranslate">
+  <meta name="referrer" content="no-referrer">
   <link rel="manifest" href="./manifest.json">
   <link rel="icon" type="image/png" href="./icons/favicon.png">
   <link rel="apple-touch-icon" href="./icons/icon-192.png">
@@ -55,6 +56,7 @@
 
     <nav id="bottom-nav-container" class="md:hidden fixed z-40"></nav>
     <div id="floating-candle-container" class="hidden md:block"></div>
+    <div id="audio-player-container"></div>
     <div id="modals-container"></div>
   </div>
 
@@ -63,7 +65,7 @@
 
   <script>
     (function () {
-      const CURRENT_VERSION = 'aura-sacra-v1.7.2';
+      const CURRENT_VERSION = 'aura-sacra-v1.8.4';
       let isReloading = false;
 
       function triggerSafeReload() {

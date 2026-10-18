@@ -1,6 +1,6 @@
-// Evening Examination of Conscience with Night Protection of Christ Modal for Aura Sacra
 import { icons } from '../icons.js';
 import { t, getLanguage } from '../i18n.js';
+import { playText, APP_LANG_MAP } from '../speech-engine.js';
 
 const EVENING_EXAM_LOCALIZATIONS = {
   it: {
@@ -247,10 +247,16 @@ export function renderEveningExamModal(container, onClose) {
               </div>
             ` : step === 3 ? `
               <div class="space-y-3 animate-fade-in text-left">
-                <span class="text-xs font-bold uppercase tracking-wider text-red-500 font-sans flex items-center gap-1.5">
-                  ${icons.shield('w-4 h-4')}
-                  <span>${loc.step3Title}</span>
-                </span>
+                <div class="flex items-center justify-between">
+                  <span class="text-xs font-bold uppercase tracking-wider text-red-500 font-sans flex items-center gap-1.5">
+                    ${icons.shield('w-4 h-4')}
+                    <span>${loc.step3Title}</span>
+                  </span>
+                  <button id="btn-listen-night-prayer" class="flex items-center gap-1.5 px-2.5 py-1 rounded-lg border border-red-600/40 hover:bg-red-500/10 text-red-600 text-xs font-semibold transition cursor-pointer" title="${t('evening.listenPrayer', 'Ascolta la Preghiera')}">
+                    ${icons.speaker('w-3.5 h-3.5')}
+                    <span>${t('evening.listenPrayer', 'Ascolta')}</span>
+                  </button>
+                </div>
                 <p class="text-xs text-[var(--text-muted)] italic">
                   ${loc.step3Text}
                 </p>
@@ -333,6 +339,18 @@ export function renderEveningExamModal(container, onClose) {
     const completeBtn = container.querySelector('#btn-complete-exam');
     if (completeBtn) {
       completeBtn.addEventListener('click', onClose);
+    }
+
+    const listenNightPrayerBtn = container.querySelector('#btn-listen-night-prayer');
+    if (listenNightPrayerBtn) {
+      listenNightPrayerBtn.addEventListener('click', async () => {
+        const fullNightPrayer = `${loc.step3Prayer1} ${loc.step3Prayer2} ${loc.step3Ps}`;
+        await playText({
+          title: loc.step3Title,
+          text: fullNightPrayer,
+          langTag: APP_LANG_MAP[lang] || 'it-IT'
+        });
+      });
     }
   }
 

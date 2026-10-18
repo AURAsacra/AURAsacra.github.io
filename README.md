@@ -40,6 +40,13 @@ Aura Sacra is localized across **9 languages** with native translations for user
 - **Illuminated Codex Manuscript Typography**: Drop caps, authentic parchment textures, and chapter-by-chapter reading with fast navigation.
 - **Multi-Verse Selection & Sharing**: Select single or multiple verses to generate high-resolution illuminated parchment cards.
 
+### 🔊 Audio-Bibbia & Preghiere Parlate (Voce Umana Naturale HD)
+- **Voce Umana Naturale HD ad Alta Fedeltà**: Lettura autentica, calda, pacata e perfettamente scandita delle Sacre Scritture e delle preghiere, che elimina radicalmente la sintesi vocale metallica e robotica.
+- **Contemplative Verse-by-Verse Pacing**: Scandito con pause meditative di respirazione (450ms) tra versetti e velocità regolabile (0.85x meditativa, 0.95x pacata, 1.05x naturale, 1.20x scorrevole).
+- **Live Illuminated Verse Tracking**: Il testo biblico evidenzia in tempo reale il versetto proclamato con bordo aureo pulsante e scorrimento automatico fluido.
+- **Multilingual Native Pronunciation**: Supporto nativo per tutte le 9 lingue storiche e liturgiche (incluso il latino ecclesiastico per la Vulgata).
+- **Floating Monastic Audio Player**: Lettore sospeso in pergamena con play/pause, salto versetti, indicatore temporale e selettore delle voci.
+
 ### 📅 Sacred Penance, Fasting & Abstinence Liturgical Engine
 - **Mathematical Computus Algorithm**: Dynamically computes Easter, Lent, Pentecost, and all moveable feasts for any year in both Western (Gregorian) and Eastern (Julian Computus converted to Gregorian) liturgical cycles.
 - **Multi-Tradition Support**:

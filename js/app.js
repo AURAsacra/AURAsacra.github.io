@@ -10,6 +10,7 @@ import { renderNavbar } from './components/navbar.js';
 import { renderSidebar } from './components/sidebar.js';
 import { renderBottomNav } from './components/bottom-nav.js';
 import { renderFloatingCandle } from './components/floating-candle.js';
+import { renderAudioPlayer } from './components/audio-player.js';
 import { renderBibleReader } from './components/bible-reader.js';
 import { renderJesusChat } from './components/jesus-chat.js';
 import { renderPrayerJournal } from './components/prayer-journal.js';
@@ -17,6 +18,7 @@ import { renderSaintsView } from './components/saints-view.js';
 import { renderFocusMode } from './components/focus-mode.js';
 import { renderPenanceCalendar } from './components/penance-calendar.js';
 import { renderAboutUs } from './components/about-us.js';
+import { initSpeechEngine } from './speech-engine.js';
 
 // Modals
 import { renderOnboardingModal } from './components/onboarding-modal.js';
@@ -63,6 +65,7 @@ async function bootstrap() {
   try { await initCircadianTheme(); } catch (e) { console.warn('Circadian init:', e); }
   try { await initSchedule(); } catch (e) { console.warn('Schedule init:', e); }
   try { await initMonasticScheduler(); } catch (e) { console.warn('Monastic scheduler init:', e); }
+  try { await initSpeechEngine(); } catch (e) { console.warn('Speech engine init:', e); }
 
   // Deep Link URL Router for Widgets, Web Push Notifications, Monastic Alarms, and Shortcuts
   const urlParams = new URLSearchParams(window.location.search);
@@ -80,6 +83,7 @@ async function bootstrap() {
   const sidebarContainer = document.getElementById('sidebar-container');
   const bottomNavContainer = document.getElementById('bottom-nav-container');
   const floatingCandleContainer = document.getElementById('floating-candle-container');
+  const audioPlayerContainer = document.getElementById('audio-player-container');
   const mainContent = document.getElementById('main-content');
   const modalsContainer = document.getElementById('modals-container');
 
@@ -212,12 +216,14 @@ async function bootstrap() {
     renderAllNavigation();
     renderActiveView();
     renderFloatingCandle(floatingCandleContainer);
+    if (audioPlayerContainer) renderAudioPlayer(audioPlayerContainer);
   });
 
   // Render initial static components
   renderAllNavigation();
   renderActiveView();
   renderFloatingCandle(floatingCandleContainer);
+  if (audioPlayerContainer) renderAudioPlayer(audioPlayerContainer);
 
   // Handle modal deep links if present in URL
   if (paramTab === 'evening') {
