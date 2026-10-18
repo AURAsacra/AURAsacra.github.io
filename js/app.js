@@ -17,7 +17,6 @@ import { renderPrayerJournal } from './components/prayer-journal.js';
 import { renderSaintsView } from './components/saints-view.js';
 import { renderFocusMode } from './components/focus-mode.js';
 import { renderPenanceCalendar } from './components/penance-calendar.js';
-import { renderAboutUs } from './components/about-us.js';
 import { initSpeechEngine } from './speech-engine.js';
 
 // Modals
@@ -193,9 +192,6 @@ async function bootstrap() {
         renderPenanceCalendar(mainContent, (quote, author) => {
           openModal('share', { quote, citation: author });
         });
-        break;
-      case 'about':
-        renderAboutUs(mainContent);
         break;
       default:
         renderBibleReader(mainContent, (quote, ref) => openModal('share', { quote, citation: ref }));

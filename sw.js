@@ -1,10 +1,9 @@
 // Aura Sacra Service Worker - 100% Offline & Airplane Mode Resilient
 // Cross-platform auto-update support for iOS Safari Web App, Android PWA & Desktop
-const CACHE_NAME = 'aura-sacra-v1.8.4';
+const CACHE_NAME = 'aura-sacra-v1.8.5';
 const ASSETS_TO_CACHE = [
   './',
   './index.html',
-  './about-us.html',
   './candle-popup.html',
   './widget.html',
   './manifest.json',
@@ -48,8 +47,6 @@ const ASSETS_TO_CACHE = [
   './js/components/navbar.js',
   './js/components/sidebar.js',
   './js/components/bottom-nav.js',
-  './js/components/about-us.js',
-  './js/views/about-us.js',
   './js/components/penance-calendar.js',
   './js/components/tools-modal.js',
   './js/components/bible-reader.js',

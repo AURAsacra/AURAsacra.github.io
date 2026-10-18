@@ -99,14 +99,6 @@ export function renderToolsModal(container, onClose, onNavigate, onOpenModal) {
           isModal: true
         },
         {
-          id: 'about',
-          label: t('nav.about', 'About Us'),
-          desc: t('tools.aboutDesc', 'History, mission, and parish info of the Romanian Orthodox Parish "St. Jacob of Putna" in Fossano'),
-          icon: 'about',
-          color: 'border-amber-600/60 bg-amber-500/10 text-amber-700 dark:text-amber-400',
-          isTab: true
-        },
-        {
           id: 'feedback',
           label: t('tools.feedbackTitle', 'Anonymous Community Feedback'),
           desc: t('tools.feedbackDesc', 'Suggest improvements or report an issue on GitHub'),

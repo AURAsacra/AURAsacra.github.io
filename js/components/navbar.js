@@ -19,18 +19,8 @@ export function renderNavbar(container, state, onNavigate, onOpenModal) {
           </div>
         </div>
 
-        <!-- Right Action Group: About Us, SOS, Language, Settings -->
+        <!-- Right Action Group: SOS, Language, Settings -->
         <div class="flex items-center gap-1 sm:gap-2.5 flex-shrink-0">
-          
-          <!-- 0. About Us Button (Visible on all screens) -->
-          <button id="btn-nav-about" class="flex items-center justify-center gap-1 sm:gap-1.5 px-2 sm:px-3 py-1.5 rounded-xl border transition shadow-sm text-xs sm:text-sm font-medium cursor-pointer flex-shrink-0 h-8 sm:h-9 ${
-            state && state.activeTab === 'about'
-              ? 'bg-amber-600 text-white border-amber-600 font-bold'
-              : 'border-amber-600/50 bg-[var(--bg-card)] text-[var(--accent-vermilion)] hover:border-amber-600 hover:bg-amber-500/10'
-          }" title="${t('nav.about', 'About Us')}">
-            ${icons.about ? icons.about('w-3.5 h-3.5 sm:w-4 sm:h-4') : icons.cross('w-3.5 h-3.5 sm:w-4 sm:h-4')}
-            <span class="nav-about-text font-sans font-semibold text-[11px] sm:text-xs">${t('nav.about', 'About Us')}</span>
-          </button>
 
           <!-- 1. SOS Peace & Temptation Shield Button -->
           <button id="btn-nav-sos" class="flex items-center justify-center gap-1 px-2 sm:px-3 py-1.5 rounded-xl bg-red-700 hover:bg-red-800 text-white font-medium text-xs shadow-md transition transform active:scale-95 border border-red-600 cursor-pointer flex-shrink-0 h-8 sm:h-9" title="${t('tools.sosDesc', 'Emergency Peace & Temptation Shield')}">
@@ -79,7 +69,6 @@ export function renderNavbar(container, state, onNavigate, onOpenModal) {
 
   // Event Listeners
   container.querySelector('#nav-brand').addEventListener('click', () => onNavigate('bible'));
-  container.querySelector('#btn-nav-about').addEventListener('click', () => onNavigate('about'));
   container.querySelector('#btn-nav-sos').addEventListener('click', () => onOpenModal('sos'));
   container.querySelector('#btn-nav-settings').addEventListener('click', () => onOpenModal('settings'));
 
