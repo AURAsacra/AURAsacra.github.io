@@ -223,6 +223,7 @@ p, span, div, .font-serif {
 .candle-wrapper {
   position: relative;
   display: inline-block;
+  margin-top: 26px;
 }
 
 .candle-body {
@@ -446,6 +447,13 @@ html.is-standalone-app #navbar-container {
 
 html.is-standalone-app #bottom-nav-container {
   bottom: calc(env(safe-area-inset-bottom, 0px) + 12px);
+}
+
+/* Mobile Safe Area Content Inset to prevent overlap with floating bottom nav dock */
+@media (max-width: 767px) {
+  #main-content {
+    padding-bottom: calc(env(safe-area-inset-bottom, 0px) + 96px) !important;
+  }
 }
 
 /* Sacred Scripture Shield: Guarantees browser translation engines do not alter sacred Word */

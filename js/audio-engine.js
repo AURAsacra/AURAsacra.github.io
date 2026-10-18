@@ -6,14 +6,18 @@ let rainNode = null;
 let rainGain = null;
 let isRainPlaying = false;
 let rainVolume = 0.5;
+let cachedNoiseBuffer = null;
+let stopTimeout = null;
 
 export function getAudioContext() {
   if (!audioCtx) {
     const AudioContextClass = window.AudioContext || window.webkitAudioContext;
-    audioCtx = new AudioContextClass();
+    if (AudioContextClass) {
+      audioCtx = new AudioContextClass();
+    }
   }
-  if (audioCtx.state === 'suspended') {
-    audioCtx.resume();
+  if (audioCtx && audioCtx.state === 'suspended') {
+    audioCtx.resume().catch(() => {});
   }
   return audioCtx;
 }
@@ -25,8 +29,9 @@ export function isAudioUnlocked() {
 export async function unlockAudio(playConfirmation = false) {
   try {
     const ctx = getAudioContext();
+    if (!ctx) return false;
     if (ctx.state === 'suspended') {
-      await ctx.resume();
+      await ctx.resume().catch(() => {});
     }
     
     // WebKit / iOS silent buffer unlock to ensure hardware pipeline wakes up
@@ -58,6 +63,34 @@ export async function unlockAudio(playConfirmation = false) {
   }
 }
 
+// Generates or retrieves cached looping pink/brown noise for soft rainfall
+function getNoiseBuffer(ctx) {
+  if (cachedNoiseBuffer && cachedNoiseBuffer.sampleRate === ctx.sampleRate) {
+    return cachedNoiseBuffer;
+  }
+  const bufferSize = ctx.sampleRate * 5;
+  const noiseBuffer = ctx.createBuffer(2, bufferSize, ctx.sampleRate);
+  
+  for (let channel = 0; channel < 2; channel++) {
+    const output = noiseBuffer.getChannelData(channel);
+    let b0 = 0, b1 = 0, b2 = 0, b3 = 0, b4 = 0, b5 = 0, b6 = 0;
+    for (let i = 0; i < bufferSize; i++) {
+      const white = Math.random() * 2 - 1;
+      // Pink noise filter algorithm
+      b0 = 0.99886 * b0 + white * 0.0555179;
+      b1 = 0.99332 * b1 + white * 0.0750759;
+      b2 = 0.96900 * b2 + white * 0.1538520;
+      b3 = 0.86650 * b3 + white * 0.3104856;
+      b4 = 0.55000 * b4 + white * 0.5329522;
+      b5 = -0.7616 * b5 - white * 0.0168980;
+      output[i] = (b0 + b1 + b2 + b3 + b4 + b5 + b6 + white * 0.5362) * 0.05;
+      b6 = white * 0.115926;
+    }
+  }
+  cachedNoiseBuffer = noiseBuffer;
+  return cachedNoiseBuffer;
+}
+
 // 1. Procedural Ambient Rainfall Generator
 export function toggleRain() {
   if (isRainPlaying) {
@@ -75,8 +108,11 @@ export function isPlayingRain() {
 
 export function setRainVolume(vol) {
   rainVolume = Math.max(0, Math.min(1, vol));
-  if (rainGain) {
-    rainGain.gain.setTargetAtTime(rainVolume * 0.4, audioCtx.currentTime, 0.1);
+  if (rainGain && audioCtx) {
+    try {
+      rainGain.gain.cancelScheduledValues(audioCtx.currentTime);
+      rainGain.gain.setTargetAtTime(rainVolume * 0.4, audioCtx.currentTime, 0.08);
+    } catch (e) {}
   }
 }
 
@@ -84,34 +120,28 @@ export function getRainVolume() {
   return rainVolume;
 }
 
-export function startRain() {
+export async function startRain() {
   try {
+    if (stopTimeout) {
+      clearTimeout(stopTimeout);
+      stopTimeout = null;
+    }
+    await unlockAudio(false);
     const ctx = getAudioContext();
-    if (isRainPlaying) return;
+    if (!ctx) return;
+    if (ctx.state === 'suspended') {
+      await ctx.resume().catch(() => {});
+    }
 
-    // Buffer of pink/brown noise (5 seconds looping)
-    const bufferSize = ctx.sampleRate * 5;
-    const noiseBuffer = ctx.createBuffer(2, bufferSize, ctx.sampleRate);
-    
-    for (let channel = 0; channel < 2; channel++) {
-      const output = noiseBuffer.getChannelData(channel);
-      let b0 = 0, b1 = 0, b2 = 0, b3 = 0, b4 = 0, b5 = 0, b6 = 0;
-      for (let i = 0; i < bufferSize; i++) {
-        const white = Math.random() * 2 - 1;
-        // Pink noise filter algorithm
-        b0 = 0.99886 * b0 + white * 0.0555179;
-        b1 = 0.99332 * b1 + white * 0.0750759;
-        b2 = 0.96900 * b2 + white * 0.1538520;
-        b3 = 0.86650 * b3 + white * 0.3104856;
-        b4 = 0.55000 * b4 + white * 0.5329522;
-        b5 = -0.7616 * b5 - white * 0.0168980;
-        output[i] = (b0 + b1 + b2 + b3 + b4 + b5 + b6 + white * 0.5362) * 0.05;
-        b6 = white * 0.115926;
-      }
+    if (isRainPlaying && rainNode) return;
+
+    if (rainNode) {
+      try { rainNode.stop(); rainNode.disconnect(); } catch (e) {}
+      rainNode = null;
     }
 
     const whiteNoise = ctx.createBufferSource();
-    whiteNoise.buffer = noiseBuffer;
+    whiteNoise.buffer = getNoiseBuffer(ctx);
     whiteNoise.loop = true;
 
     // Dual filter to create realistic soft rain frequency profile
@@ -124,8 +154,9 @@ export function startRain() {
     highpass.frequency.setValueAtTime(220, ctx.currentTime);
 
     rainGain = ctx.createGain();
-    rainGain.gain.setValueAtTime(0.01, ctx.currentTime);
-    rainGain.gain.exponentialRampToValueAtTime(rainVolume * 0.4, ctx.currentTime + 1.5);
+    const targetGain = Math.max(0, rainVolume * 0.4);
+    rainGain.gain.setValueAtTime(0.0001, ctx.currentTime);
+    rainGain.gain.linearRampToValueAtTime(targetGain, ctx.currentTime + 1.2);
 
     whiteNoise.connect(lowpass);
     lowpass.connect(highpass);
@@ -137,33 +168,50 @@ export function startRain() {
     isRainPlaying = true;
   } catch (err) {
     console.error('Audio engine startRain error:', err);
+    isRainPlaying = false;
   }
 }
 
 export function stopRain() {
+  isRainPlaying = false;
+  if (stopTimeout) {
+    clearTimeout(stopTimeout);
+    stopTimeout = null;
+  }
   if (rainGain && audioCtx) {
     try {
-      rainGain.gain.setTargetAtTime(0.001, audioCtx.currentTime, 0.4);
-      setTimeout(() => {
-        if (rainNode) {
-          rainNode.stop();
-          rainNode.disconnect();
-          rainNode = null;
-        }
-        isRainPlaying = false;
-      }, 500);
+      rainGain.gain.cancelScheduledValues(audioCtx.currentTime);
+      rainGain.gain.setTargetAtTime(0.0001, audioCtx.currentTime, 0.12);
+      const nodeToStop = rainNode;
+      rainNode = null;
+      stopTimeout = setTimeout(() => {
+        try {
+          if (nodeToStop) {
+            nodeToStop.stop();
+            nodeToStop.disconnect();
+          }
+        } catch (e) {}
+      }, 250);
     } catch (e) {
-      isRainPlaying = false;
+      if (rainNode) {
+        try { rainNode.stop(); rainNode.disconnect(); } catch (err) {}
+        rainNode = null;
+      }
     }
   } else {
-    isRainPlaying = false;
+    if (rainNode) {
+      try { rainNode.stop(); rainNode.disconnect(); } catch (e) {}
+      rainNode = null;
+    }
   }
 }
 
 // 2. Monastic Bell Chime (Pure Additive Synthesis)
 export async function playMonasticBell() {
   try {
+    await unlockAudio(false);
     const ctx = getAudioContext();
+    if (!ctx) return;
     if (ctx.state === 'suspended') {
       try { await ctx.resume(); } catch (e) {}
     }

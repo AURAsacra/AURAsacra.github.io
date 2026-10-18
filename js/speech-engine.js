@@ -212,6 +212,19 @@ export function playVoicePreview(langTag, onEndCallback = null) {
     if (onEndCallback) onEndCallback();
   };
   previewAudio.onerror = () => {
+    try {
+      if (typeof window !== 'undefined' && 'speechSynthesis' in window) {
+        const utt = new SpeechSynthesisUtterance(voice.sampleText);
+        utt.rate = currentSpeechRate;
+        const bestV = findBestVoice(voice.langTag, null);
+        if (bestV) utt.voice = bestV;
+        utt.lang = voice.langTag;
+        utt.onend = () => { stopVoicePreview(); if (onEndCallback) onEndCallback(); };
+        utt.onerror = () => { stopVoicePreview(); if (onEndCallback) onEndCallback(); };
+        window.speechSynthesis.speak(utt);
+        return;
+      }
+    } catch (e) {}
     stopVoicePreview();
     if (onEndCallback) onEndCallback();
   };
@@ -219,6 +232,19 @@ export function playVoicePreview(langTag, onEndCallback = null) {
   const p = previewAudio.play();
   if (p !== undefined) {
     p.catch(() => {
+      try {
+        if (typeof window !== 'undefined' && 'speechSynthesis' in window) {
+          const utt = new SpeechSynthesisUtterance(voice.sampleText);
+          utt.rate = currentSpeechRate;
+          const bestV = findBestVoice(voice.langTag, null);
+          if (bestV) utt.voice = bestV;
+          utt.lang = voice.langTag;
+          utt.onend = () => { stopVoicePreview(); if (onEndCallback) onEndCallback(); };
+          utt.onerror = () => { stopVoicePreview(); if (onEndCallback) onEndCallback(); };
+          window.speechSynthesis.speak(utt);
+          return;
+        }
+      } catch (e) {}
       stopVoicePreview();
       if (onEndCallback) onEndCallback();
     });
@@ -245,7 +271,9 @@ export function cleanTextForSpeech(text) {
   if (!text) return '';
   return text
     .replace(/^\[\d+\]\s*/, '')     // Remove leading verse brackets [1]
-    .replace(/[«»"]/g, '')          // Remove harsh quotes for smoother rhythm
+    .replace(/<[^>]+>/g, '')        // Remove HTML tags (e.g. <strong>, <span>)
+    .replace(/[\u{1F300}-\u{1F9FF}\u{2600}-\u{26FF}\u{2700}-\u{27BF}]/gu, '') // Remove emojis (📖, 🕊️, etc.)
+    .replace(/[•·—–«»"']/g, ' ')   // Replace bullets, dashes and quotes for smooth cadence
     .replace(/\s+/g, ' ')
     .trim();
 }
@@ -598,23 +626,30 @@ function playCurrentSubChunk() {
   };
 
   audio.onerror = (err) => {
-    console.error('Audio lector playback error:', err);
+    console.warn('Audio lector playback error, falling back to offline device speech:', err);
     if (session.status !== 'playing') return;
 
-    // Never blindly skip verses on error: pause cleanly
-    clearPendingTimers();
-    session.status = 'paused';
-    notifyState();
+    try {
+      speakNativeUtterance(chunkText);
+    } catch (e) {
+      clearPendingTimers();
+      session.status = 'paused';
+      notifyState();
+    }
   };
 
   const playPromise = audio.play();
   if (playPromise !== undefined) {
     playPromise.catch(err => {
-      console.warn('Audio playback start note:', err);
+      console.warn('Audio playback start note, falling back to offline device speech:', err);
       if (session.status === 'playing') {
-        clearPendingTimers();
-        session.status = 'paused';
-        notifyState();
+        try {
+          speakNativeUtterance(chunkText);
+        } catch (e) {
+          clearPendingTimers();
+          session.status = 'paused';
+          notifyState();
+        }
       }
     });
   }

@@ -30,6 +30,7 @@ export const TRANSLATIONS = {
       tabJesus: 'Jesus',
       tabJournal: 'Journal',
       tabTools: 'Tools',
+      bible: 'Bible',
       brandSub: 'Universal Christian Platform • 100% Offline',
       scripture: 'Scripture',
       penance: 'Penance & Fasting',
@@ -286,10 +287,15 @@ export const TRANSLATIONS = {
       done: 'Done',
       chooseVoice: 'Choose Voice',
       changeSpeed: 'Reading Speed',
+      paused: 'Paused',
+      prevVerse: 'Previous Verse',
+      nextVerse: 'Next Verse',
+      listen: 'Listen',
       of: 'of'
     },
     jesus: {
       title: 'Dialogue with Jesus',
+      downloadSuccess: 'Gemini Nano downloaded successfully! Offline dialogue is now active.',
       subtitle: 'Answers questions, theological doubts, and life dilemmas with Gospel wisdom',
       geminiNanoOffline: 'Gemini Nano (Offline On-Device)',
       offlineRequired: 'Offline • Local Gemini Required',
@@ -341,6 +347,11 @@ export const TRANSLATIONS = {
       holdPeace: 'Rest in His Peace',
       exhaleTemptation: 'Exhale Temptation',
       imFeelingBetter: 'I Feel Peace Now • Return'
+      inhale: 'Inhale Grace',
+      hold: 'Rest in His Peace',
+      exhale: 'Exhale Temptation',
+      finish: 'I Have Found Peace • Close Shield',
+      prayerTitle: 'Instant Heart Prayer:',
     },
     common: {
       close: 'Close',
@@ -371,6 +382,9 @@ export const TRANSLATIONS = {
       deleteConfirm: 'Delete this prayer?',
       inputPlaceholder: 'Write a prayer to God (press Enter to place in your journal)...',
       sendToGod: 'Send to God'
+      listen: 'Listen',
+      listenPrayer: 'Listen to this prayer',
+      prayerTitle: 'Journal Prayer',
     },
     focus: {
       title: 'Focus with God • Peaceful Study & Work',
@@ -529,6 +543,19 @@ export const TRANSLATIONS = {
       copyMarkdown: 'Copy Markdown',
       submitAnother: '← Submit another message',
       copiedAlert: 'Markdown payload copied to clipboard!'
+    },
+
+    promises: {
+      title: 'Jar of Promises',
+      sub: 'Select what your heart is experiencing. Draw a faithful promise from authentic canonical Scripture archives.',
+      wordForYou: 'Word for You:',
+      prayerSurrender: '30-Second Prayer of Surrender:',
+      drawAnother: 'Draw Another Promise',
+      listen: 'Listen',
+      shareCard: 'Share Card'
+    },
+    evening: {
+      listenPrayer: 'Listen to Prayer'
     }
   },
 
@@ -542,6 +569,7 @@ export const TRANSLATIONS = {
       tabJesus: 'Gesù',
       tabJournal: 'Diario',
       tabTools: 'Strumenti',
+      bible: 'Bibbia',
       brandSub: 'Piattaforma Cristiana Universale • 100% Offline',
       scripture: 'Scrittura',
       penance: 'Penitenza e Digiuno',
@@ -798,10 +826,15 @@ export const TRANSLATIONS = {
       done: 'Conferma',
       chooseVoice: 'Scegli Voce',
       changeSpeed: 'Velocità di Lettura',
+      paused: 'In pausa',
+      prevVerse: 'Versetto Precedente',
+      nextVerse: 'Versetto Successivo',
+      listen: 'Ascolta',
       of: 'di'
     },
     jesus: {
       title: 'Dialogo con Gesù',
+      downloadSuccess: 'Download completato! Il dialogo offline con Cristo è attivo.',
       subtitle: 'Risponde a domande, dubbi teologici e dilemmi della vita con la saggezza del Vangelo',
       geminiNanoOffline: 'Gemini Nano (Offline sul dispositivo)',
       offlineRequired: 'Offline • Richiesto Gemini Locale',
@@ -853,6 +886,11 @@ export const TRANSLATIONS = {
       holdPeace: 'Resta nella Sua Pace',
       exhaleTemptation: 'Espira la Tentazione',
       imFeelingBetter: 'Ho ritrovato la Pace • Torna'
+      inhale: 'Inspira Grazia',
+      hold: 'Resta nella Sua Pace',
+      exhale: 'Espira la Tentazione',
+      finish: 'Ho ritrovato la Pace • Chiudi Scudo',
+      prayerTitle: 'Preghiera del Cuore Immediata:',
     },
     common: {
       close: 'Chiudi',
@@ -883,6 +921,9 @@ export const TRANSLATIONS = {
       deleteConfirm: 'Eliminare questa preghiera?',
       inputPlaceholder: 'Scrivi una preghiera a Dio (premi Invio per inserirla nel diario)...',
       sendToGod: 'Offri a Dio'
+      listen: 'Ascolta',
+      listenPrayer: 'Ascolta questa preghiera',
+      prayerTitle: 'Preghiera del Diario',
     },
     focus: {
       title: 'Lavora con Dio • Studio e Concentrazione nella Pace',
@@ -1041,6 +1082,19 @@ export const TRANSLATIONS = {
       copyMarkdown: 'Copia Markdown',
       submitAnother: '← Invia un altro messaggio',
       copiedAlert: 'Testo Markdown copiato negli appunti!'
+    },
+
+    promises: {
+      title: 'Vaso delle Promesse',
+      sub: 'Seleziona ciò che il tuo cuore sta vivendo. Estrai una promessa fedele dagli archivi canonici delle Scritture.',
+      wordForYou: 'Parola per te:',
+      prayerSurrender: 'Preghiera di Abbandono (30 secondi):',
+      drawAnother: 'Estrai un\'altra Promessa',
+      listen: 'Ascolta',
+      shareCard: 'Condividi Scheda'
+    },
+    evening: {
+      listenPrayer: 'Ascolta la Preghiera'
     }
   },
 
@@ -1054,6 +1108,7 @@ export const TRANSLATIONS = {
       tabJesus: 'Iisus',
       tabJournal: 'Jurnal',
       tabTools: 'Unelte',
+      bible: 'Biblia',
       brandSub: 'Platformă Creștină Universală • 100% Offline',
       scripture: 'Scriptură',
       penance: 'Post și Pocăință',
@@ -1200,6 +1255,7 @@ export const TRANSLATIONS = {
       },
       aiReasoning: 'Inteligență Artificială',
       modelRecommended: 'Recomandat: <strong>Gemini 3.7 Flash</strong> pentru stabilitate deplină și răspunsuri neîntârziate.',
+      rerunOnboarding: 'Reia Configurarea Inițială',
       offlinePolicy: 'Rânduială de Dialog Offline:',
       pasteKeyFirst: 'Te rugăm să lipești o cheie mai întâi.',
       testingKey: 'Se verifică cheia Gemini API...',
@@ -1280,6 +1336,7 @@ export const TRANSLATIONS = {
     },
     jesus: {
       title: 'Dialog cu Iisus',
+      downloadSuccess: 'Descărcare finalizată! Dialogul offline cu Hristos este activ.',
       subtitle: 'Răspunde la întrebări, îndoieli teologice și dileme ale vieții cu înțelepciunea Evangheliei',
       geminiNanoOffline: 'Gemini Nano (Offline pe dispozitiv)',
       offlineRequired: 'Offline • Necesar Gemini Local',
@@ -1331,6 +1388,11 @@ export const TRANSLATIONS = {
       holdPeace: 'Odihnește-te în Pacea Sa',
       exhaleTemptation: 'Expiră Ispita',
       imFeelingBetter: 'Am dobândit Pace • Încheie'
+      inhale: 'Inspiră Har',
+      hold: 'Odihnește-te în Pacea Sa',
+      exhale: 'Expiră Ispita',
+      finish: 'Am dobândit Pace • Închide Scutul',
+      prayerTitle: 'Rugăciune a Inimii Imediată:',
     },
     common: {
       close: 'Închide',
@@ -1361,6 +1423,9 @@ export const TRANSLATIONS = {
       deleteConfirm: 'Ștergi această rugăciune?',
       inputPlaceholder: 'Scrie o rugăciune către Dumnezeu (apasă Enter pentru a o așeza în jurnal)...',
       sendToGod: 'Închină lui Dumnezeu'
+      listen: 'Ascultă',
+      listenPrayer: 'Ascultă această rugăciune',
+      prayerTitle: 'Rugăciune din Jurnal',
     },
     focus: {
       title: 'Lucrează cu Dumnezeu • Învățătură și Liniște',
@@ -1502,6 +1567,19 @@ export const TRANSLATIONS = {
       copyMarkdown: 'Copiază Textul Markdown',
       submitAnother: '← Trimite alt mesaj',
       copiedAlert: 'Textul Markdown a fost copiat în clipboard!'
+    },
+
+    promises: {
+      title: 'Vasul Făgăduințelor',
+      sub: 'Alege ceea ce trăiește inima ta. Extrage o făgăduință credincioasă din arhivele canonice ale Scripturii.',
+      wordForYou: 'Cuvânt pentru tine:',
+      prayerSurrender: 'Rugăciune de Încredințare (30 secunde):',
+      drawAnother: 'Extrage o altă Făgăduință',
+      listen: 'Ascultă',
+      shareCard: 'Distribuie Card'
+    },
+    evening: {
+      listenPrayer: 'Ascultă Rugăciunea'
     }
   },
 
@@ -1515,6 +1593,7 @@ export const TRANSLATIONS = {
       tabJesus: 'Jésus',
       tabJournal: 'Journal',
       tabTools: 'Outils',
+      bible: 'Bible',
       brandSub: 'Plateforme Chrétienne Universelle • 100% Hors-ligne',
       scripture: 'Écritures',
       penance: 'Pénitence & Jeûne',
@@ -1661,6 +1740,7 @@ export const TRANSLATIONS = {
       },
       aiReasoning: 'Intelligence Artificielle',
       modelRecommended: 'Recommandé : <strong>Gemini 3.7 Flash</strong> pour une stabilité optimale et des réponses instantanées.',
+      rerunOnboarding: 'Relancer la Configuration Initiale',
       offlinePolicy: 'Politique de Dialogue Hors Ligne :',
       pasteKeyFirst: 'Veuillez d\'abord coller une clé API.',
       testingKey: 'Vérification de la clé Gemini...',
@@ -1741,6 +1821,7 @@ export const TRANSLATIONS = {
     },
     jesus: {
       title: 'Dialogue avec Jésus',
+      downloadSuccess: 'Téléchargement terminé ! Le dialogue hors ligne avec le Christ est actif.',
       subtitle: 'Répond aux questions, doutes théologiques et dilemmes avec la sagesse de l’Évangile',
       geminiNanoOffline: 'Gemini Nano (Hors ligne sur l’appareil)',
       offlineRequired: 'Hors ligne • Gemini Local Requis',
@@ -1792,6 +1873,11 @@ export const TRANSLATIONS = {
       holdPeace: 'Demeurez dans Sa Paix',
       exhaleTemptation: 'Expirez la Tentation',
       imFeelingBetter: 'J\'ai retrouvé la Paix • Retour'
+      inhale: 'Inspirez la Grâce',
+      hold: 'Demeurez dans Sa Paix',
+      exhale: 'Expirez la Tentation',
+      finish: 'J\'ai retrouvé la Paix • Fermer le Bouclier',
+      prayerTitle: 'Prière du Cœur Immédiate :',
     },
     common: {
       close: 'Fermer',
@@ -1822,6 +1908,9 @@ export const TRANSLATIONS = {
       deleteConfirm: 'Supprimer cette prière ?',
       inputPlaceholder: 'Écrivez une prière à Dieu (appuyez sur Entrée pour la déposer)...',
       sendToGod: 'Offrir à Dieu'
+      listen: 'Écouter',
+      listenPrayer: 'Écouter cette prière',
+      prayerTitle: 'Prière du Journal',
     },
     focus: {
       title: 'Travaillez avec Dieu • Étude et Sérénité',
@@ -1963,6 +2052,19 @@ export const TRANSLATIONS = {
       copyMarkdown: 'Copier le Markdown',
       submitAnother: '← Envoyer un autre message',
       copiedAlert: 'Texte Markdown copié dans le presse-papiers !'
+    },
+
+    promises: {
+      title: 'Vase des Promesses',
+      sub: 'Choisissez ce que ressent votre cœur. Tirez une promesse fidèle des archives canoniques de l\'Écriture.',
+      wordForYou: 'Parole pour vous :',
+      prayerSurrender: 'Prière d\'Abandon (30 secondes) :',
+      drawAnother: 'Tirer une autre Promesse',
+      listen: 'Écouter',
+      shareCard: 'Partager la Carte'
+    },
+    evening: {
+      listenPrayer: 'Écouter la Prière'
     }
   },
 
@@ -1976,6 +2078,7 @@ export const TRANSLATIONS = {
       tabJesus: 'Jesús',
       tabJournal: 'Diario',
       tabTools: 'Herramientas',
+      bible: 'Biblia',
       brandSub: 'Plataforma Cristiana Universal • 100% Fuera de Línea',
       scripture: 'Escritura',
       penance: 'Penitencia y Ayuno',
@@ -2122,6 +2225,7 @@ export const TRANSLATIONS = {
       },
       aiReasoning: 'Inteligencia Artificial',
       modelRecommended: 'Recomendado: <strong>Gemini 3.7 Flash</strong> para máxima estabilidad y respuestas instantáneas.',
+      rerunOnboarding: 'Reejecutar Configuración Inicial',
       offlinePolicy: 'Política de Diálogo Offline:',
       pasteKeyFirst: 'Por favor pega una clave API primero.',
       testingKey: 'Probando clave Gemini API...',
@@ -2202,6 +2306,7 @@ export const TRANSLATIONS = {
     },
     jesus: {
       title: 'Diálogo con Jesús',
+      downloadSuccess: '¡Descarga completada! El diálogo fuera de línea con Cristo está activo.',
       subtitle: 'Responde preguntas, dudas teológicas y dilemas de la vida con la sabiduría del Evangelio',
       geminiNanoOffline: 'Gemini Nano (Offline en el dispositivo)',
       offlineRequired: 'Offline • Se requiere Gemini Local',
@@ -2253,6 +2358,11 @@ export const TRANSLATIONS = {
       holdPeace: 'Permanece en Su Paz',
       exhaleTemptation: 'Exhala la Tentación',
       imFeelingBetter: 'He hallado Paz • Regresar'
+      inhale: 'Inhala Gracia',
+      hold: 'Permanece en Su Paz',
+      exhale: 'Exhala la Tentación',
+      finish: 'He hallado Paz • Cerrar Escudo',
+      prayerTitle: 'Oración del Corazón Inmediata:',
     },
     common: {
       close: 'Cerrar',
@@ -2283,6 +2393,9 @@ export const TRANSLATIONS = {
       deleteConfirm: '¿Eliminar esta oración?',
       inputPlaceholder: 'Escribe una oración a Dios (presiona Enter para guardarla en tu diario)...',
       sendToGod: 'Ofrecer a Dios'
+      listen: 'Escuchar',
+      listenPrayer: 'Escuchar esta oración',
+      prayerTitle: 'Oración del Diario',
     },
     focus: {
       title: 'Trabaja con Dios • Estudio y Concentración en Paz',
@@ -2424,6 +2537,19 @@ export const TRANSLATIONS = {
       copyMarkdown: 'Copiar Markdown',
       submitAnother: '← Enviar otro mensaje',
       copiedAlert: '¡Texto Markdown copiado al portapapeles!'
+    },
+
+    promises: {
+      title: 'Vasija de Promesas',
+      sub: 'Selecciona lo que experimenta tu corazón. Extrae una promesa fiel de los archivos canónicos de la Escritura.',
+      wordForYou: 'Palabra para ti:',
+      prayerSurrender: 'Oración de Abandono (30 segundos):',
+      drawAnother: 'Extraer otra Promesa',
+      listen: 'Escuchar',
+      shareCard: 'Compartir Tarjeta'
+    },
+    evening: {
+      listenPrayer: 'Escuchar la Oración'
     }
   },
 
@@ -2437,6 +2563,7 @@ export const TRANSLATIONS = {
       tabJesus: 'Jesus',
       tabJournal: 'Diário',
       tabTools: 'Ferramentas',
+      bible: 'Bíblia',
       brandSub: 'Plataforma Cristã Universal • 100% Offline',
       scripture: 'Escritura',
       penance: 'Penitência e Jejum',
@@ -2583,6 +2710,7 @@ export const TRANSLATIONS = {
       },
       aiReasoning: 'Inteligência Artificial',
       modelRecommended: 'Recomendado: <strong>Gemini 3.7 Flash</strong> para estabilidade máxima e respostas imediatas.',
+      rerunOnboarding: 'Repetir Configuração Inicial',
       offlinePolicy: 'Política de Diálogo Offline:',
       pasteKeyFirst: 'Por favor, cola uma chave primeiro.',
       testingKey: 'A testar chave Gemini API...',
@@ -2663,6 +2791,7 @@ export const TRANSLATIONS = {
     },
     jesus: {
       title: 'Diálogo com Jesus',
+      downloadSuccess: 'Download concluído! O diálogo offline com Cristo está ativo.',
       subtitle: 'Responde a perguntas, dúvidas teológicas e dilemas da vida com a sabedoria do Evangelho',
       geminiNanoOffline: 'Gemini Nano (Offline no dispositivo)',
       offlineRequired: 'Offline • Gemini Local Necessário',
@@ -2714,6 +2843,11 @@ export const TRANSLATIONS = {
       holdPeace: 'Descansa na Sua Paz',
       exhaleTemptation: 'Expira a Tentação',
       imFeelingBetter: 'Encontrei a Paz • Voltar'
+      inhale: 'Inspira Graça',
+      hold: 'Descansa na Sua Paz',
+      exhale: 'Expira a Tentação',
+      finish: 'Encontrei a Paz • Fechar Escudo',
+      prayerTitle: 'Oração do Coração Imediata:',
     },
     common: {
       close: 'Fechar',
@@ -2744,6 +2878,9 @@ export const TRANSLATIONS = {
       deleteConfirm: 'Eliminar esta oração?',
       inputPlaceholder: 'Escreve uma oração a Deus (prime Enter para colocar no diário)...',
       sendToGod: 'Oferecer a Deus'
+      listen: 'Ouvir',
+      listenPrayer: 'Ouvir esta oração',
+      prayerTitle: 'Oração do Diário',
     },
     focus: {
       title: 'Trabalha com Deus • Estudo e Concentração em Paz',
@@ -2885,6 +3022,19 @@ export const TRANSLATIONS = {
       copyMarkdown: 'Copiar Markdown',
       submitAnother: '← Enviar outra mensagem',
       copiedAlert: 'Texto Markdown copiado para a área de transferência!'
+    },
+
+    promises: {
+      title: 'Vaso das Promessas',
+      sub: 'Seleciona o que o teu coração está a viver. Retira uma promessa fiel dos arquivos canónicos da Escritura.',
+      wordForYou: 'Palavra para ti:',
+      prayerSurrender: 'Oração de Abandono (30 segundos):',
+      drawAnother: 'Tirar outra Promessa',
+      listen: 'Ouvir',
+      shareCard: 'Partilhar Cartão'
+    },
+    evening: {
+      listenPrayer: 'Ouvir a Oração'
     }
   },
 
@@ -2898,6 +3048,7 @@ export const TRANSLATIONS = {
       tabJesus: 'Jesus',
       tabJournal: 'Tagebuch',
       tabTools: 'Werkzeuge',
+      bible: 'Bibel',
       brandSub: 'Universelle Christliche Plattform • 100% Offline',
       scripture: 'Schrift',
       penance: 'Buße & Fasten',
@@ -3044,6 +3195,7 @@ export const TRANSLATIONS = {
       },
       aiReasoning: 'Künstliche Intelligenz',
       modelRecommended: 'Empfohlen: <strong>Gemini 3.7 Flash</strong> für höchste Stabilität und verzögerungsfreie Antworten.',
+      rerunOnboarding: 'Ersteinrichtung wiederholen',
       offlinePolicy: 'Offline-Dialog-Richtlinie:',
       pasteKeyFirst: 'Bitte füge zuerst einen Schlüssel ein.',
       testingKey: 'Gemini-Schlüssel wird geprüft...',
@@ -3124,6 +3276,7 @@ export const TRANSLATIONS = {
     },
     jesus: {
       title: 'Dialog mit Jesus',
+      downloadSuccess: 'Download abgeschlossen! Der Offline-Dialog mit Christus ist aktiv.',
       subtitle: 'Beantwortet theologische Fragen, Zweifel und Lebensdilemmata mit evangelischer Weisheit',
       geminiNanoOffline: 'Gemini Nano (Offline auf dem Gerät)',
       offlineRequired: 'Offline • Lokales Gemini-Modell erforderlich',
@@ -3175,6 +3328,11 @@ export const TRANSLATIONS = {
       holdPeace: 'Raste in Seinem Frieden',
       exhaleTemptation: 'Atme Versuchung aus',
       imFeelingBetter: 'Ich habe Frieden • Zurück'
+      inhale: 'Atme Gnade ein',
+      hold: 'Raste in Seinem Frieden',
+      exhale: 'Atme Versuchung aus',
+      finish: 'Ich habe Frieden gefunden • Schild schließen',
+      prayerTitle: 'Sofortiges Herzensgebet:',
     },
     common: {
       close: 'Schließen',
@@ -3205,6 +3363,9 @@ export const TRANSLATIONS = {
       deleteConfirm: 'Dieses Gebet löschen?',
       inputPlaceholder: 'Schreibe ein Gebet zu Gott (drücke Enter zum Eintragen)...',
       sendToGod: 'Gott darbringen'
+      listen: 'Anhören',
+      listenPrayer: 'Dieses Gebet anhören',
+      prayerTitle: 'Tagebuch-Gebet',
     },
     focus: {
       title: 'Arbeiten mit Gott • Studium und Stille',
@@ -3346,6 +3507,19 @@ export const TRANSLATIONS = {
       copyMarkdown: 'Markdown kopieren',
       submitAnother: '← Weitere Nachricht verfassen',
       copiedAlert: 'Markdown-Inhalt in die Zwischenablage kopiert!'
+    },
+
+    promises: {
+      title: 'Gefäß der Verheißungen',
+      sub: 'Wähle, was dein Herz erfährt. Ziehe eine treue Verheißung aus den authentischen kanonischen Schriftarchiven.',
+      wordForYou: 'Wort für dich:',
+      prayerSurrender: '30-Sekunden-Gebet der Hingabe:',
+      drawAnother: 'Eine andere Verheißung ziehen',
+      listen: 'Anhören',
+      shareCard: 'Karte teilen'
+    },
+    evening: {
+      listenPrayer: 'Gebet anhören'
     }
   },
 
@@ -3359,6 +3533,7 @@ export const TRANSLATIONS = {
       tabJesus: 'Иисус',
       tabJournal: 'Дневник',
       tabTools: 'Служба',
+      bible: 'Библия',
       brandSub: 'Вселенская Христианская Платформа • 100% Офлайн',
       scripture: 'Писание',
       penance: 'Пост и Покаяние',
@@ -3504,6 +3679,7 @@ export const TRANSLATIONS = {
       },
       aiReasoning: 'Искусственный Интеллект',
       modelRecommended: 'Рекомендуется: <strong>Gemini 3.7 Flash</strong> для максимальной надежности и быстрых ответов.',
+      rerunOnboarding: 'Перезапустить Начальную Настройку',
       offlinePolicy: 'Правила офлайн-диалога:',
       pasteKeyFirst: 'Пожалуйста, сначала вставьте ключ API.',
       testingKey: 'Проверка ключа Gemini API...',
@@ -3584,6 +3760,7 @@ export const TRANSLATIONS = {
     },
     jesus: {
       title: 'Диалог с Иисусом',
+      downloadSuccess: 'Загрузка завершена! Офлайн-диалог со Христом активен.',
       subtitle: 'Отвечает на вопросы, богословские сомнения и жизненные дилеммы мудростью Евангелия',
       geminiNanoOffline: 'Gemini Nano (Офлайн на устройстве)',
       offlineRequired: 'Офлайн • Требуется локальный Gemini',
@@ -3635,6 +3812,11 @@ export const TRANSLATIONS = {
       holdPeace: 'Пребудь в Его Мире',
       exhaleTemptation: 'Выдохни Искушение',
       imFeelingBetter: 'Обрел Мир • Вернуться'
+      inhale: 'Вдохни Благодать',
+      hold: 'Пребудь в Его Мире',
+      exhale: 'Выдохни Искушение',
+      finish: 'Я обрел Мир • Закрыть Щит',
+      prayerTitle: 'Молитва Сердца:',
     },
     common: {
       close: 'Закрыть',
@@ -3665,6 +3847,9 @@ export const TRANSLATIONS = {
       deleteConfirm: 'Удалить эту молитву?',
       inputPlaceholder: 'Напишите молитву к Богу (нажмите Enter для сохранения)...',
       sendToGod: 'Вознести к Богу'
+      listen: 'Слушать',
+      listenPrayer: 'Слушать эту молитву',
+      prayerTitle: 'Молитва из Дневника',
     },
     focus: {
       title: 'Труд с Богом • Учение и молитвенная тишина',
@@ -3806,6 +3991,19 @@ export const TRANSLATIONS = {
       copyMarkdown: 'Скопировать Markdown',
       submitAnother: '← Отправить еще сообщение',
       copiedAlert: 'Текст Markdown скопирован в буфер обмена!'
+    },
+
+    promises: {
+      title: 'Сосуд Обетований',
+      sub: 'Выберите то, что переживает ваше сердце. Извлеките верное обетование из канонических архивов Писания.',
+      wordForYou: 'Слово для тебя:',
+      prayerSurrender: '30-секундная Молитва Предания Себя Богу:',
+      drawAnother: 'Извлечь другое Обетование',
+      listen: 'Слушать',
+      shareCard: 'Поделиться Карточкой'
+    },
+    evening: {
+      listenPrayer: 'Слушать Молитву'
     }
   },
 
@@ -3819,6 +4017,7 @@ export const TRANSLATIONS = {
       tabJesus: 'Iesus',
       tabJournal: 'Diarium',
       tabTools: 'Instrumenta',
+      bible: 'Biblia Sacra',
       brandSub: 'Suggestus Christianus Universalis • 100% Sine Filo',
       scripture: 'Scriptura Sacra',
       penance: 'Paenitentia et Ieiunium',
@@ -3965,6 +4164,7 @@ export const TRANSLATIONS = {
       },
       aiReasoning: 'Ratio Artificialis',
       modelRecommended: 'Suadetur: <strong>Gemini 3.7 Flash</strong> ad summam firmitatem et responsa prompta.',
+      rerunOnboarding: 'Reincepere Configurationem Initialem',
       offlinePolicy: 'Disciplina Colloquii Sine Interrete:',
       pasteKeyFirst: 'Pone primum clavem API.',
       testingKey: 'Clavis Gemini probatur...',
@@ -4045,6 +4245,7 @@ export const TRANSLATIONS = {
     },
     jesus: {
       title: 'Colloquium cum Jesu',
+      downloadSuccess: 'Descensio perfecta! Colloquium cum Christo sine interrete activum est.',
       subtitle: 'Quaestionibus, dubiis theologicis et vitae dilemmatibus Evangelica sapientia respondet',
       geminiNanoOffline: 'Gemini Nano (In aparato offline)',
       offlineRequired: 'Offline • Gemini Locale Requisitum',
@@ -4096,6 +4297,11 @@ export const TRANSLATIONS = {
       holdPeace: 'Mane in Pace Eius',
       exhaleTemptation: 'Effla Tentationem',
       imFeelingBetter: 'Pacem recepi • Revertere'
+      inhale: 'Trahe Gratiam',
+      hold: 'Mane in Pace Eius',
+      exhale: 'Effla Tentationem',
+      finish: 'Pacem recepi • Claude Scutum',
+      prayerTitle: 'Oratio Cordis Immediata:',
     },
     common: {
       close: 'Claudere',
@@ -4126,6 +4332,9 @@ export const TRANSLATIONS = {
       deleteConfirm: 'Delere hanc precem?',
       inputPlaceholder: 'Scribe precem ad Deum (preme Enter ad inserendum)...',
       sendToGod: 'Deo offer'
+      listen: 'Audi',
+      listenPrayer: 'Hanc orationem audire',
+      prayerTitle: 'Oratio Diarii',
     },
     focus: {
       title: 'Cum Deo Labora • Studium et Silentium',

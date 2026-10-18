@@ -273,17 +273,19 @@ export function renderEveningExamModal(container, onClose) {
                 </div>
               </div>
             ` : `
-              <div class="space-y-3 animate-fade-in text-center">
+              <div class="space-y-4 animate-fade-in text-center">
                 <span class="text-xs font-bold uppercase tracking-wider text-emerald-500 font-sans">${loc.step4Title}</span>
-                <p class="text-base font-serif italic text-[var(--text-primary)] leading-relaxed">
+                <p class="text-base font-serif italic text-[var(--text-primary)] leading-relaxed mb-4">
                   ${loc.step4Text}
                 </p>
-                <div class="candle-wrapper py-2 scale-110">
-                  <div class="candle-flame"></div>
-                  <div class="candle-wick"></div>
-                  <div class="candle-body"></div>
+                <div class="py-6 my-2 flex flex-col items-center justify-center">
+                  <div class="candle-wrapper scale-110">
+                    <div class="candle-flame"></div>
+                    <div class="candle-wick"></div>
+                    <div class="candle-body"></div>
+                  </div>
                 </div>
-                <p class="text-xs text-[var(--text-muted)] notranslate" translate="no">
+                <p class="text-xs text-[var(--text-muted)] notranslate mt-3" translate="no">
                   ${loc.step4Quote}
                 </p>
               </div>

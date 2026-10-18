@@ -87,10 +87,10 @@ export function renderSOSTemptationModal(container, onClose) {
               ${icons.shield('w-7 h-7')}
             </div>
             <h2 class="text-2xl font-bold font-display text-red-600">
-              ${t('sos.title', 'SOS Peace & Temptation Shield')}
+              ${t('sos.title', 'SOS Pace e Scudo contro la Tentazione')}
             </h2>
             <p class="text-xs text-[var(--text-muted)] italic font-serif">
-              ${t('sos.sub', 'Pause for a moment. Do not yield to temptation or anxiety. Christ is right here with you.')}
+              ${t('sos.sub', 'Fermati un istante. Non cedere alla tentazione o all\'ansia. Cristo è qui con te.')}
             </p>
           </div>
 
@@ -101,7 +101,7 @@ export function renderSOSTemptationModal(container, onClose) {
             }">
               <span class="text-3xl font-mono font-bold text-red-500">${countdown}s</span>
               <span id="breath-label" class="text-xs font-bold uppercase tracking-wider text-amber-500 mt-1">
-                ${breathState === 'inhale' ? t('sos.inhale', 'Inhale Grace') : breathState === 'hold' ? t('sos.hold', "Hold in God's Peace") : t('sos.exhale', 'Exhale Temptation')}
+                ${breathState === 'inhale' ? t('sos.inhale', 'Inspira Grazia') : breathState === 'hold' ? t('sos.hold', 'Resta nella Sua Pace') : t('sos.exhale', 'Espira la Tentazione')}
               </span>
             </div>
           </div>
@@ -122,13 +122,13 @@ export function renderSOSTemptationModal(container, onClose) {
 
           <!-- Instant Prayer of Victory (Localized Non-Biblical Prayer) -->
           <div class="border-l-4 border-red-600 bg-red-500/10 rounded-r-xl p-3 text-left text-xs sm:text-sm font-serif italic text-[var(--text-primary)]">
-            <span class="font-bold not-italic text-red-600 block mb-1">${t('sos.prayerTitle', 'Instant Heart Prayer:')}</span>
+            <span class="font-bold not-italic text-red-600 block mb-1">${t('sos.prayerTitle', 'Preghiera del Cuore Immediata:')}</span>
             ${heartPrayer}
           </div>
 
           <!-- Finished Button -->
           <button id="btn-finish-sos" class="w-full py-3 rounded-xl bg-red-600 hover:bg-red-700 text-white font-bold text-sm shadow-md transition transform active:scale-95 cursor-pointer">
-            ${t('sos.finish', 'I Have Found Peace • Close Shield')}
+            ${t('sos.finish', 'Ho ritrovato la Pace • Chiudi Scudo')}
           </button>
 
         </div>
@@ -162,13 +162,13 @@ export function renderSOSTemptationModal(container, onClose) {
     const cdEl = container.querySelector('.font-mono');
     if (cdEl) cdEl.textContent = `${countdown}s`;
     if (label) {
-      label.textContent = breathState === 'inhale' ? t('sos.inhale', 'Inhale Grace') : t('sos.exhale', 'Exhale Temptation');
+      label.textContent = breathState === 'inhale' ? t('sos.inhale', 'Inspira Grazia') : t('sos.exhale', 'Espira la Tentazione');
     }
 
     if (countdown <= 0) {
       clearInterval(timerInterval);
       countdown = 0;
-      if (label) label.textContent = t('sos.hold', "Hold in God's Peace");
+      if (label) label.textContent = t('sos.hold', 'Resta nella Sua Pace');
     }
   }, 1000);
 }

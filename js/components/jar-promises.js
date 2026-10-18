@@ -44,10 +44,10 @@ export function renderJarPromisesModal(container, onClose, onOpenShareCard) {
               ${icons.jar('w-6 h-6')}
             </div>
             <h2 class="text-2xl font-bold font-display text-[var(--accent-vermilion)]">
-              ${t('nav.promises', 'The Jar of Promises')}
+              ${t('promises.title', t('nav.promises', 'Vaso delle Promesse'))}
             </h2>
             <p class="text-xs sm:text-sm text-[var(--text-muted)] italic font-serif mt-1">
-              ${t('promises.sub', 'Select what your heart is experiencing. Draw a faithful promise from authentic canonical Scripture archives.')}
+              ${t('promises.sub', 'Seleziona ciò che il tuo cuore sta vivendo. Estrai una promessa fedele dagli archivi canonici delle Scritture.')}
             </p>
           </div>
 
@@ -69,7 +69,7 @@ export function renderJarPromisesModal(container, onClose, onOpenShareCard) {
               <div class="bg-[var(--bg-parchment)] border-2 border-amber-600/50 rounded-xl p-5 shadow-inner notranslate" translate="no">
                 <div class="text-center border-b border-stone-300 dark:border-stone-800 pb-2 mb-3">
                   <span class="text-xs font-display font-bold text-amber-600 uppercase tracking-widest notranslate" translate="no">
-                    ${drawnPromise.ref.split('/')[0].trim()}
+                    ${localizeScriptureCitation(drawnPromise.ref.split('/')[0].trim(), currentLang)}
                   </span>
                   <span class="block text-[10px] font-mono text-[var(--text-muted)] mt-0.5 notranslate" translate="no">
                     📖 ${displayVersion}
@@ -140,9 +140,10 @@ export function renderJarPromisesModal(container, onClose, onOpenShareCard) {
     const listenPromiseBtn = container.querySelector('#btn-listen-promise');
     if (listenPromiseBtn && drawnPromise) {
       listenPromiseBtn.addEventListener('click', async () => {
-        const fullPromiseSpeech = `${drawnPromise.ref.split('/')[0].trim()}. ${displayVerse}. ${displayReflection}. ${displayPrayer}`;
+        const citation = localizeScriptureCitation(drawnPromise.ref.split('/')[0].trim(), currentLang);
+        const fullPromiseSpeech = `${citation}. ${displayVerse}. ${displayReflection}. ${displayPrayer}`;
         await playText({
-          title: `${t('nav.promises', 'Vaso delle Promesse')} • ${drawnPromise.ref.split('/')[0].trim()}`,
+          title: `${t('promises.title', 'Vaso delle Promesse')} • ${citation}`,
           text: fullPromiseSpeech,
           langTag: APP_LANG_MAP[currentLang] || 'it-IT'
         });

@@ -19,7 +19,7 @@ export function renderFocusMode(container) {
   const volume = getRainVolume();
 
   container.innerHTML = `
-    <div class="max-w-2xl mx-auto space-y-6 pb-32 sm:pb-24">
+    <div class="max-w-2xl mx-auto space-y-6 pb-36 sm:pb-32">
       
       <!-- Header Card -->
       <div class="bg-[var(--bg-card)] border border-stone-300 dark:border-stone-800 rounded-2xl p-6 sm:p-8 text-center shadow-lg">
@@ -176,7 +176,8 @@ export function renderFocusMode(container) {
   });
 
   if (rainAudioBtn) {
-    rainAudioBtn.addEventListener('click', () => {
+    rainAudioBtn.addEventListener('click', async () => {
+      await unlockAudio().catch(() => {});
       const active = toggleRain();
       rainAudioBtn.className = `p-3 rounded-full border transition cursor-pointer ${
         active 
