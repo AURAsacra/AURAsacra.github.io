@@ -51,7 +51,6 @@ Aura Sacra is localized across **9 languages** with native translations for user
 - **Mathematical Computus Algorithm**: Dynamically computes Easter, Lent, Pentecost, and all moveable feasts for any year in both Western (Gregorian) and Eastern (Julian Computus converted to Gregorian) liturgical cycles.
 - **Multi-Tradition Support**:
   - **Catholic (Roman Rite)**: Ash Wednesday, Good Friday, all Fridays of the year, with canonical dispensations on Solemnities (Can. 1251 & *Paenitemini*).
-  - **Traditional Catholic (1962)**: Includes Ember Days (*Quatuor Tempora*), historic Vigils, Holy Saturday Great Silence, and daily Lenten fasts.
   - **Eastern Orthodox (Byzantine)**: Great Lent (*Tessaracoste*), Apostles' Fast, Dormition Fast, Nativity Fast (*St. Philip's Fast*), and weekly Wednesday and Friday fasts (*Didache*).
   - **Protestant / Evangelical**: Ash Wednesday and Good Friday solemnities, the biblical Daniel Fast, personal prayerful fasting, and liberty of conscience (*Romans 14:5*).
   - **Ecumenical / Spiritual Seeker**: Shared Christian asceticism, fasting from sin and malice, silence before God, and solidarity with the poor.
