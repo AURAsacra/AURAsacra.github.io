@@ -53,7 +53,7 @@ export function renderScheduleModal(container, onClose) {
                 : 'text-[var(--text-secondary)] hover:text-[var(--text-primary)]'
             }">
               <span>⛪</span>
-              <span>Ore Canoniche</span>
+              <span>${t('scheduleModal.tabMonastic', 'Canonical Hours')}</span>
             </button>
             <button id="tab-btn-focus" class="flex-1 py-2 px-3 rounded-lg transition cursor-pointer flex items-center justify-center gap-1.5 ${
               activeTab === 'focus' 
@@ -61,7 +61,7 @@ export function renderScheduleModal(container, onClose) {
                 : 'text-[var(--text-secondary)] hover:text-[var(--text-primary)]'
             }">
               <span>💼</span>
-              <span>Studio & Lavoro</span>
+              <span>${t('scheduleModal.tabFocus', 'Study & Work')}</span>
             </button>
           </div>
 
@@ -74,7 +74,7 @@ export function renderScheduleModal(container, onClose) {
                   <div class="flex items-center gap-2.5 min-w-0">
                     <span class="text-2xl flex-shrink-0">${nextHour.hour.icon}</span>
                     <div class="min-w-0">
-                      <p class="text-[10px] uppercase tracking-wider font-bold text-amber-600">Prossima Ora Canonica</p>
+                      <p class="text-[10px] uppercase tracking-wider font-bold text-amber-600">${t('scheduleModal.nextCanonicalHour', 'Next Canonical Hour')}</p>
                       <h4 class="text-sm font-bold text-[var(--text-primary)] truncate">${nextHour.hour.name}</h4>
                       <p class="text-[11px] text-[var(--text-muted)] truncate">${nextHour.hour.sub}</p>
                     </div>
@@ -84,25 +84,25 @@ export function renderScheduleModal(container, onClose) {
                       ${nextHour.hour.time}
                     </span>
                     <span class="text-[10px] text-amber-600 dark:text-amber-400 font-bold block mt-1">
-                      tra ${nextHour.countdownStr}
+                      ${t('scheduleModal.countdownIn', 'in')} ${nextHour.countdownStr}
                     </span>
                   </div>
                 </div>
               ` : `
                 <div class="p-3 rounded-xl bg-[var(--bg-secondary)] border border-stone-200 dark:border-stone-800 text-center text-xs text-[var(--text-muted)]">
-                  Nessun orario monastico programmato (Modalità libera).
+                  ${t('scheduleModal.noHoursScheduled', 'No monastic hours scheduled (free mode).')}
                 </div>
               `}
 
               <!-- Monastic Rhythm Mode Select -->
               <div class="space-y-1.5">
                 <label class="block text-xs font-bold uppercase tracking-wider text-[var(--text-muted)] font-sans">
-                  Ritmo di Preghiera Attivo:
+                  ${t('scheduleModal.activeRhythm', 'Active prayer rhythm:')}
                 </label>
                 <select id="modal-monastic-mode" class="w-full bg-[var(--bg-secondary)] border border-stone-300 dark:border-stone-700 rounded-xl px-3 py-2 text-xs font-semibold text-[var(--text-primary)] cursor-pointer">
-                  <option value="monastic" ${monasticConfig.mode === 'monastic' ? 'selected' : ''}>⛪ Ritmo Monastico Completo (6 Ore Canoniche)</option>
-                  <option value="simple" ${monasticConfig.mode === 'simple' ? 'selected' : ''}>🕊️ Ritmo Quotidiano Semplice (3 Ore)</option>
-                  <option value="disabled" ${monasticConfig.mode === 'disabled' ? 'selected' : ''}>🔇 Preghiera Libera (Nessun allarme)</option>
+                  <option value="monastic" ${monasticConfig.mode === 'monastic' ? 'selected' : ''}>⛪ ${t('settings.monasticFull', 'Full Monastic Rhythm (6 Canonical Hours)')}</option>
+                  <option value="simple" ${monasticConfig.mode === 'simple' ? 'selected' : ''}>🕊️ ${t('settings.monasticSimple', 'Simple Daily Rhythm (3 Hours)')}</option>
+                  <option value="disabled" ${monasticConfig.mode === 'disabled' ? 'selected' : ''}>🔇 ${t('settings.monasticDisabled', 'Free Prayer (No fixed hours)')}</option>
                 </select>
               </div>
 
@@ -111,16 +111,16 @@ export function renderScheduleModal(container, onClose) {
                 <label class="flex items-center gap-2.5 p-2.5 bg-[var(--bg-secondary)] rounded-xl border border-stone-300 dark:border-stone-700 cursor-pointer hover:border-amber-600/40 transition">
                   <input type="checkbox" id="modal-monastic-notif" ${monasticConfig.notificationsEnabled ? 'checked' : ''} class="w-4 h-4 accent-amber-600 rounded cursor-pointer" />
                   <div class="text-left flex-1 min-w-0">
-                    <span class="text-xs font-bold text-[var(--text-primary)] block">🔔 Notifiche Orarie</span>
-                    <span class="text-[10px] text-stone-400 block truncate">Push e locali</span>
+                    <span class="text-xs font-bold text-[var(--text-primary)] block">🔔 ${t('scheduleModal.hourlyNotifications', 'Hourly notifications')}</span>
+                    <span class="text-[10px] text-stone-400 block truncate">${t('scheduleModal.pushAndLocal', 'Push and local')}</span>
                   </div>
                 </label>
 
                 <label class="flex items-center gap-2.5 p-2.5 bg-[var(--bg-secondary)] rounded-xl border border-stone-300 dark:border-stone-700 cursor-pointer hover:border-amber-600/40 transition">
                   <input type="checkbox" id="modal-monastic-bell" ${monasticConfig.playBell ? 'checked' : ''} class="w-4 h-4 accent-amber-600 rounded cursor-pointer" />
                   <div class="text-left flex-1 min-w-0">
-                    <span class="text-xs font-bold text-[var(--text-primary)] block">🛎️ Campana Monastica</span>
-                    <span class="text-[10px] text-stone-400 block truncate">Cattedrale bronzea</span>
+                    <span class="text-xs font-bold text-[var(--text-primary)] block">🛎️ ${t('settings.monasticBell', 'Monastic Bell')}</span>
+                    <span class="text-[10px] text-stone-400 block truncate">${t('scheduleModal.bronzeCathedralBell', 'Bronze cathedral bell')}</span>
                   </div>
                 </label>
               </div>
@@ -128,7 +128,7 @@ export function renderScheduleModal(container, onClose) {
               <!-- Canonical Hours List -->
               <div class="space-y-2">
                 <label class="block text-xs font-bold uppercase tracking-wider text-[var(--text-muted)] font-sans">
-                  Ore Canoniche in Programma:
+                  ${t('scheduleModal.scheduledHours', 'Scheduled Canonical Hours:')}
                 </label>
                 <div class="space-y-1.5 max-h-52 overflow-y-auto overscroll-contain pr-1 custom-scrollbar">
                   ${activeHours.map(h => `
@@ -152,11 +152,11 @@ export function renderScheduleModal(container, onClose) {
               <div class="flex items-center gap-2 pt-1">
                 <button type="button" id="modal-btn-test-bell" class="flex-1 py-2 px-3 rounded-xl bg-amber-600/10 hover:bg-amber-600/20 text-amber-600 border border-amber-600/30 text-xs font-bold flex items-center justify-center gap-1.5 transition cursor-pointer">
                   <span>🛎️</span>
-                  <span>Rintocco di Prova</span>
+                  <span>${t('settings.testBell', 'Test Bell')}</span>
                 </button>
                 <button type="button" id="modal-btn-test-notif" class="flex-1 py-2 px-3 rounded-xl bg-stone-500/10 hover:bg-stone-500/20 text-[var(--text-primary)] border border-stone-300 dark:border-stone-700 text-xs font-bold flex items-center justify-center gap-1.5 transition cursor-pointer">
                   <span>🔔</span>
-                  <span>Notifica di Prova</span>
+                  <span>${t('settings.testNotif', 'Test Notification')}</span>
                 </button>
               </div>
             </div>

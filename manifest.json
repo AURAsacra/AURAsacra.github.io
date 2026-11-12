@@ -1,7 +1,8 @@
 {
-  "name": "Aura Sacra — Universal Christian Platform",
+  "name": "Aura Sacra — Piattaforma Cristiana Universale",
   "short_name": "Aura Sacra",
-  "description": "An ecumenical, 100% offline spiritual platform with Scripture, prayer journal, sacred circadian themes, and dialogue with Jesus.",
+  "lang": "it",
+  "description": "Piattaforma spirituale ecumenica, completamente offline, con Sacra Scrittura, diario di preghiera, temi liturgici e una guida spirituale centrata su Gesù.",
   "start_url": "./index.html",
   "display": "standalone",
   "background_color": "#141416",

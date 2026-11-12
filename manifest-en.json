@@ -1,0 +1,21 @@
+{
+  "name": "Aura Sacra — Universal Christian Platform",
+  "short_name": "Aura Sacra",
+  "lang": "en",
+  "description": "An ecumenical, 100% offline spiritual platform with Scripture, prayer journal, sacred circadian themes, and a spiritual guide.",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#141416",
+  "theme_color": "#c49a45",
+  "orientation": "any",
+  "icons": [
+    { "src": "./icons/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any maskable" },
+    { "src": "./icons/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any maskable" }
+  ],
+  "shortcuts": [
+    { "name": "Verse of the Day", "short_name": "Bible", "description": "Read and meditate on Scripture", "url": "./index.html?tab=bible", "icons": [{ "src": "./icons/icon-192.png", "sizes": "192x192" }] },
+    { "name": "Candle & Rain", "short_name": "Candle", "description": "A study and prayer session with the sacred candle", "url": "./index.html?tab=focus", "icons": [{ "src": "./icons/icon-192.png", "sizes": "192x192" }] },
+    { "name": "Talk with the Guide", "short_name": "Guide", "description": "A spiritual dialogue centered on Christ", "url": "./index.html?tab=chat", "icons": [{ "src": "./icons/icon-192.png", "sizes": "192x192" }] },
+    { "name": "Random Verse", "short_name": "Inspiration", "description": "Receive a random Bible verse for meditation", "url": "./index.html?tab=bible&random=1", "icons": [{ "src": "./icons/icon-192.png", "sizes": "192x192" }] }
+  ]
+}

@@ -86,7 +86,7 @@ function updatePlayerUI(state) {
   const friendlyVoiceBadge = getFriendlyVoiceName(state.voice || state.voiceURI, state.langTag);
 
   containerEl.innerHTML = `
-    <div class="fixed bottom-24 sm:bottom-20 md:bottom-6 left-1/2 -translate-x-1/2 z-40 max-w-xl w-[94%] bg-[var(--bg-card)]/95 backdrop-blur-md border-2 border-amber-600/80 rounded-2xl p-3 sm:p-4 shadow-2xl parchment-border animate-fade-in notranslate" translate="no">
+    <div class="fixed bottom-20 sm:bottom-20 md:bottom-8 inset-x-0 mx-auto z-40 max-w-xl w-[92%] sm:w-[88%] audio-player-popup bg-[var(--bg-card)]/95 backdrop-blur-md border-2 border-amber-600/80 rounded-2xl p-3 sm:p-4 shadow-2xl parchment-border animate-fade-in notranslate" translate="no">
       
       <!-- Top Row: Icon, Title, Rate Selector & Close -->
       <div class="flex items-center justify-between gap-2 border-b border-stone-200/70 dark:border-stone-800/80 pb-2 mb-2.5">

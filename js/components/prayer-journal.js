@@ -73,7 +73,7 @@ export async function renderPrayerJournal(container, onBringPrayerToJesus) {
                     <!-- Bring to Jesus Button -->
                     <button class="btn-bring-jesus flex items-center gap-1.5 px-3 py-1 rounded-lg border border-amber-600/40 bg-amber-600/10 hover:bg-amber-600/20 text-amber-600 text-xs font-medium transition cursor-pointer" data-text="${encodeURIComponent(entry.text)}" data-id="${entry.id}">
                       ${icons.message('w-3.5 h-3.5')}
-                      <span>${t('journal.bringToJesus', 'Bring to Jesus')}</span>
+                      <span>${t('journal.bringToJesus', 'Porta alla Guida')}</span>
                     </button>
 
                     <!-- Delete Button -->

@@ -12,7 +12,7 @@ import { renderBottomNav } from './components/bottom-nav.js';
 import { renderFloatingCandle } from './components/floating-candle.js';
 import { renderAudioPlayer } from './components/audio-player.js';
 import { renderBibleReader } from './components/bible-reader.js';
-import { renderJesusChat } from './components/jesus-chat.js';
+import { renderGuideChat } from './components/guide-chat.js';
 import { renderPrayerJournal } from './components/prayer-journal.js';
 import { renderSaintsView } from './components/saints-view.js';
 import { renderFocusMode } from './components/focus-mode.js';
@@ -171,7 +171,7 @@ async function bootstrap() {
         );
         break;
       case 'chat':
-        renderJesusChat(mainContent, pendingPrayerForJesus);
+        renderGuideChat(mainContent, pendingPrayerForJesus);
         pendingPrayerForJesus = null;
         break;
       case 'journal':
@@ -221,31 +221,39 @@ async function bootstrap() {
   renderFloatingCandle(floatingCandleContainer);
   if (audioPlayerContainer) renderAudioPlayer(audioPlayerContainer);
 
-  // Handle modal deep links if present in URL
-  if (paramTab === 'evening') {
-    openModal('evening');
-  } else if (paramTab === 'schedule') {
-    openModal('schedule');
-  } else if (paramTab === 'settings') {
-    openModal('settings');
-  } else if (paramTab === 'widget' || paramTab === 'random' || urlParams.get('random') === '1') {
-    navigate('bible', { isRandom: true });
+  function handleModalDeepLinks() {
+    if (paramTab === 'evening') {
+      openModal('evening');
+    } else if (paramTab === 'schedule') {
+      openModal('schedule');
+    } else if (paramTab === 'settings') {
+      openModal('settings');
+    } else if (paramTab === 'widget' || paramTab === 'random' || urlParams.get('random') === '1') {
+      navigate('bible', { isRandom: true });
+    }
   }
 
-  // Check Onboarding safely without blocking bootstrap
+  // Check Onboarding safely before opening deep links
+  let onboardingActive = false;
   try {
     const isCompletedSync = localStorage.getItem('aurasacra_onboarding_completed') === 'true';
     const onboardingCompleted = isCompletedSync || (await getSetting('onboarding_completed', false));
     if (!onboardingCompleted) {
+      onboardingActive = true;
       renderOnboardingModal(modalsContainer, () => {
         modalsContainer.innerHTML = '';
         renderAllNavigation();
         renderActiveView();
         renderFloatingCandle(floatingCandleContainer);
+        handleModalDeepLinks();
       }, true);
     }
   } catch (onboardingErr) {
     console.warn('Onboarding check warning:', onboardingErr);
+  }
+
+  if (!onboardingActive) {
+    handleModalDeepLinks();
   }
 
   // In-App Toast Banner for Canonical Monastic Hour Chimes
@@ -272,9 +280,9 @@ async function bootstrap() {
       </div>
       <div class="flex items-center gap-2 flex-shrink-0">
         <button id="toast-btn-pray" class="px-3 py-1.5 rounded-xl bg-amber-600 hover:bg-amber-700 active:bg-amber-800 text-white font-bold text-xs shadow-md transition cursor-pointer">
-          Prega Ora
+          ${t('common.prayNow', 'Prega Ora')}
         </button>
-        <button id="toast-btn-close" class="p-1 text-stone-400 hover:text-[var(--text-primary)] transition cursor-pointer" title="Chiudi">
+        <button id="toast-btn-close" class="p-1 text-stone-400 hover:text-[var(--text-primary)] transition cursor-pointer" title="${t('common.close', 'Chiudi')}">
           ✕
         </button>
       </div>

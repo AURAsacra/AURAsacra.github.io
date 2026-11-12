@@ -108,7 +108,6 @@ export async function renderSettingsModal(container, onClose, onRefresh) {
             </label>
             <select id="setting-confession" class="w-full bg-[var(--bg-secondary)] border border-stone-300 dark:border-stone-700 rounded-xl px-3 py-2 text-sm text-[var(--text-primary)] cursor-pointer">
               <option value="catholic" ${currentConfession === 'catholic' ? 'selected' : ''}>${t('settings.confessions.catholic', 'Cattolico (Romano)')}</option>
-              <option value="traditional" ${currentConfession === 'traditional' ? 'selected' : ''}>${t('settings.confessions.traditional', 'Cattolico Tradizionale (Latino 1962 / Quattro Tempora)')}</option>
               <option value="orthodox" ${currentConfession === 'orthodox' ? 'selected' : ''}>${t('settings.confessions.orthodox', 'Ortodosso (Bizantino Orientale)')}</option>
               <option value="protestant" ${currentConfession === 'protestant' ? 'selected' : ''}>${t('settings.confessions.protestant', 'Protestante / Evangelico')}</option>
               <option value="ecumenical" ${currentConfession === 'ecumenical' ? 'selected' : ''}>${t('settings.confessions.ecumenical', 'Ecumenico / Cercatore Spirituale')}</option>
@@ -175,9 +174,9 @@ export async function renderSettingsModal(container, onClose, onRefresh) {
               <label class="flex items-center gap-2.5 p-2.5 bg-[var(--bg-secondary)] rounded-xl border border-stone-300 dark:border-stone-700/80 cursor-pointer hover:border-amber-600/40 transition">
                 <input type="checkbox" id="setting-monastic-notif" ${monasticConfig.notificationsEnabled ? 'checked' : ''} class="w-4 h-4 accent-amber-600 cursor-pointer rounded" />
                 <div class="text-left flex-1 min-w-0">
-                  <span class="text-xs font-bold text-[var(--text-primary)] block">🔔 Notifiche Push & Locali</span>
+                  <span class="text-xs font-bold text-[var(--text-primary)] block">🔔 ${t('settings.monasticNotif', 'Notifiche Push & Locali')}</span>
                   <span class="text-[10px] text-stone-400 block truncate" id="setting-notif-perm-status">
-                    ${'Notification' in window && Notification.permission === 'granted' ? '✓ Consentite' : 'Tocca per attivare'}
+                    ${'Notification' in window && Notification.permission === 'granted' ? t('settings.notifAllowed', '✓ Consentite') : t('settings.notifPrompt', 'Tocca per attivare')}
                   </span>
                 </div>
               </label>
@@ -185,8 +184,8 @@ export async function renderSettingsModal(container, onClose, onRefresh) {
               <label class="flex items-center gap-2.5 p-2.5 bg-[var(--bg-secondary)] rounded-xl border border-stone-300 dark:border-stone-700/80 cursor-pointer hover:border-amber-600/40 transition">
                 <input type="checkbox" id="setting-monastic-bell" ${monasticConfig.playBell ? 'checked' : ''} class="w-4 h-4 accent-amber-600 cursor-pointer rounded" />
                 <div class="text-left flex-1 min-w-0">
-                  <span class="text-xs font-bold text-[var(--text-primary)] block">🛎️ Campana Monastica</span>
-                  <span class="text-[10px] text-stone-400 block truncate">Rintocco cattedrale offline</span>
+                  <span class="text-xs font-bold text-[var(--text-primary)] block">🛎️ ${t('settings.monasticBell', 'Campana Monastica')}</span>
+                  <span class="text-[10px] text-stone-400 block truncate">${t('settings.monasticBellDesc', 'Rintocco cattedrale offline')}</span>
                 </div>
               </label>
             </div>
@@ -200,12 +199,12 @@ export async function renderSettingsModal(container, onClose, onRefresh) {
             <div class="flex items-center gap-2 pt-1">
               <button type="button" id="btn-test-monastic-bell" class="flex-1 py-2 px-2.5 rounded-xl bg-amber-600/10 hover:bg-amber-600/20 text-amber-600 border border-amber-600/30 text-xs font-bold flex items-center justify-center gap-1.5 transition cursor-pointer">
                 <span>🛎️</span>
-                <span>Prova Campana</span>
+                <span>${t('settings.testBell', 'Prova Campana')}</span>
               </button>
 
               <button type="button" id="btn-test-monastic-notif" class="flex-1 py-2 px-2.5 rounded-xl bg-stone-500/10 hover:bg-stone-500/20 text-[var(--text-primary)] border border-stone-300 dark:border-stone-700 text-xs font-bold flex items-center justify-center gap-1.5 transition cursor-pointer">
                 <span>🔔</span>
-                <span>Test Notifica</span>
+                <span>${t('settings.testNotif', 'Test Notifica')}</span>
               </button>
             </div>
           </div>
@@ -222,205 +221,188 @@ export async function renderSettingsModal(container, onClose, onRefresh) {
               </span>
             </div>
 
-            <!-- API Key Input -->
+            <!-- Gemini API Key -->
             <div class="space-y-1.5">
               <div class="flex items-center justify-between text-xs">
-                <span class="text-[var(--text-secondary)] font-medium">${t('settings.aiKey', 'Google Gemini API Key:')}</span>
-                <a href="https://aistudio.google.com/app/apikey" target="_blank" rel="noopener noreferrer" class="text-amber-600 hover:underline flex items-center gap-0.5 font-medium">
+                <label for="setting-gemini-key" class="text-[var(--text-muted)] font-medium">${t('settings.aiKey', 'Chiave API Google Gemini:')}</label>
+                <a href="https://aistudio.google.com/app/apikey" target="_blank" rel="noopener noreferrer" class="text-amber-600 hover:underline font-medium">
                   ${t('settings.aiKeyLink', 'Ottieni chiave gratuita su Google AI Studio ↗')}
                 </a>
               </div>
-              <div class="relative flex items-center">
-                <input 
-                  type="password" 
-                  id="setting-gemini-key" 
-                  value="${currentGeminiKey}" 
-                  placeholder="${t('apiKeyModal.enterKey', 'Incolla la tua chiave API Gemini (inizia con AIza...)')}" 
-                  class="w-full bg-[var(--bg-secondary)] border border-stone-300 dark:border-stone-700 rounded-xl pl-3 pr-20 py-2.5 text-xs font-mono text-[var(--text-primary)] focus:outline-none focus:border-amber-600"
-                />
-                <div class="absolute right-2 flex items-center gap-1">
-                  <button type="button" id="btn-toggle-setting-key-vis" class="p-1 text-stone-400 hover:text-stone-600 dark:hover:text-stone-200 transition cursor-pointer" title="${t('apiKeyModal.showKey', 'Mostra Chiave')}">
-                    ${icons.eye('w-4 h-4')}
+              <div class="relative">
+                <input type="password" id="setting-gemini-key" value="${currentGeminiKey}" placeholder="AIza..." autocomplete="off" spellcheck="false" class="w-full bg-[var(--bg-secondary)] border border-stone-300 dark:border-stone-700 rounded-xl pl-3 pr-20 py-2 text-xs font-mono text-[var(--text-primary)]" />
+                <div class="absolute right-1 top-1/2 -translate-y-1/2 flex items-center gap-0.5">
+                  <button type="button" id="btn-clear-setting-key" title="${t('apiKeyModal.clearInput', 'Cancella')}" class="p-1.5 rounded-lg text-stone-400 hover:text-red-500 hover:bg-red-500/10 transition cursor-pointer">
+                    ${icons.trash('w-3.5 h-3.5')}
                   </button>
-                  <button type="button" id="btn-clear-setting-key" class="p-1 text-stone-400 hover:text-red-500 transition cursor-pointer" title="${t('apiKeyModal.clearInput', 'Cancella')}">
-                    ${icons.close('w-3.5 h-3.5')}
+                  <button type="button" id="btn-toggle-setting-key" class="p-1.5 rounded-lg text-stone-400 hover:text-[var(--text-primary)] hover:bg-stone-500/10 transition cursor-pointer">
+                    ${icons.eye('w-3.5 h-3.5')}
                   </button>
                 </div>
               </div>
-
-              <!-- Test Key & Status Row -->
-              <div class="flex items-center justify-between text-[11px] pt-0.5">
-                <button type="button" id="btn-test-setting-key" class="px-2.5 py-1 rounded-lg bg-amber-600/10 hover:bg-amber-600/20 text-amber-600 border border-amber-600/30 flex items-center gap-1 font-semibold transition cursor-pointer">
-                  ${icons.sparkles('w-3 h-3')}
-                  <span>${t('settings.testKey', 'Test Connessione')}</span>
+              <div class="flex items-center justify-between gap-2 pt-0.5">
+                <button type="button" id="btn-test-setting-key" class="py-1.5 px-3 rounded-xl bg-amber-600/10 hover:bg-amber-600/20 text-amber-600 border border-amber-600/30 text-xs font-bold flex items-center gap-1.5 transition cursor-pointer disabled:opacity-50">
+                  ${icons.check('w-3.5 h-3.5')}
+                  <span>${t('settings.testKey', 'Verifica Connessione')}</span>
                 </button>
-                <span id="setting-key-feedback" class="text-[11px] font-sans"></span>
-              </div>
-
-              <!-- Gemini Model Selection -->
-              <div class="space-y-1.5 pt-2">
-                <label for="setting-gemini-model" class="block text-[11px] font-bold uppercase tracking-wider text-[var(--text-muted)] font-sans">
-                  ${t('settings.aiModel', 'Modello Gemini AI:')}
-                </label>
-                <select id="setting-gemini-model" class="w-full bg-[var(--bg-secondary)] border border-stone-300 dark:border-stone-700 rounded-xl px-3 py-2 text-xs font-semibold text-[var(--text-primary)] focus:outline-none focus:border-amber-600 cursor-pointer">
-                  ${AVAILABLE_MODELS.map(m => `
-                    <option value="${m.id}" ${currentGeminiModel === m.id ? 'selected' : ''}>
-                      ${m.name} - ${m.desc}
-                    </option>
-                  `).join('')}
-                </select>
-                <p class="text-[10px] text-stone-400 italic">
-                  ${t('settings.modelRecommended', 'Consigliato: <strong>Gemini 3.7 Flash</strong> per massima reattività e stabilità.')}
-                </p>
+                <span id="setting-key-feedback" class="text-[11px] font-sans font-semibold text-right"></span>
               </div>
             </div>
 
-            <!-- Offline Policy Notice -->
-            <div class="bg-[var(--bg-secondary)] border border-stone-300 dark:border-stone-700/60 rounded-xl p-3 text-xs space-y-1">
-              <div class="font-bold text-[var(--text-primary)] flex items-center gap-1.5">
+            <!-- Gemini Model Selection -->
+            <div class="space-y-1.5">
+              <label for="setting-gemini-model" class="block text-[11px] font-bold uppercase tracking-wider text-[var(--text-muted)] font-sans">
+                ${t('settings.aiModel', 'Modello / Versione Gemini AI:')}
+              </label>
+              <select id="setting-gemini-model" class="w-full bg-[var(--bg-secondary)] border border-stone-300 dark:border-stone-700 rounded-xl px-3 py-2 text-xs font-semibold text-[var(--text-primary)] cursor-pointer">
+                ${AVAILABLE_MODELS.map(m => `
+                  <option value="${m.id}" ${m.id === currentGeminiModel ? 'selected' : ''}>${m.name} — ${m.desc}</option>
+                `).join('')}
+              </select>
+              <p class="text-[11px] text-stone-400 italic font-serif">
+                ${t('settings.modelRecommended', 'Consigliato: <strong>Gemini 2.5 Flash</strong> per massima stabilità, alta velocità e risposte complete senza troncamenti.')}
+              </p>
+            </div>
+
+            <!-- Offline Dialogue Policy Notice -->
+            <div class="bg-[var(--bg-secondary)] border border-stone-300 dark:border-stone-700 rounded-xl p-3 space-y-1">
+              <div class="flex items-center gap-1.5 text-xs font-bold text-[var(--text-primary)]">
                 ${icons.shield('w-3.5 h-3.5 text-amber-600')}
-                <span>${t('settings.offlinePolicy', 'Integrità & Privacy Offline:')}</span>
+                <span>${t('settings.offlinePolicy', 'Politica Dialogo Offline:')}</span>
               </div>
-              <p class="text-[10px] text-[var(--text-muted)] leading-relaxed">
-                ${t('settings.offlineNotice', 'I tuoi dati, note, confessioni e preghiere rimangono esclusivamente sul tuo dispositivo.')}
+              <p class="text-[11px] text-[var(--text-muted)] leading-relaxed">
+                ${t('settings.offlineNotice', 'Se il modello Gemini Nano locale non è scaricato su questo dispositivo, il dialogo AI offline è disabilitato per evitare risposte imprecise o preconfezionate.')}
               </p>
             </div>
           </div>
 
-          <!-- Backup & Restore Data (100% Offline) -->
+          <!-- Backup Data (100% Offline) -->
           <div class="pt-4 border-t border-stone-200 dark:border-stone-800 space-y-3">
             <label class="block text-xs font-bold uppercase tracking-wider text-[var(--text-muted)] font-sans">
-              ${t('settings.backupTitle', 'Sovranità Dati • Backup JSON 100% Offline:')}
+              ${t('settings.backupTitle', 'Sovranità dei Dati • Backup JSON 100% Offline:')}
             </label>
-            
-            <div class="flex flex-col sm:flex-row items-center gap-2">
-              <button id="btn-export-json" class="w-full sm:flex-1 py-2.5 px-3 rounded-xl border border-amber-600/40 bg-amber-600/10 hover:bg-amber-600/20 text-amber-600 text-xs font-bold flex items-center justify-center gap-2 transition cursor-pointer">
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+              <button type="button" id="btn-export-json" class="py-2.5 px-3 rounded-xl border border-stone-300 dark:border-stone-700 bg-[var(--bg-secondary)] hover:border-amber-600/50 text-xs font-medium text-[var(--text-primary)] flex items-center justify-center gap-2 transition cursor-pointer">
                 ${icons.download('w-4 h-4')}
-                <span>${t('settings.exportBackup', 'Esporta Dati (Backup JSON)')}</span>
+                <span>${t('settings.exportBackup', 'Esporta Tutti i Dati (Backup JSON)')}</span>
               </button>
-
-              <label class="w-full sm:flex-1 py-2.5 px-3 rounded-xl border border-stone-300 dark:border-stone-700 hover:border-amber-600 text-xs font-medium text-[var(--text-secondary)] flex items-center justify-center gap-2 transition cursor-pointer text-center">
-                ${icons.plus('w-4 h-4')}
+              <label class="py-2.5 px-3 rounded-xl border border-stone-300 dark:border-stone-700 bg-[var(--bg-secondary)] hover:border-amber-600/50 text-xs font-medium text-[var(--text-primary)] flex items-center justify-center gap-2 transition cursor-pointer">
                 <span>${t('settings.importBackup', 'Importa Backup')}</span>
-                <input type="file" id="input-import-json" accept=".json" class="hidden">
+                <input type="file" id="input-import-json" accept=".json,application/json" class="hidden" />
               </label>
             </div>
-            <p class="text-[11px] text-stone-400 italic">
-              ${t('settings.backupDesc', 'Nessun dato viene mai inviato a server esterni. Puoi trasferire le tue note e preghiere tra dispositivi con il file JSON.')}
+            <p class="text-[11px] text-[var(--text-muted)] italic font-serif">
+              ${t('settings.backupDesc', 'Nessun dato lascia mai il tuo dispositivo. Puoi salvare note, preghiere e conversazioni in un file JSON per trasferirle tra dispositivi.')}
             </p>
           </div>
 
           <!-- Save Button -->
-          <button id="btn-save-settings" class="w-full py-3 rounded-xl bg-amber-600 hover:bg-amber-700 active:bg-amber-800 text-white font-bold text-sm shadow-md transition transform active:scale-95 cursor-pointer">
+          <button id="btn-save-settings" type="button" class="w-full py-3 rounded-xl bg-amber-600 hover:bg-amber-700 active:bg-amber-800 text-white font-bold text-sm shadow-md transition active:scale-95 cursor-pointer">
             ${t('settings.save', 'Salva Impostazioni')}
           </button>
 
           <!-- Re-run Initial Setup / Onboarding Button -->
-          <button id="btn-rerun-onboarding" type="button" class="w-full py-2.5 rounded-xl border border-stone-300 dark:border-stone-700 hover:border-amber-600/60 text-xs font-semibold text-[var(--text-muted)] hover:text-amber-600 flex items-center justify-center gap-1.5 transition cursor-pointer">
-            <span>🧭</span>
-            <span>${t('settings.rerunOnboarding', 'Riesegui Configurazione Iniziale')}</span>
+          <button id="btn-rerun-onboarding" type="button" class="w-full py-2.5 rounded-xl border border-stone-300 dark:border-stone-700 hover:border-amber-600/50 text-xs font-semibold text-[var(--text-muted)] hover:text-[var(--text-primary)] transition cursor-pointer">
+            ${t('settings.rerunOnboarding', 'Rivedi Configurazione Iniziale')}
           </button>
 
         </div>
       </div>
     `;
 
-    // Render monastic hours preview list based on mode
+    // Render Monastic hours preview based on selected mode
     const previewContainer = container.querySelector('#setting-monastic-hours-preview');
     const monasticModeSelect = container.querySelector('#setting-monastic-mode');
 
-    function updateMonasticHoursPreview() {
-      if (!previewContainer) return;
+    function updateMonasticPreview() {
+      if (!previewContainer || !monasticModeSelect) return;
       const mode = monasticModeSelect.value;
       const preset = MONASTIC_HOURS_PRESETS[mode];
 
-      if (mode === 'disabled' || !preset || !preset.hours.length) {
+      if (mode === 'disabled' || !preset || !Array.isArray(preset.hours) || preset.hours.length === 0) {
         previewContainer.innerHTML = `
-          <div class="p-3 bg-[var(--bg-secondary)] rounded-xl border border-stone-200 dark:border-stone-800 text-center text-xs text-[var(--text-muted)] italic">
-            ${t('settings.monasticFreeNote', 'Preghiera libera attiva: nessuna notifica programmata.')}
+          <div class="p-3 bg-[var(--bg-secondary)] rounded-xl border border-stone-300 dark:border-stone-700 text-center text-[11px] text-[var(--text-muted)] font-serif italic">
+            ${t('settings.monasticFreeNote', 'Preghiera libera attiva: nessun allarme o rintocco programmato.')}
           </div>
         `;
         return;
       }
 
-      previewContainer.innerHTML = `
-        <div class="space-y-1.5 max-h-48 overflow-y-auto overscroll-contain pr-1 custom-scrollbar">
-          ${preset.hours.map(h => `
-            <div class="flex items-center justify-between p-2 rounded-xl bg-[var(--bg-secondary)] border border-stone-200 dark:border-stone-800 text-xs">
-              <div class="flex items-center gap-2 min-w-0">
-                <span class="text-base">${h.icon}</span>
-                <div class="min-w-0">
-                  <span class="font-bold text-[var(--text-primary)] block truncate">${h.name}</span>
-                  <span class="text-[10px] text-stone-400 block truncate">${h.sub}</span>
-                </div>
-              </div>
-              <span class="px-2 py-0.5 rounded-lg bg-amber-600/15 border border-amber-600/30 text-amber-600 font-mono font-bold text-xs flex-shrink-0">
-                ${h.time}
-              </span>
+      previewContainer.innerHTML = preset.hours.map(h => `
+        <div class="flex items-center justify-between p-2 bg-[var(--bg-secondary)] rounded-xl border border-stone-300 dark:border-stone-700">
+          <div class="flex items-center gap-2 min-w-0">
+            <span class="text-base flex-shrink-0">${h.icon || '⛪'}</span>
+            <div class="min-w-0">
+              <span class="text-xs font-bold text-[var(--text-primary)] block truncate">${t(`monasticHours.${h.id}.name`, h.nameEn)}</span>
+              <span class="text-[10px] text-stone-400 block truncate">${t(`monasticHours.${h.id}.sub`, h.subEn || '')}</span>
             </div>
-          `).join('')}
+          </div>
+          <span class="text-[11px] font-mono font-bold text-amber-600 bg-amber-600/10 border border-amber-600/30 px-2 py-0.5 rounded-full flex-shrink-0">${h.time}</span>
         </div>
-      `;
+      `).join('');
     }
 
-    updateMonasticHoursPreview();
-
+    updateMonasticPreview();
     if (monasticModeSelect) {
-      monasticModeSelect.addEventListener('change', updateMonasticHoursPreview);
+      monasticModeSelect.addEventListener('change', updateMonasticPreview);
     }
 
-    // Monastic Test Bell Chime
+    // Monastic bell test
     const testBellBtn = container.querySelector('#btn-test-monastic-bell');
     if (testBellBtn) {
       testBellBtn.addEventListener('click', async () => {
-        await unlockAudio(false);
-        await playMonasticBell();
+        try {
+          await unlockAudio(false);
+          await playMonasticBell();
+        } catch (e) {
+          console.warn('Bell test error:', e);
+        }
       });
     }
 
-    // Monastic Test Notification
+    // Monastic notification test
     const testNotifBtn = container.querySelector('#btn-test-monastic-notif');
     if (testNotifBtn) {
       testNotifBtn.addEventListener('click', async () => {
-        if ('Notification' in window && Notification.permission !== 'granted') {
-          const granted = await requestNotificationPermission();
+        try {
           const permStatusEl = container.querySelector('#setting-notif-perm-status');
-          if (permStatusEl) {
-            permStatusEl.textContent = granted ? '✓ Consentite' : 'Permesso negato';
+          if ('Notification' in window && Notification.permission !== 'granted') {
+            const granted = await requestNotificationPermission();
+            if (permStatusEl) {
+              permStatusEl.textContent = granted
+                ? t('settings.notifAllowed', '✓ Allowed')
+                : t('settings.notifDenied', 'Permission not granted');
+            }
           }
+          await testMonasticNotification();
+        } catch (e) {
+          console.warn('Notification test error:', e);
         }
-        await testMonasticNotification();
       });
     }
 
-    // Close handler
-    container.querySelector('#btn-close-settings').addEventListener('click', onClose);
+    // Close
+    container.querySelector('#btn-close-settings')?.addEventListener('click', onClose);
 
     // Re-run Onboarding Setup
     const rerunBtn = container.querySelector('#btn-rerun-onboarding');
     if (rerunBtn) {
       rerunBtn.addEventListener('click', () => {
-        onClose();
-        const modalsContainer = document.querySelector('#modals-container');
-        if (modalsContainer) {
-          renderOnboardingModal(modalsContainer, () => {
-            modalsContainer.innerHTML = '';
-            if (onRefresh) onRefresh();
-          });
-        }
+        renderOnboardingModal(container, () => {
+          container.innerHTML = '';
+          if (typeof onRefresh === 'function') onRefresh();
+        }, true);
       });
     }
 
-    // Toggle key visibility in settings
-    let isKeyHidden = true;
+    // Toggle key visibility
     const keyInput = container.querySelector('#setting-gemini-key');
-    const toggleKeyBtn = container.querySelector('#btn-toggle-setting-key-vis');
+    const toggleKeyBtn = container.querySelector('#btn-toggle-setting-key');
     if (toggleKeyBtn && keyInput) {
       toggleKeyBtn.addEventListener('click', () => {
-        isKeyHidden = !isKeyHidden;
-        keyInput.type = isKeyHidden ? 'password' : 'text';
-        toggleKeyBtn.innerHTML = isKeyHidden ? icons.eye('w-4 h-4') : icons.eyeOff('w-4 h-4');
-        toggleKeyBtn.title = isKeyHidden ? t('apiKeyModal.showKey', 'Mostra Chiave') : t('apiKeyModal.hideKey', 'Nascondi');
+        const isHidden = keyInput.type === 'password';
+        keyInput.type = isHidden ? 'text' : 'password';
+        toggleKeyBtn.innerHTML = isHidden ? icons.eyeOff('w-3.5 h-3.5') : icons.eye('w-3.5 h-3.5');
       });
     }
 
@@ -440,20 +422,20 @@ export async function renderSettingsModal(container, onClose, onRefresh) {
       testKeyBtn.addEventListener('click', async () => {
         const val = keyInput.value.trim().replace(/^["']|["']$/g, '');
         if (!val) {
-          feedbackSpan.textContent = t('settings.pasteKeyFirst', 'Incolla prima una chiave.');
-          feedbackSpan.className = 'text-[11px] font-sans text-red-500 font-semibold';
+          feedbackSpan.textContent = t('settings.pasteKeyFirst', 'Incolla prima una chiave API.');
+          feedbackSpan.className = 'text-[11px] font-sans font-semibold text-right text-red-500';
           return;
         }
         testKeyBtn.disabled = true;
-        feedbackSpan.textContent = t('settings.testingKey', 'Verifica chiave API...');
-        feedbackSpan.className = 'text-[11px] font-sans text-amber-600';
+        feedbackSpan.textContent = t('settings.testingKey', 'Verifica chiave API Gemini in corso...');
+        feedbackSpan.className = 'text-[11px] font-sans font-semibold text-right text-stone-500';
         try {
           await testGeminiApiKey(val);
-          feedbackSpan.textContent = t('settings.validKey', '✓ Chiave API Valida!');
-          feedbackSpan.className = 'text-[11px] font-sans text-emerald-600 font-bold';
+          feedbackSpan.textContent = t('settings.validKey', '✓ Chiave API valida!');
+          feedbackSpan.className = 'text-[11px] font-sans font-semibold text-right text-emerald-600';
         } catch (err) {
-          feedbackSpan.textContent = `✕ ${t('apiKeyModal.verificationFailed', 'Errore')}: ${err.message}`;
-          feedbackSpan.className = 'text-[11px] font-sans text-red-500 font-semibold';
+          feedbackSpan.textContent = err.message;
+          feedbackSpan.className = 'text-[11px] font-sans font-semibold text-right text-red-500';
         } finally {
           testKeyBtn.disabled = false;
         }
@@ -461,85 +443,93 @@ export async function renderSettingsModal(container, onClose, onRefresh) {
     }
 
     // Save Settings
-    container.querySelector('#btn-save-settings').addEventListener('click', async () => {
-      const newLanguage = container.querySelector('#setting-language').value;
-      const nationality = container.querySelector('#setting-nationality')?.value || 'universal';
-      const confession = container.querySelector('#setting-confession').value;
-      const theme = container.querySelector('#setting-theme').value;
-      const userName = container.querySelector('#setting-username').value.trim();
-      const geminiKey = container.querySelector('#setting-gemini-key').value.trim();
-      const geminiModel = container.querySelector('#setting-gemini-model').value;
+    const saveBtn = container.querySelector('#btn-save-settings');
+    if (saveBtn) {
+      saveBtn.addEventListener('click', async () => {
+        const newLanguage = container.querySelector('#setting-language').value;
+        const nationality = container.querySelector('#setting-nationality').value;
+        const confession = container.querySelector('#setting-confession').value;
+        const userName = container.querySelector('#setting-username').value.trim();
+        const themeOverride = container.querySelector('#setting-theme').value;
+        const geminiKey = container.querySelector('#setting-gemini-key').value;
+        const geminiModel = container.querySelector('#setting-gemini-model').value;
+        const monasticMode = container.querySelector('#setting-monastic-mode').value;
+        const monasticNotif = container.querySelector('#setting-monastic-notif').checked;
+        const monasticBell = container.querySelector('#setting-monastic-bell').checked;
 
-      // Monastic Settings
-      const monasticMode = container.querySelector('#setting-monastic-mode').value;
-      const monasticNotif = container.querySelector('#setting-monastic-notif').checked;
-      const monasticBell = container.querySelector('#setting-monastic-bell').checked;
+        await setSetting('user_nationality', nationality);
+        await setSetting('user_confession', confession);
+        // Auto-set bible canon based on confession
+        const canonMap = { catholic: 'catholic', orthodox: 'orthodox', protestant: 'protestant' };
+        const autoCanon = canonMap[confession] || 'all';
+        await setSetting('preferred_canon', autoCanon);
+        try {
+          localStorage.setItem('aurasacra_user_nationality', nationality);
+          localStorage.setItem('aurasacra_user_confession', confession);
+        } catch (e) {}
+        await setSetting('user_name', userName);
+        await setGeminiApiKey(geminiKey);
+        setSelectedGeminiModel(geminiModel);
+        await setLiturgicalThemeOverride(themeOverride);
 
-      await setSetting('user_nationality', nationality);
-      await setSetting('user_confession', confession);
-      await setSetting('confession', confession);
-      await setSetting('penance_tradition', confession);
-      try {
-        localStorage.setItem('aurasacra_user_confession', confession);
-      } catch (e) {}
-      await setSetting('user_name', userName);
-      await setGeminiApiKey(geminiKey);
-      setSelectedGeminiModel(geminiModel);
-      await setLiturgicalThemeOverride(theme);
+        // Save Monastic Config
+        await saveMonasticConfig({
+          mode: monasticMode,
+          notificationsEnabled: monasticNotif && monasticMode !== 'disabled',
+          playBell: monasticBell && monasticMode !== 'disabled'
+        });
 
-      // Save Monastic Config
-      await saveMonasticConfig({
-        mode: monasticMode,
-        notificationsEnabled: monasticNotif && monasticMode !== 'disabled',
-        playBell: monasticBell && monasticMode !== 'disabled'
+        // Non-blocking notification permission request (UI closes immediately)
+        if (monasticNotif && monasticMode !== 'disabled') {
+          requestNotificationPermission().catch(() => {});
+        }
+
+        if (newLanguage !== currentLanguage) {
+          await setLanguage(newLanguage);
+        }
+
+        onClose();
+        if (typeof onRefresh === 'function') onRefresh();
       });
-
-      // Non-blocking notification permission & audio unlock so UI closes immediately
-      if (monasticNotif && monasticMode !== 'disabled') {
-        requestNotificationPermission().catch(() => {});
-        unlockAudio(false).catch(() => {});
-      }
-
-      if (newLanguage !== currentLanguage) {
-        await setLanguage(newLanguage);
-      }
-
-      onClose();
-      if (typeof onRefresh === 'function') onRefresh();
-    });
+    }
 
     // Export JSON Backup
-    container.querySelector('#btn-export-json').addEventListener('click', async () => {
-      const dataStr = await exportAllData();
-      const blob = new Blob([dataStr], { type: 'application/json' });
-      const url = URL.createObjectURL(blob);
-      const a = document.createElement('a');
-      a.href = url;
-      a.download = `AuraSacra_Backup_${new Date().toISOString().slice(0, 10)}.json`;
-      document.body.appendChild(a);
-      a.click();
-      document.body.removeChild(a);
-      URL.revokeObjectURL(url);
-    });
+    const exportBtn = container.querySelector('#btn-export-json');
+    if (exportBtn) {
+      exportBtn.addEventListener('click', async () => {
+        const dataStr = await exportAllData();
+        const blob = new Blob([dataStr], { type: 'application/json' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = `aurasacra_backup_${new Date().toISOString().slice(0, 10)}.json`;
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+      });
+    }
 
     // Import JSON Backup
-    container.querySelector('#input-import-json').addEventListener('change', (e) => {
-      const file = e.target.files[0];
-      if (!file) return;
-
-      const reader = new FileReader();
-      reader.onload = async (event) => {
-        try {
-          await importAllData(event.target.result);
-          alert(t('settings.backupRestored', 'Backup ripristinato con successo!'));
-          onClose();
-          onRefresh();
-        } catch (err) {
-          alert(t('settings.invalidBackup', 'Formato del backup non valido.'));
-        }
-      };
-      reader.readAsText(file);
-    });
+    const importInput = container.querySelector('#input-import-json');
+    if (importInput) {
+      importInput.addEventListener('change', (e) => {
+        const file = e.target.files[0];
+        if (!file) return;
+        const reader = new FileReader();
+        reader.onload = async (ev) => {
+          try {
+            await importAllData(ev.target.result);
+            alert(t('settings.backupRestored', 'Backup ripristinato con successo!'));
+            window.location.reload();
+          } catch (err) {
+            console.error(err);
+            alert(t('settings.invalidBackup', 'Formato del file di backup non valido.'));
+          }
+        };
+        reader.readAsText(file);
+      });
+    }
   }
 
   render();

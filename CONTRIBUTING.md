@@ -30,6 +30,7 @@ Every code and content contribution should adhere to these core pillars:
   - English (`en`), Italian (`it`), Romanian (`ro`), French (`fr`), Spanish (`es`), Portuguese (`pt`), German (`de`), Russian (`ru`), and Latin (`la`).
 - Main UI strings reside in `js/i18n.js`.
 - Liturgical fasting rules, permissions, theology, and traditions reside in `js/data/penance-i18n.js`.
+- The canonical saint catalogs and their name translations reside in `js/data/saints.js`; keep each name localized in all nine languages and retain the faith-specific grouping in `SAINTS_BY_FAITH`.
 
 ### 5. Transparent & Privacy-Preserving AI
 - The spiritual dialogue assistant interfaces directly with **Google Gemini 3** (via user-supplied API key) or on-device local models (*Chrome Gemini Nano*).
@@ -72,14 +73,17 @@ aura-sacra/
 │   │   ├── penance-i18n.js      # Fasting & traditions multilingual catalog
 │   │   ├── scriptures.js        # Bible loader & book catalog
 │   │   ├── scripture-archives.js# Pre-loaded offline reference verses
-│   │   ├── daily-saints.js      # Liturgical saints & color calendar
-│   │   ├── saints.js            # Tradition-specific Church fathers
+│   │   ├── saints.js             # Canonical faith-grouped saints catalog & localization
+│   │   ├── daily-saints.js       # Compatibility re-exports to saints.js
+│   │   ├── national-calendars.js # Compatibility re-exports to saints.js
+│   │   ├── orthodox-saints.js    # Compatibility re-exports to saints.js
+│   │   ├── saints-i18n.js        # Compatibility re-exports to saints.js
 │   │   ├── promises.js          # Jar of Promises reflections & prayers
 │   │   └── doubts.js            # Faith Compass questions & answers
 │   └── components/              # Modular UI components
 │       ├── bible-reader.js      # Scripture reader & highlight engine
 │       ├── penance-calendar.js  # Liturgical calendar & Day Inspector
-│       ├── jesus-chat.js        # Spiritual dialogue view
+│       ├── guide-chat.js        # Spiritual guide chat view
 │       ├── prayer-journal.js    # Local prayer journal
 │       ├── saints-view.js       # Saints & Church fathers view
 │       ├── evening-exam.js      # Compline examination of conscience

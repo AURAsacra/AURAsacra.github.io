@@ -9,9 +9,9 @@
   <link rel="apple-touch-icon" sizes="180x180" href="./icons/icon-192.png">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-  <meta name="apple-mobile-web-app-title" content="Versetto Sacro">
+  <meta id="apple-app-title" name="apple-mobile-web-app-title" content="Versetto Sacro">
   <meta name="theme-color" content="#141416">
-  <link rel="manifest" href="./manifest.json">
+  <link id="app-manifest" rel="manifest" href="./manifest.json">
   <link rel="stylesheet" href="./css/style.css">
   <style>
     body {
@@ -163,28 +163,28 @@
     <a href="./index.html" style="display: inline-flex; align-items: center; gap: 6px; font-size: 12px; font-family: var(--font-sans); color: #ffb300; text-decoration: none; font-weight: bold; background: rgba(198, 146, 20, 0.15); border: 1px solid rgba(198, 146, 20, 0.4); padding: 6px 14px; border-radius: 9999px; transition: all 0.2s;">
       <span>←</span> <span>Aura Sacra App</span>
     </a>
-    <span style="font-size: 11px; font-family: var(--font-sans); color: #a89c8a; font-weight: 600;">Widget Versetto</span>
+    <span style="font-size: 11px; font-family: var(--font-sans); color: #a89c8a; font-weight: 600;" data-i18n="nav.widget">Widget Versetto</span>
   </div>
 
   <!-- Controls Bar: Size Selector -->
   <div class="controls-pill">
-    <button class="btn-tab" data-size="small">Piccolo (2x2)</button>
-    <button class="btn-tab active" data-size="medium">Medio (4x2)</button>
-    <button class="btn-tab" data-size="large">Grande (4x4)</button>
+    <button class="btn-tab" data-size="small"><span data-i18n="widgetModal.small">Piccolo</span> (2×2)</button>
+    <button class="btn-tab active" data-size="medium"><span data-i18n="widgetModal.medium">Medio</span> (4×2)</button>
+    <button class="btn-tab" data-size="large"><span data-i18n="widgetModal.large">Grande</span> (4×4)</button>
   </div>
 
   <!-- Appearance Bar: Dark / Light / Tinted -->
   <div style="display: flex; gap: 8px; margin-bottom: 14px; font-family: var(--font-sans); font-size: 11px;">
-    <button id="btn-theme-dark" class="btn-share" style="color: #eedfc7; border-color: #555;">🌙 Notte</button>
-    <button id="btn-theme-light" class="btn-share" style="color: #eedfc7; border-color: #555;">☀️ Pergamena</button>
-    <button id="btn-theme-tinted" class="btn-share" style="color: #eedfc7; border-color: #555;">✨ iOS 18 Tinted</button>
-    <button id="btn-random-verse" class="btn-share" style="color: #ffb300; border-color: #c69214;">🎲 Altro Versetto</button>
+    <button id="btn-theme-dark" class="btn-share" style="color: #eedfc7; border-color: #555;">🌙 <span data-i18n="widgetPage.night">Notte</span></button>
+    <button id="btn-theme-light" class="btn-share" style="color: #eedfc7; border-color: #555;">☀️ <span data-i18n="widgetModal.parchment">Pergamena</span></button>
+    <button id="btn-theme-tinted" class="btn-share" style="color: #eedfc7; border-color: #555;">✨ <span data-i18n="widgetModal.tinted">iOS 18 Tinted</span></button>
+    <button id="btn-random-verse" class="btn-share" style="color: #ffb300; border-color: #c69214;">🎲 <span data-i18n="widgetModal.newVerse">Altro Versetto</span></button>
   </div>
 
   <!-- Widget Canvas Container -->
   <div class="widget-stage">
     
-    <div id="aura-widget-card" class="widget-card widget-size-medium" title="Tocca per aprire questo versetto nella Bibbia">
+    <div id="aura-widget-card" class="widget-card widget-size-medium" data-i18n-title="widgetPage.openVerse" title="Tocca per aprire questo versetto nella Bibbia">
       
       <!-- Header row -->
       <div style="display: flex; align-items: center; justify-content: space-between; gap: 8px;">
@@ -209,10 +209,10 @@
       <!-- Action Row -->
       <div id="widget-action-row" style="display: flex; align-items: center; justify-content: space-between; gap: 8px;">
         <span style="font-family: var(--font-sans); font-size: 10px; color: #a89c8a; display: flex; align-items: center; gap: 4px;">
-          <span>📖</span> <span id="widget-action-label">Tocca per leggere</span>
+          <span>📖</span> <span id="widget-action-label" data-i18n="widgetModal.tapToRead">Tocca per leggere</span>
         </span>
-        <button id="btn-widget-share" class="btn-share" title="Condividi versetto con scheda grafica">
-          <span>📤</span> <span>Condividi</span>
+        <button id="btn-widget-share" class="btn-share" data-i18n-title="widgetPage.shareVerse" title="Condividi versetto con scheda grafica">
+          <span>📤</span> <span data-i18n="common.share">Condividi</span>
         </button>
       </div>
 
@@ -221,36 +221,60 @@
   </div>
 
   <p style="font-family: var(--font-sans); font-size: 11px; color: #888; max-width: 360px; text-align: center; margin-top: 12px;">
-    Toccando il widget verrai portato direttamente al versetto nella Bibbia, evidenziato con un alone dorato. Il pulsante <strong>Condividi</strong> genera la scheda artistica per WhatsApp e Instagram.
+    <span data-i18n-html="widgetPage.readDescription">Toccando il widget verrai portato direttamente al versetto nella Bibbia, evidenziato con un alone dorato. Il pulsante <strong>Condividi</strong> genera la scheda artistica per WhatsApp e Instagram.</span>
   </p>
 
   <!-- iOS-specific intuitive guide box -->
   <div id="ios-guide-box" style="margin-top: 14px; background: rgba(36, 32, 28, 0.95); border: 1.5px solid rgba(198, 146, 20, 0.6); border-radius: 20px; padding: 12px 16px; max-width: 380px; box-shadow: 0 10px 30px rgba(0,0,0,0.7); text-align: left;">
     <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 8px;">
       <span style="font-size: 18px;">🍏</span>
-      <span style="font-family: var(--font-display); font-weight: bold; font-size: 12px; color: #ffb300;">Come impostarlo come Widget su iPhone:</span>
+      <span style="font-family: var(--font-display); font-weight: bold; font-size: 12px; color: #ffb300;" data-i18n="widgetPage.setupTitle">Come impostarlo come Widget su iPhone:</span>
     </div>
     <div style="display: flex; flex-direction: column; gap: 7px; font-family: var(--font-sans); font-size: 11px; color: #eedfc7;">
       <div style="display: flex; align-items: center; gap: 8px;">
         <span style="background: rgba(198, 146, 20, 0.25); color: #ffb300; border-radius: 50%; width: 20px; height: 20px; flex-shrink: 0; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 10px;">1</span>
-        <span>In Safari, tocca in basso il tasto Condividi <strong style="color: #ffb300; font-size: 13px;">📤</strong></span>
+        <span data-i18n-html="widgetPage.setupStep1">In Safari, tocca in basso il tasto Condividi <strong style="color: #ffb300; font-size: 13px;">📤</strong></span>
       </div>
       <div style="display: flex; align-items: center; gap: 8px;">
         <span style="background: rgba(198, 146, 20, 0.25); color: #ffb300; border-radius: 50%; width: 20px; height: 20px; flex-shrink: 0; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 10px;">2</span>
-        <span>Scorri e tocca <strong style="color: #fff;">«Aggiungi alla schermata Home»</strong></span>
+        <span data-i18n-html="widgetPage.setupStep2">Scorri e tocca <strong style="color: #fff;">«Aggiungi alla schermata Home»</strong></span>
       </div>
       <div style="display: flex; align-items: center; gap: 8px;">
         <span style="background: rgba(198, 146, 20, 0.25); color: #ffb300; border-radius: 50%; width: 20px; height: 20px; flex-shrink: 0; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 10px;">3</span>
-        <span>Conferma <strong>«Aggiungi»</strong>: diventerà un widget a tutto schermo!</span>
+        <span data-i18n-html="widgetPage.setupStep3">Conferma <strong>«Aggiungi»</strong>: diventerà un widget a tutto schermo!</span>
       </div>
     </div>
   </div>
 
   <script type="module">
     import { getRandomVerse, getDailyVerse } from './js/widget-verse.js';
-    import { initI18n } from './js/i18n.js';
+    import { initI18n, getLanguage, onLanguageChange, t } from './js/i18n.js';
 
     await initI18n();
+    const updateManifest = (language) => {
+      document.getElementById('app-manifest').href = language === 'it' ? './manifest.json' : `./manifest-${language}.json`;
+    };
+    const updateWidgetTitle = () => {
+      const title = t('nav.widget', 'Sacred Verse Widget');
+      document.title = `Aura Sacra — ${title}`;
+      document.getElementById('apple-app-title').content = title;
+    };
+    updateManifest(getLanguage());
+    updateWidgetTitle();
+    onLanguageChange((language) => {
+      updateManifest(language);
+      updateWidgetTitle();
+    });
+    document.querySelectorAll('[data-i18n]').forEach((el) => {
+      el.textContent = t(el.dataset.i18n, el.textContent);
+    });
+    document.querySelectorAll('[data-i18n-title]').forEach((el) => {
+      el.title = t(el.dataset.i18nTitle, el.title);
+    });
+    document.querySelectorAll('[data-i18n-html]').forEach((el) => {
+      el.innerHTML = t(el.dataset.i18nHtml, el.innerHTML);
+    });
+    document.getElementById('widget-ref').textContent = t('common.loading', 'Loading...');
 
     let currentVerse = null;
     let currentSize = 'medium';
@@ -268,7 +292,7 @@
       currentVerse = random ? await getRandomVerse() : await getDailyVerse();
       refEl.textContent = currentVerse.citation;
       quoteEl.textContent = `«${currentVerse.text}»`;
-      badgeEl.textContent = currentVerse.versionLabel || 'BIBBIA';
+      badgeEl.textContent = currentVerse.versionLabel || t('common.bible', 'Bible');
       applySizeStyles();
     }
 

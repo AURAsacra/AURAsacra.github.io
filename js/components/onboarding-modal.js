@@ -8,10 +8,10 @@ import { getDefaultBibleForLanguage } from '../data/scripture-archives.js';
 import { saveMonasticConfig, requestNotificationPermission } from '../monastic-hours.js';
 import { unlockAudio } from '../audio-engine.js';
 
-export function renderOnboardingModal(container, onComplete, canClose = true) {
+export async function renderOnboardingModal(container, onComplete, canClose = true) {
   if (!container) return;
 
-  // Synchronous initial values from localStorage / i18n for 0ms instant render without blocking
+  // Synchronous initial values from localStorage / i18n for instant render
   let selectedLanguage = localStorage.getItem('aurasacra_language') || getLanguage() || 'it';
   let selectedNationality = localStorage.getItem('aurasacra_user_nationality') || 'universal';
   let selectedConfession = localStorage.getItem('aurasacra_user_confession') || 'ecumenical';
@@ -19,17 +19,17 @@ export function renderOnboardingModal(container, onComplete, canClose = true) {
   let selectedRhythm = 'monastic';
   let enableNotifications = true;
 
-  // Non-blocking background sync from IndexedDB in case values were not in localStorage
-  (async () => {
-    try {
-      const dbNat = await getSetting('user_nationality', null);
-      if (dbNat && selectedNationality === 'universal') selectedNationality = dbNat;
-      const dbConf = await getSetting('user_confession', null) || await getSetting('confession', null);
-      if (dbConf) selectedConfession = dbConf;
-      const dbName = await getSetting('user_name', null);
-      if (dbName && !enteredName) enteredName = dbName;
-    } catch (e) {}
-  })();
+  // Instant async sync with database before rendering
+  try {
+    const [dbNat, dbConf, dbName] = await Promise.all([
+      getSetting('user_nationality', null),
+      getSetting('user_confession', null),
+      getSetting('user_name', null)
+    ]);
+    if (dbNat && selectedNationality === 'universal') selectedNationality = dbNat;
+    if (dbConf) selectedConfession = dbConf;
+    if (dbName && !enteredName) enteredName = dbName;
+  } catch (e) {}
 
   // Dynamic localization helper that responds immediately to local modal language selection
   function obT(keyPath, defaultText = '') {
@@ -80,8 +80,11 @@ export function renderOnboardingModal(container, onComplete, canClose = true) {
           </button>
 
           <!-- Header Section (Fixed at top of modal) -->
-          <div class="p-4 sm:p-6 pb-2.5 sm:pb-3 flex-shrink-0 text-center space-y-1.5 sm:space-y-2 border-b border-stone-200/50 dark:border-stone-800/50 pr-10">
-            <img src="./icons/logo.png" alt="Aura Sacra" width="64" height="64" style="width: 56px; height: 56px; max-width: 64px; max-height: 64px;" class="w-12 h-12 sm:w-16 sm:h-16 rounded-xl sm:rounded-2xl mx-auto shadow-md border-2 border-amber-600/50 object-cover">
+          <div class="p-4 sm:p-6 pb-2.5 sm:pb-3 flex-shrink-0 text-center space-y-1.5 sm:space-y-2 border-b border-stone-200/50 dark:border-stone-800/50 px-6 sm:px-8">
+            <div class="relative w-14 h-14 sm:w-16 sm:h-16 mx-auto flex items-center justify-center">
+              <img src="./icons/logo.png" alt="Aura Sacra" width="64" height="64" class="w-14 h-14 sm:w-16 sm:h-16 rounded-xl sm:rounded-2xl mx-auto shadow-md border-2 border-amber-600/50 object-cover" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+              <div class="hidden w-14 h-14 sm:w-16 sm:h-16 rounded-xl sm:rounded-2xl bg-amber-600/10 border-2 border-amber-600/50 items-center justify-center text-amber-500 font-bold text-2xl shadow-md">✝</div>
+            </div>
             <div>
               <h2 class="text-xl sm:text-2xl font-bold font-display text-[var(--accent-vermilion)] leading-tight">
                 ${obT('onboarding.welcome', 'Benvenuto in Aura Sacra')}
@@ -126,7 +129,7 @@ export function renderOnboardingModal(container, onComplete, canClose = true) {
                     <span>🌍</span>
                     <span>${obT('onboarding.selectNationality', 'Nazionalità Originale / Radici Regionali:')}</span>
                   </label>
-                  <span class="text-[10px] text-amber-600 font-serif italic">«Sinassario & Devozioni»</span>
+                  <span class="text-[10px] text-amber-600 font-serif italic">«${obT('onboarding.synaxariumTitle', 'Synaxarium & Devotions')}»</span>
                 </div>
                 <p class="text-[10.5px] text-[var(--text-muted)] italic font-serif leading-tight">
                   ${obT('onboarding.nationalityDesc', 'Personalizza il calendario liturgico con i santi patroni e le tradizioni della tua terra natale.')}
@@ -150,31 +153,23 @@ export function renderOnboardingModal(container, onComplete, canClose = true) {
                 ${obT('onboarding.traditionQuestion', '2. Qual è la tua tradizione di fede o cammino spirituale?')}
               </label>
               
-              <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 sm:gap-2.5">
-                <button type="button" class="conf-btn p-2.5 sm:p-3 rounded-xl border-2 border-stone-300 dark:border-stone-800 bg-[var(--bg-secondary)] text-left hover:border-amber-600/50 transition cursor-pointer" data-conf="catholic">
-                  <span class="conf-title block text-xs sm:text-sm font-bold font-display text-[var(--text-primary)]">${obT('onboarding.traditions.catholicTitle', 'Cattolico (Romano)')}</span>
-                  <span class="text-[10px] sm:text-xs text-stone-400 block mt-0.5 leading-tight">${obT('onboarding.traditions.catholicDesc', 'Canone biblico completo, santi e liturgia romana')}</span>
-                </button>
-
-                <button type="button" class="conf-btn p-2.5 sm:p-3 rounded-xl border-2 border-stone-300 dark:border-stone-800 bg-[var(--bg-secondary)] text-left hover:border-amber-600/50 transition cursor-pointer" data-conf="traditional">
-                  <span class="conf-title block text-xs sm:text-sm font-bold font-display text-[var(--text-primary)]">${obT('onboarding.traditions.traditionalTitle', 'Cattolico Tradizionale (1962)')}</span>
-                  <span class="text-[10px] sm:text-xs text-stone-400 block mt-0.5 leading-tight">${obT('onboarding.traditions.traditionalDesc', 'Messa in latino, Quattro Tempora, vigilie e digiuni antichi')}</span>
-                </button>
-
-                <button type="button" class="conf-btn p-2.5 sm:p-3 rounded-xl border-2 border-stone-300 dark:border-stone-800 bg-[var(--bg-secondary)] text-left hover:border-amber-600/50 transition cursor-pointer" data-conf="orthodox">
-                  <span class="conf-title block text-xs sm:text-sm font-bold font-display text-[var(--text-primary)]">${obT('onboarding.traditions.orthodoxTitle', 'Ortodosso (Bizantino)')}</span>
-                  <span class="text-[10px] sm:text-xs text-stone-400 block mt-0.5 leading-tight">${obT('onboarding.traditions.orthodoxDesc', 'Tradizione orientale, Padri della Chiesa ed esicasmo')}</span>
-                </button>
-
-                <button type="button" class="conf-btn p-2.5 sm:p-3 rounded-xl border-2 border-stone-300 dark:border-stone-800 bg-[var(--bg-secondary)] text-left hover:border-amber-600/50 transition cursor-pointer" data-conf="protestant">
-                  <span class="conf-title block text-xs sm:text-sm font-bold font-display text-[var(--text-primary)]">${obT('onboarding.traditions.protestantTitle', 'Protestante / Evangelico')}</span>
-                  <span class="text-[10px] sm:text-xs text-stone-400 block mt-0.5 leading-tight">${obT('onboarding.traditions.protestantDesc', 'Canone di 66 libri e fede evangelica')}</span>
-                </button>
-
-                <button type="button" class="conf-btn sm:col-span-2 p-2.5 sm:p-3 rounded-xl border-2 border-amber-600 bg-amber-600/10 text-left transition cursor-pointer shadow-sm" data-conf="ecumenical">
-                  <span class="conf-title block text-xs sm:text-sm font-bold font-display text-amber-500">${obT('onboarding.traditions.ecumenicalTitle', 'Ecumenico / Cercatore di Dio')}</span>
-                  <span class="text-[10px] sm:text-xs text-stone-400 block mt-0.5 leading-tight">${obT('onboarding.traditions.ecumenicalDesc', 'Terreno sacro comune e condiviso per ogni cercatore di verità')}</span>
-                </button>
+              <div class="grid grid-cols-2 gap-2">
+                ${[
+                  { id: 'catholic', title: obT('onboarding.traditions.catholicTitle', 'Cattolico (Romano)'), desc: obT('onboarding.traditions.catholicDesc', 'Canone biblico completo, santi e liturgia romana') },
+                  { id: 'orthodox', title: obT('onboarding.traditions.orthodoxTitle', 'Ortodosso (Bizantino)'), desc: obT('onboarding.traditions.orthodoxDesc', 'Tradizione orientale, Padri della Chiesa ed esicasmo') },
+                  { id: 'protestant', title: obT('onboarding.traditions.protestantTitle', 'Protestante / Evangelico'), desc: obT('onboarding.traditions.protestantDesc', 'Canone di 66 libri e fede evangelica') },
+                  { id: 'ecumenical', title: obT('onboarding.traditions.ecumenicalTitle', 'Ecumenico / Cercatore di Dio'), desc: obT('onboarding.traditions.ecumenicalDesc', 'Terreno sacro comune e condiviso per ogni cercatore di verità') }
+                ].map((c) => {
+                  const isSel = selectedConfession === c.id;
+                  return `
+                    <button type="button" class="conf-btn p-2.5 sm:p-3 rounded-xl border-2 ${
+                      isSel ? 'border-amber-600 bg-amber-600/10 shadow-sm' : 'border-stone-300 dark:border-stone-800 bg-[var(--bg-secondary)] hover:border-amber-600/50'
+                    } text-left transition cursor-pointer flex flex-col justify-between min-h-[72px]" data-conf="${c.id}">
+                      <span class="conf-title block text-xs sm:text-sm font-bold font-display ${isSel ? 'text-amber-500' : 'text-[var(--text-primary)]'}">${c.title}</span>
+                      <span class="text-[10px] sm:text-xs text-stone-400 block mt-0.5 leading-tight">${c.desc}</span>
+                    </button>
+                  `;
+                }).join('')}
               </div>
             </div>
 
@@ -192,7 +187,7 @@ export function renderOnboardingModal(container, onComplete, canClose = true) {
                 <label class="block text-[11px] sm:text-xs font-bold uppercase tracking-wider text-[var(--text-muted)] font-sans">
                   ${obT('onboarding.monasticQuestion', '4. Quale ritmo di preghiera monastica desideri seguire?')}
                 </label>
-                <span class="text-[10px] text-amber-600 font-serif font-bold italic">«Ora et Labora»</span>
+                <span class="text-[10px] text-amber-600 font-serif font-bold italic">«${obT('onboarding.monasticMotto', 'Ora et Labora')}»</span>
               </div>
 
               <div class="grid grid-cols-1 gap-2">
@@ -200,7 +195,7 @@ export function renderOnboardingModal(container, onComplete, canClose = true) {
                 <button type="button" class="monastic-btn p-2.5 sm:p-3 rounded-xl border-2 border-amber-600 bg-amber-600/10 text-left transition cursor-pointer shadow-sm" data-rhythm="monastic">
                   <div class="flex items-center justify-between">
                     <span class="monastic-title text-xs sm:text-sm font-bold font-display text-amber-500">⛪ ${obT('onboarding.rhythms.monasticTitle', 'Ritmo Monastico Completo (Ora et Labora)')}</span>
-                    <span class="text-[10px] bg-amber-600/20 text-amber-600 px-1.5 py-0.5 rounded font-mono font-semibold">6 Ore</span>
+                    <span class="text-[10px] bg-amber-600/20 text-amber-600 px-1.5 py-0.5 rounded font-mono font-semibold">6 ${obT('onboarding.hours', 'Hours')}</span>
                   </div>
                   <span class="text-[10px] sm:text-xs text-stone-400 block mt-1 leading-tight">
                     ${obT('onboarding.rhythms.monasticDesc', '06:00 Lodi • 09:00 Terza • 12:00 Sesta & Angelus • 15:00 Nona • 18:00 Vespri • 21:00 Compieta')}
@@ -211,7 +206,7 @@ export function renderOnboardingModal(container, onComplete, canClose = true) {
                 <button type="button" class="monastic-btn p-2.5 sm:p-3 rounded-xl border-2 border-stone-300 dark:border-stone-800 bg-[var(--bg-secondary)] text-left hover:border-amber-600/50 transition cursor-pointer" data-rhythm="simple">
                   <div class="flex items-center justify-between">
                     <span class="monastic-title text-xs sm:text-sm font-bold font-display text-[var(--text-primary)]">🕊️ ${obT('onboarding.rhythms.simpleTitle', 'Ritmo Quotidiano Semplice (Secolare / Famiglia)')}</span>
-                    <span class="text-[10px] bg-stone-500/20 text-stone-400 px-1.5 py-0.5 rounded font-mono font-semibold">3 Ore</span>
+                    <span class="text-[10px] bg-stone-500/20 text-stone-400 px-1.5 py-0.5 rounded font-mono font-semibold">3 ${obT('onboarding.hours', 'Hours')}</span>
                   </div>
                   <span class="text-[10px] sm:text-xs text-stone-400 block mt-1 leading-tight">
                     ${obT('onboarding.rhythms.simpleDesc', '07:30 Mattino • 12:30 Angelus di Mezzogiorno • 21:30 Compieta & Riposo')}
@@ -222,7 +217,7 @@ export function renderOnboardingModal(container, onComplete, canClose = true) {
                 <button type="button" class="monastic-btn p-2.5 sm:p-3 rounded-xl border-2 border-stone-300 dark:border-stone-800 bg-[var(--bg-secondary)] text-left hover:border-amber-600/50 transition cursor-pointer" data-rhythm="disabled">
                   <div class="flex items-center justify-between">
                     <span class="monastic-title text-xs sm:text-sm font-bold font-display text-[var(--text-primary)]">🔇 ${obT('onboarding.rhythms.freeTitle', 'Preghiera Libera (Senza orari prefissati)')}</span>
-                    <span class="text-[10px] bg-stone-500/20 text-stone-400 px-1.5 py-0.5 rounded font-mono font-semibold">Libero</span>
+                    <span class="text-[10px] bg-stone-500/20 text-stone-400 px-1.5 py-0.5 rounded font-mono font-semibold">${obT('onboarding.free', 'Free')}</span>
                   </div>
                   <span class="text-[10px] sm:text-xs text-stone-400 block mt-1 leading-tight">
                     ${obT('onboarding.rhythms.freeDesc', 'Nessuna sveglia o allarme prefissato. Prega spontaneamente secondo il tuo cuore.')}
@@ -232,7 +227,7 @@ export function renderOnboardingModal(container, onComplete, canClose = true) {
 
               <!-- Notifications & Bell Chimes Toggle -->
               <label class="flex items-center gap-2.5 p-2.5 bg-[var(--bg-secondary)] rounded-xl border border-stone-300 dark:border-stone-700/80 cursor-pointer hover:border-amber-600/50 transition">
-                <input type="checkbox" id="ob-notifications" ${enableNotifications ? 'checked' : ''} class="w-4 h-4 sm:w-4.5 sm:h-4.5 accent-amber-600 cursor-pointer rounded" />
+                <input type="checkbox" id="ob-notifications" ${enableNotifications ? 'checked' : ''} class="w-4 h-4 sm:w-5 sm:h-5 accent-amber-600 cursor-pointer rounded" />
                 <div class="text-left flex-1 min-w-0">
                   <span class="text-xs sm:text-sm font-bold text-[var(--text-primary)] block">🔔 ${obT('onboarding.notifLabel', 'Attiva notifiche e rintocco della campana monastica')}</span>
                   <span class="text-[10px] text-[var(--text-muted)] block leading-tight">${obT('onboarding.notifSub', 'Risuona ad ogni ora canonica con versetto biblico e invito al raccoglimento')}</span>
@@ -272,10 +267,10 @@ export function renderOnboardingModal(container, onComplete, canClose = true) {
       });
     }
 
-    // 1. Language selector change handler (instantly switches language & re-renders modal)
+    // 1. Language selector change handler (instantly switches the app and modal)
     const langSelect = container.querySelector('#ob-language');
     if (langSelect) {
-      langSelect.addEventListener('change', (e) => {
+      langSelect.addEventListener('change', async (e) => {
         selectedLanguage = e.target.value;
         const currentNameInput = container.querySelector('#ob-username');
         if (currentNameInput) enteredName = currentNameInput.value;
@@ -287,6 +282,9 @@ export function renderOnboardingModal(container, onComplete, canClose = true) {
           selectedNationality = selectedLanguage;
         }
 
+        const defaultBible = getDefaultBibleForLanguage(selectedLanguage);
+        if (defaultBible) await setSetting('preferred_bible_version', defaultBible);
+        await setLanguage(selectedLanguage);
         render();
       });
     }
@@ -304,14 +302,12 @@ export function renderOnboardingModal(container, onComplete, canClose = true) {
       container.querySelectorAll('.conf-btn').forEach((b) => {
         const isSel = b.getAttribute('data-conf') === selected;
         const titleSpan = b.querySelector('.conf-title');
-        const isSpan2 = b.getAttribute('data-conf') === 'ecumenical';
-        const baseSpan = isSpan2 ? 'sm:col-span-2 ' : '';
 
         if (isSel) {
-          b.className = `conf-btn ${baseSpan}p-2.5 sm:p-3 rounded-xl border-2 border-amber-600 bg-amber-600/10 text-left transition cursor-pointer shadow-sm`;
+          b.className = 'conf-btn p-2.5 sm:p-3 rounded-xl border-2 border-amber-600 bg-amber-600/10 text-left transition cursor-pointer shadow-sm flex flex-col justify-between min-h-[72px]';
           if (titleSpan) titleSpan.className = 'conf-title block text-xs sm:text-sm font-bold font-display text-amber-500';
         } else {
-          b.className = `conf-btn ${baseSpan}p-2.5 sm:p-3 rounded-xl border-2 border-stone-300 dark:border-stone-800 bg-[var(--bg-secondary)] text-left hover:border-amber-600/50 transition cursor-pointer`;
+          b.className = 'conf-btn p-2.5 sm:p-3 rounded-xl border-2 border-stone-300 dark:border-stone-800 bg-[var(--bg-secondary)] text-left hover:border-amber-600/50 transition cursor-pointer flex flex-col justify-between min-h-[72px]';
           if (titleSpan) titleSpan.className = 'conf-title block text-xs sm:text-sm font-bold font-display text-[var(--text-primary)]';
         }
       });
@@ -369,7 +365,11 @@ export function renderOnboardingModal(container, onComplete, canClose = true) {
           const nameInput = (nameInputEl?.value || enteredName || '').trim();
           const shouldEnableNotif = notifCheckbox ? notifCheckbox.checked : enableNotifications;
 
-          // 1. Save Language and Nationality (Step 1)
+          // 1. Save the Scripture language before switching the app language.
+          const defaultBible = getDefaultBibleForLanguage(selectedLanguage);
+          if (defaultBible) {
+            await setSetting('preferred_bible_version', defaultBible);
+          }
           await setLanguage(selectedLanguage);
           await setSetting('user_language', selectedLanguage);
           await setSetting('user_nationality', selectedNationality);
@@ -378,16 +378,13 @@ export function renderOnboardingModal(container, onComplete, canClose = true) {
             localStorage.setItem('aurasacra_user_nationality', selectedNationality);
           } catch (e) {}
 
-          // Automatically set appropriate historic Bible version for chosen language
-          const defaultBible = getDefaultBibleForLanguage(selectedLanguage);
-          if (defaultBible) {
-            await setSetting('preferred_bible_version', defaultBible);
-          }
-
           // 2. Save Confession (Step 2)
           await setSetting('user_confession', selectedConfession || 'ecumenical');
-          await setSetting('confession', selectedConfession || 'ecumenical');
           await setSetting('penance_tradition', selectedConfession || 'ecumenical');
+          // Auto-set bible canon based on confession
+          const canonMap = { catholic: 'catholic', orthodox: 'orthodox', protestant: 'protestant' };
+          const autoCanon = canonMap[selectedConfession] || 'all';
+          await setSetting('preferred_canon', autoCanon);
           try {
             localStorage.setItem('aurasacra_user_confession', selectedConfession || 'ecumenical');
           } catch (e) {}

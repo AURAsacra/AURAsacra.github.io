@@ -14,7 +14,9 @@ import {
   getLocalizedSaint,
   NATIONALITY_META,
   getNationalityMeta,
-  SUPPORTED_NATIONALITIES
+  SUPPORTED_NATIONALITIES,
+  renderLiturgicalLegendHtml,
+  resolveSaintLiturgicalMeta
 } from '../data/saints.js';
 import { icons } from '../icons.js';
 import { getSetting, saveSetting } from '../db.js';
@@ -36,11 +38,11 @@ export async function renderPenanceCalendar(container, onOpenShareCard) {
   const normalizedTradition =
     userConfession === 'orthodox' || userConfession === 'eastern' ? 'orthodox' :
     userConfession === 'protestant' ? 'protestant' :
-    userConfession === 'traditional' ? 'traditional' :
     userConfession === 'ecumenical' ? 'ecumenical' :
     'catholic';
 
   activeTradition = await getSetting('penance_tradition', normalizedTradition);
+  if (activeTradition === 'traditional') activeTradition = 'catholic';
   let userNationality = ((await getSetting('user_nationality', 'universal')) || 'universal').toLowerCase();
   const today = new Date();
   currentDisplayDate = new Date(today.getFullYear(), today.getMonth(), 1);
@@ -67,11 +69,11 @@ export async function renderPenanceCalendar(container, onOpenShareCard) {
     const isInspectingToday = isSameDate(selectedDate, today);
     const selectedDaySaints = getSaintsForDate(selectedDate, activeTradition, userNationality, lang);
     const primarySelectedSaint = selectedDaySaints[0] || null;
-    const locPrimarySelectedSaint = primarySelectedSaint ? getLocalizedSaint(primarySelectedSaint, lang) : null;
+    const locPrimarySelectedSaint = primarySelectedSaint ? getLocalizedSaint(primarySelectedSaint, lang, activeTradition, userNationality) : null;
     const activeNatMeta = getNationalityMeta(userNationality, lang);
 
     container.innerHTML = `
-      <div class="space-y-6 pb-32 sm:pb-24 animate-fade-in max-w-5xl mx-auto">
+      <div class="space-y-6 pb-32 sm:pb-24 animate-fade-in max-w-5xl mx-auto penance-view text-[var(--text-primary)]">
         
         <!-- Header & Tradition Selection -->
         <div class="bg-[var(--bg-card)] border border-stone-300 dark:border-stone-800 rounded-2xl p-5 shadow-sm space-y-4">
@@ -98,7 +100,7 @@ export async function renderPenanceCalendar(container, onOpenShareCard) {
                 <button data-tradition="${trad.id}" class="px-3 py-1.5 rounded-lg text-xs font-sans font-semibold transition cursor-pointer ${
                   activeTradition === trad.id
                     ? 'bg-amber-600 text-white shadow-sm'
-                    : 'text-[var(--text-secondary)] hover:text-[var(--text-primary)] hover:bg-stone-500/10'
+                    : 'text-[var(--text-secondary)] hover:text-[var(--text-primary)] hover:bg-black/5 dark:hover:bg-white/10'
                 }" title="${meta.subtitle}">
                   ${meta.name}
                 </button>
@@ -109,20 +111,20 @@ export async function renderPenanceCalendar(container, onOpenShareCard) {
           </div>
 
           <!-- Active Tradition & Regional Nationality Bar -->
-          <div class="text-xs text-[var(--text-muted)] bg-[var(--bg-secondary)] p-3 rounded-xl border border-stone-200 dark:border-stone-800/80 flex flex-col md:flex-row md:items-center justify-between gap-3 min-w-0 max-w-full overflow-hidden">
+          <div class="text-xs text-[var(--text-secondary)] bg-[var(--bg-secondary)] p-3 rounded-xl border border-stone-200 dark:border-stone-800/80 flex flex-col md:flex-row md:items-center justify-between gap-3 min-w-0 max-w-full overflow-hidden">
             <div class="leading-relaxed min-w-0 flex-1">
-              <strong class="text-[var(--text-primary)] font-semibold">${t('penance.activeRite', 'Active Rite:')}</strong>
+              <strong class="text-[var(--text-primary)] font-bold">${t('penance.activeRite', 'Active Rite:')}</strong>
               ${getTraditionMeta(activeTradition, lang).subtitle} — ${
       getTraditionMeta(activeTradition, lang).description
     }
             </div>
 
             <!-- Nationality / Regional Calendar Selector -->
-            <div class="flex items-center justify-between sm:justify-start gap-2 min-w-0 max-w-full flex-shrink-0">
-              <label for="calendar-nationality-select" class="text-[11px] font-sans font-bold uppercase tracking-wider text-amber-600 dark:text-amber-500 whitespace-nowrap flex-shrink-0">
+            <div class="flex flex-col sm:flex-row sm:items-center sm:justify-start gap-2 min-w-0 w-full sm:w-auto sm:max-w-full">
+              <label for="calendar-nationality-select" class="text-[11px] font-sans font-bold uppercase tracking-wider text-amber-600 dark:text-amber-500 sm:whitespace-nowrap">
                 ${t('settings.nationality', 'Calendario:')}
               </label>
-              <select id="calendar-nationality-select" class="max-w-[200px] sm:max-w-[260px] min-w-0 bg-[var(--bg-card)] border border-stone-300 dark:border-stone-700 rounded-lg px-2.5 py-1.5 text-xs font-sans font-semibold text-[var(--text-primary)] cursor-pointer focus:outline-none focus:border-amber-600 truncate shadow-xs">
+              <select id="calendar-nationality-select" class="w-full sm:w-auto max-w-full sm:max-w-[260px] min-w-0 bg-[var(--bg-card)] border border-stone-300 dark:border-stone-700 rounded-lg px-2.5 py-1.5 text-xs font-sans font-semibold text-[var(--text-primary)] cursor-pointer focus:outline-none focus:border-amber-600 truncate shadow-xs">
                 ${SUPPORTED_NATIONALITIES.map((natCode) => {
                   const nMeta = getNationalityMeta(natCode, lang);
                   return `<option value="${natCode}" ${userNationality === natCode ? 'selected' : ''}>${nMeta.flag} ${nMeta.name}</option>`;
@@ -135,11 +137,11 @@ export async function renderPenanceCalendar(container, onOpenShareCard) {
         <!-- Today's Status Banner with Saints of the Day -->
         <div class="rounded-2xl p-5 sm:p-6 shadow-md border-2 relative overflow-hidden transition ${
           todayStatus.badge.color === 'vermilion'
-            ? 'bg-red-500/10 border-red-600/70 text-red-950 dark:text-red-100'
+            ? 'bg-red-500/10 border-red-600/70 text-white'
             : todayStatus.badge.color === 'purple'
-            ? 'bg-purple-500/10 border-purple-600/70 text-purple-950 dark:text-purple-100'
+            ? 'bg-purple-500/10 border-purple-600/70 text-white'
             : todayStatus.badge.color === 'gold'
-            ? 'bg-amber-500/10 border-amber-500/70 text-amber-950 dark:text-amber-100'
+            ? 'bg-amber-500/10 border-amber-500/70 text-white'
             : 'bg-[var(--bg-card)] border-stone-300 dark:border-stone-800'
         } parchment-border">
           
@@ -153,7 +155,7 @@ export async function renderPenanceCalendar(container, onOpenShareCard) {
                     ? 'bg-purple-600 text-white'
                     : todayStatus.badge.color === 'gold'
                     ? 'bg-amber-600 text-white'
-                    : 'bg-stone-300 dark:bg-stone-700 text-[var(--text-primary)]'
+                    : 'bg-[var(--bg-card)] text-[var(--text-primary)] border border-stone-300 dark:border-stone-700 shadow-xs'
                 }">
                   <span>${icons[todayStatus.badge.icon]('w-3.5 h-3.5')}</span>
                   <span>${todayStatus.badge.label}</span>
@@ -172,15 +174,15 @@ export async function renderPenanceCalendar(container, onOpenShareCard) {
                 <div class="pt-1 flex flex-wrap items-center gap-2">
                   <span class="text-[11px] font-sans font-bold text-amber-600 uppercase tracking-wider">${t('penance.todayCommemoration', "Today's Saint / Feast:")}</span>
                   ${todaySaints.map(s => {
-                    const locS = getLocalizedSaint(s, lang);
-                    const cMeta = locS.colorMeta || getLiturgicalColorMeta(locS.color, lang);
+                    const locS = getLocalizedSaint(s, lang, activeTradition, userNationality);
+                    const cMeta = locS.colorMeta || getLiturgicalColorMeta(locS.color, lang, activeTradition, userNationality);
                     const cName = locS.colorName || cMeta.name;
                     const sName = locS.displayName || locS.name;
                     const rankName = locS.rankName || t(`ranks.${locS.rank}`, locS.rank);
                     return `
                       <span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-lg border text-xs font-sans font-semibold ${cMeta.badgeClass}">
                         ${locS.nationalityMeta ? `<span title="${locS.nationalityMeta.name}">${locS.nationalityMeta.flag}</span>` : ''}
-                        <span>${cMeta.symbol} ${sName}</span>
+                        <span>${cMeta.symbol ? cMeta.symbol + ' ' : ''}${sName}</span>
                         <span class="opacity-75 text-[10px]">(${cName} • ${rankName})</span>
                       </span>
                     `;
@@ -193,7 +195,7 @@ export async function renderPenanceCalendar(container, onOpenShareCard) {
             <div class="bg-[var(--bg-card)]/90 border border-stone-300 dark:border-stone-700 rounded-xl p-3 text-xs space-y-1 w-full sm:w-72 shadow-xs">
               <div class="flex items-center gap-1.5 font-bold text-emerald-700 dark:text-emerald-400">
                 <span>✓ ${t('common.allowed', 'Allowed')}:</span>
-                <span class="font-normal text-[var(--text-primary)] truncate">${todayStatus.rules.allowed.split(',')[0]} & more</span>
+                <span class="font-normal text-[var(--text-primary)] truncate">${todayStatus.rules.allowed.split(',')[0]} ${t('penance.andMore', 'and more')}</span>
               </div>
               <div class="flex items-center gap-1.5 font-bold text-red-700 dark:text-red-400">
                 <span>✗ ${t('common.avoid', 'Avoid')}:</span>
@@ -238,24 +240,8 @@ export async function renderPenanceCalendar(container, onOpenShareCard) {
                 ${t('penance.jumpToday', 'Jump to Today')}
               </button>
               
-              <!-- Liturgical Colors Legend Pills (Red, Blue, Black, Ordinary) -->
-              <div class="hidden xl:flex items-center gap-2.5 text-[11px] font-sans text-[var(--text-muted)] border-l border-stone-300 dark:border-stone-700 pl-3">
-                <span class="flex items-center gap-1 font-semibold text-red-600 dark:text-red-400" title="${t('colors.redDesc')}">
-                  <span class="w-2.5 h-2.5 rounded-full bg-red-600 dark:bg-red-500 ring-1 ring-red-400"></span>
-                  <span>† ${t('colors.red', 'Red')}</span>
-                </span>
-                <span class="flex items-center gap-1 font-semibold text-blue-600 dark:text-blue-400" title="${t('colors.blueDesc')}">
-                  <span class="w-2.5 h-2.5 rounded-full bg-blue-600 dark:bg-blue-500 ring-1 ring-blue-400"></span>
-                  <span>† ${t('colors.blue', 'Blue')}</span>
-                </span>
-                <span class="flex items-center gap-1 font-semibold text-stone-900 dark:text-stone-200" title="${t('colors.blackDesc')}">
-                  <span class="w-2.5 h-2.5 rounded-full bg-stone-800 dark:bg-stone-300 ring-1 ring-stone-600 dark:ring-stone-400"></span>
-                  <span>† ${t('colors.black', 'Black')}</span>
-                </span>
-                <span class="flex items-center gap-1 font-normal text-stone-600 dark:text-stone-400" title="${t('colors.whiteDesc')}">
-                  <span>${t('colors.white', 'Ordinary')}</span>
-                </span>
-              </div>
+              <!-- Liturgical Colors Legend Pills (Authentic to Tradition & Zone) -->
+              ${renderLiturgicalLegendHtml(activeTradition, userNationality, lang, true)}
             </div>
           </div>
 
@@ -288,7 +274,7 @@ export async function renderPenanceCalendar(container, onOpenShareCard) {
                 const isSelected = isSameDate(dObj.date, selectedDate);
                 const daySaints = getSaintsForDate(dObj.date, activeTradition, userNationality, lang);
                 const primarySaint = daySaints[0] || null;
-                const locPrimary = primarySaint ? getLocalizedSaint(primarySaint, lang) : null;
+                const locPrimary = primarySaint ? getLocalizedSaint(primarySaint, lang, activeTradition, userNationality) : null;
 
                 let cellColorStyle = 'border-stone-200 dark:border-stone-800 bg-[var(--bg-secondary)] hover:border-amber-600';
                 if (dObj.badge.color === 'vermilion') {
@@ -408,7 +394,7 @@ export async function renderPenanceCalendar(container, onOpenShareCard) {
               <h3 class="text-2xl sm:text-3xl font-display font-bold text-[var(--accent-vermilion)] mt-1">
                 ${locPrimarySelectedSaint ? (locPrimarySelectedSaint.displayName || locPrimarySelectedSaint.name) : selected.title}
               </h3>
-              <p class="text-sm font-serif italic text-[var(--text-muted)] mt-0.5">
+              <p class="text-sm font-serif italic text-[var(--text-secondary)] mt-0.5">
                 ${locPrimarySelectedSaint && locPrimarySelectedSaint.title ? locPrimarySelectedSaint.title + ' • ' : ''}${selected.title} — ${selected.subtitle}
               </p>
             </div>
@@ -421,7 +407,7 @@ export async function renderPenanceCalendar(container, onOpenShareCard) {
                 ? 'bg-purple-600 text-white border-purple-700 shadow-sm'
                 : selected.badge.color === 'gold'
                 ? 'bg-amber-600 text-white border-amber-700 shadow-sm'
-                : 'bg-[var(--bg-secondary)] text-[var(--text-primary)] border-stone-300 dark:border-stone-700'
+                : 'bg-[var(--bg-card)] text-[var(--text-primary)] border border-stone-300 dark:border-stone-700 shadow-xs'
             }">
               <span>${icons[selected.badge.icon]('w-4 h-4')}</span>
               <span class="font-sans font-bold text-xs uppercase tracking-wider">${selected.badge.label}</span>
@@ -442,8 +428,8 @@ export async function renderPenanceCalendar(container, onOpenShareCard) {
 
             <div class="space-y-3">
               ${selectedDaySaints.map(saint => {
-                const locSaint = getLocalizedSaint(saint, lang);
-                const cMeta = locSaint.colorMeta || getLiturgicalColorMeta(locSaint.color, lang);
+                const locSaint = getLocalizedSaint(saint, lang, activeTradition, userNationality);
+                const cMeta = locSaint.colorMeta || saint.colorMeta || resolveSaintLiturgicalMeta(saint, activeTradition, userNationality, lang);
                 const cName = locSaint.colorName || cMeta.name;
                 const rankName = locSaint.rankName || t(`ranks.${locSaint.rank}`, locSaint.rank);
                 const saintDisplayName = locSaint.displayName || locSaint.name;
@@ -512,13 +498,8 @@ export async function renderPenanceCalendar(container, onOpenShareCard) {
               }).join('')}
             </div>
 
-            <!-- Liturgical Color Guidelines Footer -->
-            <div class="text-[11px] text-[var(--text-muted)] pt-1 flex flex-wrap items-center gap-3">
-              <span class="flex items-center gap-1"><strong class="text-red-600 dark:text-red-400">† ${t('colors.red', 'Red')}:</strong> ${t('colors.redDesc')}</span>
-              <span class="flex items-center gap-1"><strong class="text-blue-600 dark:text-blue-400">† ${t('colors.blue', 'Blue')}:</strong> ${t('colors.blueDesc')}</span>
-              <span class="flex items-center gap-1"><strong class="text-stone-900 dark:text-stone-200">† ${t('colors.black', 'Black')}:</strong> ${t('colors.blackDesc')}</span>
-              <span class="flex items-center gap-1"><strong class="text-stone-600 dark:text-stone-400">${t('colors.white', 'Ordinary')}:</strong> ${t('colors.whiteDesc')}</span>
-            </div>
+            <!-- Liturgical Legend (Authentic to Tradition & Zone) -->
+            ${renderLiturgicalLegendHtml(activeTradition, userNationality, lang, false)}
           </div>
 
           <!-- Rules Grid: Fasting, Abstinence, Allowed, Avoid -->
@@ -581,7 +562,7 @@ export async function renderPenanceCalendar(container, onOpenShareCard) {
 
             <div class="border-t border-stone-300/60 dark:border-stone-700/60 pt-3 notranslate" translate="no">
               <span class="text-xs font-mono font-bold text-amber-600 notranslate" translate="no">— ${selected.scripture?.ref || ''}</span>
-              <p class="text-xs sm:text-sm font-serif italic text-[var(--text-primary)] mt-0.5 notranslate" translate="no">
+              <p class="text-xs sm:text-sm font-serif italic text-[var(--text-secondary)] mt-0.5 notranslate" translate="no">
                 «${selected.scripture?.text || ''}»
               </p>
             </div>

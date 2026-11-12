@@ -1,0 +1,21 @@
+{
+  "name": "Aura Sacra — suggestus christianus universalis",
+  "short_name": "Aura Sacra",
+  "lang": "la",
+  "description": "Suggestus spiritualis oecumenicus, omnino sine filo operans, cum Scriptura, diario precationum, thematibus liturgicis et ductore spirituali.",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#141416",
+  "theme_color": "#c49a45",
+  "orientation": "any",
+  "icons": [
+    { "src": "./icons/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any maskable" },
+    { "src": "./icons/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any maskable" }
+  ],
+  "shortcuts": [
+    { "name": "Versus diei", "short_name": "Biblia", "description": "Scripturam Sacram lege et meditare", "url": "./index.html?tab=bible", "icons": [{ "src": "./icons/icon-192.png", "sizes": "192x192" }] },
+    { "name": "Candela et pluvia", "short_name": "Candela", "description": "Sessio precationis et laboris cum candela sacra", "url": "./index.html?tab=focus", "icons": [{ "src": "./icons/icon-192.png", "sizes": "192x192" }] },
+    { "name": "Cum Ductore colloquere", "short_name": "Ductor", "description": "Colloquium spirituale Christum in medio ponens", "url": "./index.html?tab=chat", "icons": [{ "src": "./icons/icon-192.png", "sizes": "192x192" }] },
+    { "name": "Versus fortuitus", "short_name": "Inspiratio", "description": "Versum biblicum fortuitum ad meditationem accipe", "url": "./index.html?tab=bible&random=1", "icons": [{ "src": "./icons/icon-192.png", "sizes": "192x192" }] }
+  ]
+}

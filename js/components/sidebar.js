@@ -6,7 +6,7 @@ export function renderSidebar(container, activeTab, onNavigate, onOpenModal) {
   const navItems = [
     { id: 'bible', label: t('nav.scripture', 'Sacred Scripture'), icon: 'book', isTab: true },
     { id: 'penance', label: t('nav.penance', 'Penance & Fasting Calendar'), icon: 'calendar', isTab: true },
-    { id: 'chat', label: t('nav.jesus', 'Dialogue with Jesus'), icon: 'message', isTab: true },
+    { id: 'chat', label: t('nav.jesus', 'Dialogo con la Guida'), icon: 'message', isTab: true },
     { id: 'journal', label: t('nav.journal', 'Prayer Journal'), icon: 'heart', isTab: true },
     { id: 'saints', label: t('nav.saints', 'Saints & Fathers'), icon: 'cross', isTab: true },
     { id: 'focus', label: t('nav.focus', 'Focus with Candle & Rain'), icon: 'flame', isTab: true }
@@ -63,8 +63,8 @@ export function renderSidebar(container, activeTab, onNavigate, onOpenModal) {
         </p>
         <div class="space-y-1">
           ${toolsItems.map((item) => `
-            <button data-nav-modal="${item.id}" class="w-full flex items-center gap-3 px-3 py-2 rounded-lg text-sm text-left text-[var(--text-secondary)] hover:bg-[var(--bg-secondary)] hover:text-[var(--text-primary)] transition cursor-pointer">
-              <span class="text-stone-400 group-hover:text-amber-600">${getIconSvg(item.icon)}</span>
+            <button data-nav-modal="${item.id}" class="w-full flex items-center gap-3 px-3 py-2 rounded-lg text-sm text-left text-[var(--text-secondary)] hover:bg-[var(--bg-secondary)] hover:text-[var(--text-primary)] transition cursor-pointer group">
+              <span class="text-stone-400 group-hover:text-amber-600 transition-colors">${getIconSvg(item.icon)}</span>
               <span>${item.label}</span>
             </button>
           `).join('')}

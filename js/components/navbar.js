@@ -2,6 +2,8 @@
 import { icons } from '../icons.js';
 import { t, getLanguage, setLanguage, SUPPORTED_LANGUAGES } from '../i18n.js';
 
+let outsideLangClickHandler = null;
+
 export function renderNavbar(container, state, onNavigate, onOpenModal) {
   const currentLang = getLanguage();
   const currentLangObj = SUPPORTED_LANGUAGES.find(l => l.code === currentLang) || SUPPORTED_LANGUAGES[0];
@@ -12,7 +14,10 @@ export function renderNavbar(container, state, onNavigate, onOpenModal) {
         
         <!-- Logo & Title -->
         <div class="flex items-center gap-1.5 sm:gap-3 cursor-pointer select-none min-w-0 flex-shrink" id="nav-brand">
-          <img src="./icons/logo.png" alt="Aura Sacra Logo" width="40" height="40" style="width: 34px; height: 34px; max-width: 40px; max-height: 40px;" class="w-8 h-8 sm:w-10 sm:h-10 rounded-xl object-cover shadow-sm border border-amber-600/40 flex-shrink-0">
+          <div class="relative w-8 h-8 sm:w-10 sm:h-10 flex-shrink-0 flex items-center justify-center">
+            <img src="./icons/logo.png" alt="Aura Sacra Logo" width="40" height="40" class="w-8 h-8 sm:w-10 sm:h-10 rounded-xl object-cover shadow-sm border border-amber-600/40 flex-shrink-0" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+            <div class="hidden w-8 h-8 sm:w-10 sm:h-10 rounded-xl bg-amber-600/10 border border-amber-600/40 items-center justify-center text-amber-500 font-bold text-base shadow-sm">✝</div>
+          </div>
           <div class="min-w-0">
             <h1 class="text-sm sm:text-2xl font-bold tracking-wide sm:tracking-widest text-[var(--accent-vermilion)] leading-tight truncate">AURA SACRA</h1>
             <p class="text-xs text-[var(--text-muted)] font-serif italic hidden sm:block">${t('nav.brandSub', 'Universal Christian Platform • 100% Offline')}</p>
@@ -67,10 +72,13 @@ export function renderNavbar(container, state, onNavigate, onOpenModal) {
     </div>
   `;
 
-  // Event Listeners
-  container.querySelector('#nav-brand').addEventListener('click', () => onNavigate('bible'));
-  container.querySelector('#btn-nav-sos').addEventListener('click', () => onOpenModal('sos'));
-  container.querySelector('#btn-nav-settings').addEventListener('click', () => onOpenModal('settings'));
+  // Event Listeners with null guards
+  const navBrand = container.querySelector('#nav-brand');
+  if (navBrand) navBrand.addEventListener('click', () => onNavigate('bible'));
+  const btnSos = container.querySelector('#btn-nav-sos');
+  if (btnSos) btnSos.addEventListener('click', () => onOpenModal('sos'));
+  const btnSettings = container.querySelector('#btn-nav-settings');
+  if (btnSettings) btnSettings.addEventListener('click', () => onOpenModal('settings'));
 
   // Language Popover Toggle & Selection
   const langPickerBtn = container.querySelector('#btn-nav-lang-picker');
@@ -81,12 +89,19 @@ export function renderNavbar(container, state, onNavigate, onOpenModal) {
       langMenu.classList.toggle('hidden');
     });
 
+    // Cleanup previous document listener to prevent memory leak
+    if (outsideLangClickHandler) {
+      document.removeEventListener('click', outsideLangClickHandler);
+      outsideLangClickHandler = null;
+    }
+
     // Close when clicking outside
-    document.addEventListener('click', (e) => {
+    outsideLangClickHandler = (e) => {
       if (!langMenu.contains(e.target) && !langPickerBtn.contains(e.target)) {
         langMenu.classList.add('hidden');
       }
-    });
+    };
+    document.addEventListener('click', outsideLangClickHandler);
 
     langMenu.querySelectorAll('button[data-switch-lang]').forEach((btn) => {
       btn.addEventListener('click', async () => {

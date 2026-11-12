@@ -27,14 +27,14 @@ export const TRANSLATIONS = {
     nav: {
       tabBible: 'Bible',
       tabPenance: 'Penance',
-      tabJesus: 'Jesus',
+      tabJesus: 'Guide',
       tabJournal: 'Journal',
       tabTools: 'Tools',
       bible: 'Bible',
       brandSub: 'Universal Christian Platform • 100% Offline',
       scripture: 'Scripture',
       penance: 'Penance & Fasting',
-      jesus: 'Dialogue with Jesus',
+      jesus: 'Dialogue with the Guide',
       journal: 'Prayer Journal',
       saints: 'Saints & Fathers',
       focus: 'Focus Meditation',
@@ -54,14 +54,14 @@ export const TRANSLATIONS = {
       night: 'Night / Compline'
     },
     colors: {
-      white: "No Cross (Ordinary)",
+      white: "White / Ordinary",
       blue: "Blue",
       black: "Black",
       red: "Red",
-      whiteDesc: "Ordinary Ferias & Simple Daily Commemorations (No Cross)",
-      blueDesc: "Feasts of the Mother of God & National/Regional Patron Saints across all Christian traditions (Blue Cross)",
-      blackDesc: "Universal Saints with Polyeleos or Great Doxology: Church Fathers, Apostles & Martyrs (Black Cross)",
-      redDesc: "Great Feasts (Praznice) of the Lord and the Theotokos, and Great Solemnities with Vigil (Red Cross)"
+      whiteDesc: "Ordinary Time, ferias and daily commemorations without cross",
+      blueDesc: "Feasts of the Blessed Virgin Mary and Patron Saints",
+      blackDesc: "Saints with Polyeleos or Great Doxology and commemorations",
+      redDesc: "Solemnities, Holy Days of Obligation, Great Feasts and Martyrs"
     },
     ranks: {
       solemnity: 'Solemnity',
@@ -88,6 +88,7 @@ export const TRANSLATIONS = {
       abstinenceDiscipline: 'Abstinence Discipline (Quality of Food)',
       allowedTable: '✓ Permitted Table',
       avoidTable: '✗ Prohibited or Restricted',
+      andMore: 'and more',
       theologicalMeaning: 'Theological & Biblical Meaning',
       prayerOfDay: 'Penitential Prayer of the Day',
       saintsOnThisDay: 'Saints & Feasts Commemorated on this Day',
@@ -126,9 +127,20 @@ export const TRANSLATIONS = {
       importanceRank: 'Liturgical Rank:',
       shareQuote: 'Share Quote',
       meditation: 'Patristic Meditation',
-      scripture: 'Scripture Reference'
+      scripture: 'Scripture Reference',
+      allSaints: 'All Saints',
+      searchPlaceholder: 'Search saint, feast, or keyword...',
+      noResults: 'No saints found matching your search.',
+      clearSearch: 'Clear search'
     },
     settings: {
+      monasticNotif: 'Push & Local Notifications',
+      notifAllowed: '✓ Allowed',
+      notifPrompt: 'Tap to enable',
+      monasticBell: 'Cathedral Bell',
+      monasticBellDesc: 'Offline cathedral chime',
+      testBell: 'Test Bell',
+      testNotif: 'Test Notification',
       title: 'Settings & Sacred Preferences',
       subtitle: 'Customize faith tradition, language, circadian theme, and offline data backup',
       language: "Interface Language:",
@@ -178,7 +190,6 @@ export const TRANSLATIONS = {
       nativeLangs: 'Native Languages',
       confessions: {
         catholic: 'Catholic (Roman)',
-        traditional: 'Traditional Catholic (Latin 1962 / Ember Days)',
         orthodox: 'Orthodox (Eastern Byzantine)',
         protestant: 'Protestant / Evangelical',
         ecumenical: 'Ecumenical / Spiritual Seeker'
@@ -294,7 +305,7 @@ export const TRANSLATIONS = {
       of: 'of'
     },
     jesus: {
-      title: 'Dialogue with Jesus',
+      title: 'DIALOGUE WITH THE GUIDE',
       downloadSuccess: 'Gemini Nano downloaded successfully! Offline dialogue is now active.',
       subtitle: 'Answers questions, theological doubts, and life dilemmas with Gospel wisdom',
       geminiNanoOffline: 'Gemini Nano (Offline On-Device)',
@@ -326,14 +337,14 @@ export const TRANSLATIONS = {
       prompt4: 'How can I truly forgive someone who hurt me deeply?',
       prompt5: 'How can I find inner peace and overcome anxiety?',
       prompt6: 'How do I pray when God seems completely silent?',
-      inputPlaceholder: 'Ask a question, share a doubt, or speak to Jesus...',
+      inputPlaceholder: 'Ask a question, share a doubt, or speak with the Guide...',
       offlineInputDisabled: 'Offline AI Disabled: Local Gemini model required...',
       connectInputPrompt: 'Please connect Gemini AI above to ask questions...',
       ask: 'Ask',
-      reflecting: 'Jesus is reflecting on your question...',
+      reflecting: 'The Spiritual Guide is reflecting on your question...',
       you: 'You',
-      jesusChrist: 'Jesus Christ',
-      confirmClear: 'Clear the entire conversation history with Jesus?',
+      jesusChrist: 'Spiritual Guide',
+      confirmClear: 'Clear the entire conversation history with the Guide?',
       errorCommunicating: 'Error communicating with Gemini AI.',
       nanoDownloaded: 'Gemini Nano downloaded successfully! Offline dialogue is now active.',
       downloadFailed: 'Download failed',
@@ -354,6 +365,7 @@ export const TRANSLATIONS = {
       prayerTitle: 'Instant Heart Prayer:',
     },
     common: {
+      prayNow: 'Pray Now',
       close: 'Close',
       save: 'Save',
       cancel: 'Cancel',
@@ -377,7 +389,7 @@ export const TRANSLATIONS = {
       prayersCount: 'Prayers',
       emptyTitle: 'The First Page of Your Soul',
       emptyDesc: 'Write a prayer, a sigh, a petition, or a word of gratitude in the box below. It will be preserved privately offline.',
-      bringToJesus: 'Bring to Jesus',
+      bringToJesus: 'Bring to Guide',
       deleteTooltip: 'Delete prayer',
       deleteConfirm: 'Delete this prayer?',
       inputPlaceholder: 'Write a prayer to God (press Enter to place in your journal)...',
@@ -472,8 +484,6 @@ export const TRANSLATIONS = {
       traditions: {
         catholicTitle: 'Catholic (Roman)',
         catholicDesc: 'Full biblical canon, saints, and Roman liturgy',
-        traditionalTitle: 'Traditional Catholic (1962)',
-        traditionalDesc: 'Latin Mass, Ember Days, Vigils & traditional fasts',
         orthodoxTitle: 'Orthodox (Eastern)',
         orthodoxDesc: 'Eastern tradition, Church Fathers, and Hesychasm',
         protestantTitle: 'Protestant / Evangelical',
@@ -566,14 +576,14 @@ export const TRANSLATIONS = {
     nav: {
       tabBible: 'Bibbia',
       tabPenance: 'Penitenza',
-      tabJesus: 'Gesù',
+      tabJesus: 'Guida',
       tabJournal: 'Diario',
       tabTools: 'Strumenti',
       bible: 'Bibbia',
       brandSub: 'Piattaforma Cristiana Universale • 100% Offline',
       scripture: 'Scrittura',
       penance: 'Penitenza e Digiuno',
-      jesus: 'Dialogo con Gesù',
+      jesus: 'Dialogo con la Guida',
       journal: 'Diario di Preghiera',
       saints: 'Santi e Padri',
       focus: 'Meditazione Focus',
@@ -593,14 +603,14 @@ export const TRANSLATIONS = {
       night: 'Notte / Compieta'
     },
     colors: {
-      white: "Senza croce (Ordinario)",
-      blue: "Blu",
+      white: "Bianco / Ordinario",
+      blue: "Azzurro / Blu",
       black: "Nero",
       red: "Rosso",
-      whiteDesc: "Giorni feriali ordinari e memorie semplici del Sinassario (senza croce)",
-      blueDesc: "Feste della Madre di Dio e Santi Patroni Nazionali e Locali di tutte le Chiese (Croce Blu)",
-      blackDesc: "Santi della Chiesa universale con Polieleo o Grande Dossologia: Padri della Chiesa, Apostoli e Martiri (Croce Nera)",
-      redDesc: "Praznice Împărătești del Signore e della Madre di Dio, e Grandi Feste con Veglia (Croce Rossa)"
+      whiteDesc: "Tempo Ordinario, memorie feriali e santi senza croce",
+      blueDesc: "Beata Vergine Maria e Patroni (Privilegio mariano o Cruce Albastră)",
+      blackDesc: "Santi con Polieleo o Grande Dossologia e memorie liturgiche",
+      redDesc: "Solennità di Precetto, Grandi Feste del Signore, Pentecoste e Martiri"
     },
     ranks: {
       solemnity: 'Solennità',
@@ -627,6 +637,7 @@ export const TRANSLATIONS = {
       abstinenceDiscipline: 'Disciplina dell\'Astinenza (Qualità del Cibo)',
       allowedTable: '✓ Tavola Permessa',
       avoidTable: '✗ Proibito o Ristretto',
+      andMore: 'e altro ancora',
       theologicalMeaning: 'Significato Teologico e Biblico',
       prayerOfDay: 'Preghiera Penitenziale del Giorno',
       saintsOnThisDay: 'Santi e Festività Commemorati Oggi',
@@ -665,9 +676,20 @@ export const TRANSLATIONS = {
       importanceRank: 'Grado Liturgico:',
       shareQuote: 'Condividi Citazione',
       meditation: 'Meditazione Patristica',
-      scripture: 'Riferimento Biblico'
+      scripture: 'Riferimento Biblico',
+      allSaints: 'Tutti i Santi',
+      searchPlaceholder: 'Cerca un santo, festa o parola chiave...',
+      noResults: 'Nessun santo trovato per questa ricerca.',
+      clearSearch: 'Cancella ricerca'
     },
     settings: {
+      monasticNotif: 'Notifiche Push & Locali',
+      notifAllowed: '✓ Consentite',
+      notifPrompt: 'Tocca per attivare',
+      monasticBell: 'Campana Monastica',
+      monasticBellDesc: 'Rintocco cattedrale offline',
+      testBell: 'Prova Campana',
+      testNotif: 'Test Notifica',
       title: 'Impostazioni e Preferenze Sacre',
       subtitle: 'Personalizza tradizione di fede, lingua, tema circadiano e backup 100% offline',
       language: "Lingua dell'Interfaccia:",
@@ -717,7 +739,6 @@ export const TRANSLATIONS = {
       nativeLangs: 'Lingue Native',
       confessions: {
         catholic: 'Cattolico (Romano)',
-        traditional: 'Cattolico Tradizionale (Latino 1962 / Quattro Tempora)',
         orthodox: 'Ortodosso (Bizantino Orientale)',
         protestant: 'Protestante / Evangelico',
         ecumenical: 'Ecumenico / Cercatore Spirituale'
@@ -833,7 +854,7 @@ export const TRANSLATIONS = {
       of: 'di'
     },
     jesus: {
-      title: 'Dialogo con Gesù',
+      title: 'DIALOGO CON LA GUIDA',
       downloadSuccess: 'Download completato! Il dialogo offline con Cristo è attivo.',
       subtitle: 'Risponde a domande, dubbi teologici e dilemmi della vita con la saggezza del Vangelo',
       geminiNanoOffline: 'Gemini Nano (Offline sul dispositivo)',
@@ -869,9 +890,9 @@ export const TRANSLATIONS = {
       offlineInputDisabled: 'IA Offline Disattivata: Modello Gemini locale richiesto...',
       connectInputPrompt: 'Collega Gemini AI in alto per porre domande...',
       ask: 'Chiedi',
-      reflecting: 'Gesù sta riflettendo sulla tua domanda...',
+      reflecting: 'La Guida Spirituale sta riflettendo sulla tua domanda...',
       you: 'Tu',
-      jesusChrist: 'Gesù Cristo',
+      jesusChrist: 'Guida Spirituale',
       confirmClear: 'Cancellare l’intera cronologia della conversazione con Gesù?',
       errorCommunicating: 'Errore nella comunicazione con Gemini AI.',
       nanoDownloaded: 'Gemini Nano scaricato con successo! Il dialogo offline è ora attivo.',
@@ -893,6 +914,7 @@ export const TRANSLATIONS = {
       prayerTitle: 'Preghiera del Cuore Immediata:',
     },
     common: {
+      prayNow: 'Prega Ora',
       close: 'Chiudi',
       save: 'Salva',
       cancel: 'Annulla',
@@ -916,7 +938,7 @@ export const TRANSLATIONS = {
       prayersCount: 'Preghiere',
       emptyTitle: 'La Prima Pagina dell\'Anima',
       emptyDesc: 'Scrivi una preghiera, un sospiro, una supplica o un ringraziamento qui sotto. Sarà custodita privatamente offline.',
-      bringToJesus: 'Porta a Gesù',
+      bringToJesus: 'Porta alla Guida',
       deleteTooltip: 'Elimina preghiera',
       deleteConfirm: 'Eliminare questa preghiera?',
       inputPlaceholder: 'Scrivi una preghiera a Dio (premi Invio per inserirla nel diario)...',
@@ -1011,8 +1033,6 @@ export const TRANSLATIONS = {
       traditions: {
         catholicTitle: 'Cattolico (Romano)',
         catholicDesc: 'Canone biblico completo, santi e liturgia romana',
-        traditionalTitle: 'Cattolico Tradizionale (1962)',
-        traditionalDesc: 'Messa in latino, Quattro Tempora, vigilie e digiuni tradizionali',
         orthodoxTitle: 'Ortodosso (Orientale)',
         orthodoxDesc: 'Tradizione bizantina, Padri della Chiesa ed esicasmo',
         protestantTitle: 'Protestante / Evangelico',
@@ -1023,6 +1043,7 @@ export const TRANSLATIONS = {
       nameQuestion: '3. Come desideri essere chiamato nel dialogo spirituale?',
       namePlaceholder: 'Il tuo nome (o lascia vuoto per \'Discepolo\')',
       monasticQuestion: '4. Quale ritmo di preghiera monastica desideri seguire?',
+      monasticMotto: 'Ora et Labora',
       rhythms: {
         monasticTitle: 'Ritmo Monastico Completo (Ora et Labora)',
         monasticDesc: '06:00 Lodi • 09:00 Terza • 12:00 Sesta & Angelus • 15:00 Nona • 18:00 Vespri • 21:00 Compieta',
@@ -1105,14 +1126,14 @@ export const TRANSLATIONS = {
     nav: {
       tabBible: 'Biblia',
       tabPenance: 'Pocăință',
-      tabJesus: 'Iisus',
+      tabJesus: 'Ghid',
       tabJournal: 'Jurnal',
       tabTools: 'Unelte',
       bible: 'Biblia',
       brandSub: 'Platformă Creștină Universală • 100% Offline',
       scripture: 'Scriptură',
       penance: 'Post și Pocăință',
-      jesus: 'Dialog cu Iisus',
+      jesus: 'Dialog cu Ghidul',
       journal: 'Jurnal de Rugăciune',
       saints: 'Sfinți și Părinți',
       focus: 'Rugăciune Focus',
@@ -1132,13 +1153,13 @@ export const TRANSLATIONS = {
     },
     colors: {
       white: "Fără cruce (Zi de rând)",
-      blue: "Albastru",
-      black: "Negru",
-      red: "Roșu",
+      blue: "Cruce Albastră",
+      black: "Cruce Neagră",
+      red: "Cruce Roșie",
       whiteDesc: "Zile de rând și pomeniri simple din sinaxar (zile lucrătoare, fără cruce)",
-      blueDesc: "Sărbători ale Maicii Domnului și Sfinți Patroni Naționali și Locali din toate Tradițiile Ortodoxe (Cruce Albastră)",
-      blackDesc: "Sfinți din toată Ortodoxia cu polieleu sau doxologie mare: Părinți, Apostoli și Mari Mucenici (Cruce Neagră)",
-      redDesc: "Praznice Împărătești ale Mântuitorului și ale Maicii Domnului, și Sărbători mari cu priveghere (Cruce Roșie)"
+      blueDesc: "Sfinți Români și ocrotitori locali aprobați de Sfântul Sinod (Cruce Albastră)",
+      blackDesc: "Sfinți cu polieleu sau doxologie mare fără ținere (Cruce Neagră)",
+      redDesc: "Praznice Împărătești și sărbători mari de ținere cu priveghere (Cruce Roșie)"
     },
     ranks: {
       solemnity: 'Praznic Mare (Solennitate)',
@@ -1165,6 +1186,7 @@ export const TRANSLATIONS = {
       abstinenceDiscipline: 'Rânduiala Înfrânării (Calitatea Bucatelor)',
       allowedTable: '✓ Masă Îngăduită',
       avoidTable: '✗ De Evitat sau Oprit',
+      andMore: 'și altele',
       theologicalMeaning: 'Înțeles Teologic și Duhovnicesc',
       prayerOfDay: 'Rugăciunea de Pocăință a Zilei',
       saintsOnThisDay: 'Sfinții Pomeniți în Această Zi',
@@ -1203,9 +1225,20 @@ export const TRANSLATIONS = {
       importanceRank: 'Treaptă Liturgică:',
       shareQuote: 'Trimite Citat',
       meditation: 'Cuvânt Patristic',
-      scripture: 'Temei Scripturistic'
+      scripture: 'Temei Scripturistic',
+      allSaints: 'Toți Sfinții',
+      searchPlaceholder: 'Caută un sfânt, sărbătoare sau cuvânt-cheie...',
+      noResults: 'Niciun sfânt găsit pentru această căutare.',
+      clearSearch: 'Șterge căutarea'
     },
     settings: {
+      monasticNotif: 'Notificări Push & Locale',
+      notifAllowed: '✓ Permise',
+      notifPrompt: 'Atingeți pentru a activa',
+      monasticBell: 'Clopot Monahal',
+      monasticBellDesc: 'Bătaie de clopot offline',
+      testBell: 'Probează Clopotul',
+      testNotif: 'Probează Notificarea',
       title: 'Setări și Rânduieli Sfinte',
       subtitle: 'Personalizează tradiția duhovnicească, limba, tema de lumină și backup-ul offline',
       language: "Limba Interfeței:",
@@ -1248,7 +1281,6 @@ export const TRANSLATIONS = {
       nativeLangs: 'Limbi Materne',
       confessions: {
         catholic: 'Catolic (Roman)',
-        traditional: 'Catolic Tradițional (Latin 1962)',
         orthodox: 'Ortodox (Răsăritean Bizantin)',
         protestant: 'Protestant / Evanghelic',
         ecumenical: 'Ecumenic / Căutător Duhovnicesc'
@@ -1335,7 +1367,7 @@ export const TRANSLATIONS = {
       clearSelection: 'Anulează selecția'
     },
     jesus: {
-      title: 'Dialog cu Iisus',
+      title: 'DIALOG CU GHIDUL',
       downloadSuccess: 'Descărcare finalizată! Dialogul offline cu Hristos este activ.',
       subtitle: 'Răspunde la întrebări, îndoieli teologice și dileme ale vieții cu înțelepciunea Evangheliei',
       geminiNanoOffline: 'Gemini Nano (Offline pe dispozitiv)',
@@ -1373,8 +1405,8 @@ export const TRANSLATIONS = {
       ask: 'Întreabă',
       reflecting: 'Iisus cugetă la întrebarea ta...',
       you: 'Tu',
-      jesusChrist: 'Iisus Hristos',
-      confirmClear: 'Ștergeți întregul istoric al conversației cu Iisus?',
+      jesusChrist: 'Ghid Duhovnicesc',
+      confirmClear: 'Ștergeți întregul istoric al dialogului cu Ghidul?',
       errorCommunicating: 'Eroare la comunicarea cu Gemini AI.',
       nanoDownloaded: 'Gemini Nano descărcat cu succes! Dialogul offline este acum activ.',
       downloadFailed: 'Descărcarea a eșuat',
@@ -1395,6 +1427,7 @@ export const TRANSLATIONS = {
       prayerTitle: 'Rugăciune a Inimii Imediată:',
     },
     common: {
+      prayNow: 'Rugați-vă acum',
       close: 'Închide',
       save: 'Salvează',
       cancel: 'Anulează',
@@ -1418,7 +1451,7 @@ export const TRANSLATIONS = {
       prayersCount: 'Rugăciuni',
       emptyTitle: 'Cea Dintâi Pagină a Sufletului',
       emptyDesc: 'Scrie o rugăciune, un suspin, o cerere sau o mulțumire în căsuța de mai jos. Va fi păstrată în taină, doar pe dispozitivul tău.',
-      bringToJesus: 'Adu la Iisus',
+      bringToJesus: 'Adu la Ghid',
       deleteTooltip: 'Șterge rugăciunea',
       deleteConfirm: 'Ștergi această rugăciune?',
       inputPlaceholder: 'Scrie o rugăciune către Dumnezeu (apasă Enter pentru a o așeza în jurnal)...',
@@ -1507,8 +1540,6 @@ export const TRANSLATIONS = {
       traditions: {
         catholicTitle: 'Catolic (Roman)',
         catholicDesc: 'Canonul biblic complet, cinstirea sfinților și liturghia romană',
-        traditionalTitle: 'Catolic Tradițional (1962)',
-        traditionalDesc: 'Liturghia în latină, Zilele de Post Tradiționale și ajunurile',
         orthodoxTitle: 'Ortodox (Răsăritean)',
         orthodoxDesc: 'Tradiția bizantină, Sfinții Părinți și isihasmul',
         protestantTitle: 'Protestant / Evanghelic',
@@ -1590,14 +1621,14 @@ export const TRANSLATIONS = {
     nav: {
       tabBible: 'Bible',
       tabPenance: 'Pénitence',
-      tabJesus: 'Jésus',
+      tabJesus: 'Guide',
       tabJournal: 'Journal',
       tabTools: 'Outils',
       bible: 'Bible',
       brandSub: 'Plateforme Chrétienne Universelle • 100% Hors-ligne',
       scripture: 'Écritures',
       penance: 'Pénitence & Jeûne',
-      jesus: 'Dialogue avec Jésus',
+      jesus: 'Dialogue avec le Guide',
       journal: 'Journal de Prière',
       saints: 'Saints & Pères',
       focus: 'Méditation Focus',
@@ -1616,14 +1647,14 @@ export const TRANSLATIONS = {
       night: 'Nuit / Complies'
     },
     colors: {
-      white: "Sans croix (Ordinaire)",
+      white: "Blanc / Ordinaire",
       blue: "Bleu",
       black: "Noir",
       red: "Rouge",
-      whiteDesc: "Jours de férie ordinaires et mémoires simples du synaxaire (sans croix)",
-      blueDesc: "Fêtes de la Mère de Dieu et Saints Patrons Nationaux et Locaux de toutes les Églises (Croix Bleue)",
-      blackDesc: "Saints de l'Église universelle avec Polyéléos ou Grande Doxologie: Pères, Apôtres et Martyrs (Croix Noire)",
-      redDesc: "Grandes Fêtes (Praznice) du Seigneur et de la Mère de Dieu, et Solennités avec Veillée (Croix Rouge)"
+      whiteDesc: "Temps Ordinaire, féries et mémoires simples sans croix",
+      blueDesc: "Fêtes de la Vierge Marie et Saints Patrons",
+      blackDesc: "Saints avec Polyéléos ou Grande Doxologie et mémoires liturgiques",
+      redDesc: "Solennités d'Obligation, Grandes Fêtes du Seigneur et Martyrs"
     },
     ranks: {
       solemnity: 'Solennité',
@@ -1650,6 +1681,7 @@ export const TRANSLATIONS = {
       abstinenceDiscipline: 'Discipline de l\'Abstinence (Qualité des Aliments)',
       allowedTable: '✓ Table Autorisée',
       avoidTable: '✗ Interdit ou Restreint',
+      andMore: 'et plus',
       theologicalMeaning: 'Sens Théologique & Biblique',
       prayerOfDay: 'Prière Pénitentielle du Jour',
       saintsOnThisDay: 'Saints Commémorés en ce Jour',
@@ -1688,9 +1720,20 @@ export const TRANSLATIONS = {
       importanceRank: 'Rang Liturgique:',
       shareQuote: 'Partager la Citation',
       meditation: 'Méditation Patristique',
-      scripture: 'Référence Biblique'
+      scripture: 'Référence Biblique',
+      allSaints: 'Tous les Saints',
+      searchPlaceholder: 'Rechercher un saint, une fête ou un mot-clé...',
+      noResults: 'Aucun saint trouvé pour cette recherche.',
+      clearSearch: 'Effacer la recherche'
     },
     settings: {
+      monasticNotif: 'Notifications Push & Locales',
+      notifAllowed: '✓ Autorisées',
+      notifPrompt: 'Appuyer pour activer',
+      monasticBell: 'Cloche Monastique',
+      monasticBellDesc: 'Sonnerie de cathédrale hors-ligne',
+      testBell: 'Tester la Cloche',
+      testNotif: 'Tester la Notification',
       title: 'Paramètres & Préférences Sacrées',
       subtitle: 'Personnalisez la tradition de foi, la langue, le thème circadien et les sauvegardes',
       language: "Langue de l'Interface :",
@@ -1733,7 +1776,6 @@ export const TRANSLATIONS = {
       nativeLangs: 'Langues Maternelles',
       confessions: {
         catholic: 'Catholique (Romain)',
-        traditional: 'Catholique Traditionnel (Latin 1962 / Quatre-Temps)',
         orthodox: 'Orthodoxe (Byzantin Oriental)',
         protestant: 'Protestant / Évangélique',
         ecumenical: 'Œcuménique / Chercheur Spirituel'
@@ -1820,7 +1862,7 @@ export const TRANSLATIONS = {
       clearSelection: 'Effacer la sélection'
     },
     jesus: {
-      title: 'Dialogue avec Jésus',
+      title: 'DIALOGUE AVEC LE GUIDE',
       downloadSuccess: 'Téléchargement terminé ! Le dialogue hors ligne avec le Christ est actif.',
       subtitle: 'Répond aux questions, doutes théologiques et dilemmes avec la sagesse de l’Évangile',
       geminiNanoOffline: 'Gemini Nano (Hors ligne sur l’appareil)',
@@ -1858,7 +1900,7 @@ export const TRANSLATIONS = {
       ask: 'Demander',
       reflecting: 'Jésus médite sur votre question...',
       you: 'Vous',
-      jesusChrist: 'Jésus-Christ',
+      jesusChrist: 'Guide Spirituel',
       confirmClear: 'Effacer tout l’historique de conversation avec Jésus ?',
       errorCommunicating: 'Erreur lors de la communication avec Gemini AI.',
       nanoDownloaded: 'Gemini Nano téléchargé avec succès ! Le dialogue hors ligne est activé.',
@@ -1880,6 +1922,7 @@ export const TRANSLATIONS = {
       prayerTitle: 'Prière du Cœur Immédiate :',
     },
     common: {
+      prayNow: 'Prier maintenant',
       close: 'Fermer',
       save: 'Enregistrer',
       cancel: 'Annuler',
@@ -1903,7 +1946,7 @@ export const TRANSLATIONS = {
       prayersCount: 'Prières',
       emptyTitle: 'La Première Page de Votre Âme',
       emptyDesc: 'Écrivez une prière, un soupir, une supplication ou une louange ci-dessous. Elle sera conservée en secret hors ligne.',
-      bringToJesus: 'Apporter à Jésus',
+      bringToJesus: 'Apporter au Guide',
       deleteTooltip: 'Supprimer la prière',
       deleteConfirm: 'Supprimer cette prière ?',
       inputPlaceholder: 'Écrivez une prière à Dieu (appuyez sur Entrée pour la déposer)...',
@@ -1992,8 +2035,6 @@ export const TRANSLATIONS = {
       traditions: {
         catholicTitle: 'Catholique (Romain)',
         catholicDesc: 'Canon biblique complet, culte des saints et liturgie romaine',
-        traditionalTitle: 'Catholique Traditionnel (1962)',
-        traditionalDesc: 'Messe en latin, Quatre-Temps, vigiles et jeûnes traditionnels',
         orthodoxTitle: 'Orthodoxe (Oriental)',
         orthodoxDesc: 'Tradition byzantine, Pères de l’Église et hésychasme',
         protestantTitle: 'Protestant / Évangélique',
@@ -2075,14 +2116,14 @@ export const TRANSLATIONS = {
     nav: {
       tabBible: 'Biblia',
       tabPenance: 'Penitencia',
-      tabJesus: 'Jesús',
+      tabJesus: 'Guía',
       tabJournal: 'Diario',
       tabTools: 'Herramientas',
       bible: 'Biblia',
       brandSub: 'Plataforma Cristiana Universal • 100% Fuera de Línea',
       scripture: 'Escritura',
       penance: 'Penitencia y Ayuno',
-      jesus: 'Diálogo con Jesús',
+      jesus: 'Diálogo con el Guía',
       journal: 'Diario de Oración',
       saints: 'Santos y Padres',
       focus: 'Meditación Focus',
@@ -2101,14 +2142,14 @@ export const TRANSLATIONS = {
       night: 'Noche / Completas'
     },
     colors: {
-      white: "Sin cruz (Ordinario)",
+      white: "Blanco / Ordinario",
       blue: "Azul",
       black: "Negro",
       red: "Rojo",
-      whiteDesc: "Días feriales ordinarios y memorias simples del sinaxario (sin cruz)",
-      blueDesc: "Fiestas de la Madre de Dios y Santos Patronos Nacionales y Locales de todas las Iglesias (Cruz Azul)",
-      blackDesc: "Santos de la Iglesia universal con Polieleo o Gran Doxología: Padres, Apóstoles y Mártires (Cruz Negra)",
-      redDesc: "Grandes Fiestas (Praznice) del Señor y de la Madre de Dios, y Solemnidades con Vigilia (Cruz Roja)"
+      whiteDesc: "Tiempo Ordinario, días feriales y memorias sin cruz",
+      blueDesc: "Fiestas de la Virgen María y Santos Patronos (Privilegio mariano)",
+      blackDesc: "Santos con Polieleo o Gran Doxología y memorias litúrgicas",
+      redDesc: "Solemnidades de Precepto, Grandes Fiestas del Señor y Mártires"
     },
     ranks: {
       solemnity: 'Solemnidad',
@@ -2135,6 +2176,7 @@ export const TRANSLATIONS = {
       abstinenceDiscipline: 'Disciplina de la Abstinencia (Calidad de Alimentos)',
       allowedTable: '✓ Mesa Permitida',
       avoidTable: '✗ Prohibido o Restringido',
+      andMore: 'y más',
       theologicalMeaning: 'Sentido Teológico y Bíblico',
       prayerOfDay: 'Oración Penitencial del Día',
       saintsOnThisDay: 'Santos Conmemorados en Este Día',
@@ -2173,9 +2215,20 @@ export const TRANSLATIONS = {
       importanceRank: 'Grado Litúrgico:',
       shareQuote: 'Compartir Cita',
       meditation: 'Meditación Patrística',
-      scripture: 'Referencia Bíblica'
+      scripture: 'Referencia Bíblica',
+      allSaints: 'Todos los Santos',
+      searchPlaceholder: 'Buscar un santo, fiesta o palabra clave...',
+      noResults: 'No se encontraron santos para esta búsqueda.',
+      clearSearch: 'Borrar búsqueda'
     },
     settings: {
+      monasticNotif: 'Notificaciones Push y Locales',
+      notifAllowed: '✓ Permitidas',
+      notifPrompt: 'Tocar para activar',
+      monasticBell: 'Campana Monástica',
+      monasticBellDesc: 'Campanadas de catedral sin conexión',
+      testBell: 'Probar Campana',
+      testNotif: 'Probar Notificación',
       title: 'Ajustes y Preferencias Sagradas',
       subtitle: 'Configura tradición de fe, idioma, tema circadiano y copia de seguridad offline',
       language: "Idioma de la Interfaz:",
@@ -2218,7 +2271,6 @@ export const TRANSLATIONS = {
       nativeLangs: 'Idiomas Nativos',
       confessions: {
         catholic: 'Católico (Romano)',
-        traditional: 'Católico Tradicional (Latín 1962 / Témporas)',
         orthodox: 'Ortodoxo (Bizantino Oriental)',
         protestant: 'Protestante / Evangélico',
         ecumenical: 'Ecuménico / Buscador Espiritual'
@@ -2254,7 +2306,7 @@ export const TRANSLATIONS = {
       shareDesc: 'Diseña y comparte citas iluminadas de la Escritura en redes',
       scheduleDesc: 'Armoniza estudio y trabajo con las horas canónicas monásticas',
       settingsDesc: 'Selector de idioma, clave API, copia de seguridad y temas circadianos',
-      feedbackTitle: 'Comentarios Anonymos de la Comunidad',
+      feedbackTitle: 'Comentarios Anónimos de la Comunidad',
       feedbackDesc: 'Envía sugerencias o incidencias directamente mediante GitHub Issues'
     },
     reader: {
@@ -2305,7 +2357,7 @@ export const TRANSLATIONS = {
       clearSelection: 'Borrar selección'
     },
     jesus: {
-      title: 'Diálogo con Jesús',
+      title: 'DIÁLOGO CON EL GUÍA',
       downloadSuccess: '¡Descarga completada! El diálogo fuera de línea con Cristo está activo.',
       subtitle: 'Responde preguntas, dudas teológicas y dilemas de la vida con la sabiduría del Evangelio',
       geminiNanoOffline: 'Gemini Nano (Offline en el dispositivo)',
@@ -2343,7 +2395,7 @@ export const TRANSLATIONS = {
       ask: 'Preguntar',
       reflecting: 'Jesús está reflexionando sobre su pregunta...',
       you: 'Tú',
-      jesusChrist: 'Jesucristo',
+      jesusChrist: 'Guía Espiritual',
       confirmClear: '¿Borrar todo el historial de conversación con Jesús?',
       errorCommunicating: 'Error al comunicarse con Gemini AI.',
       nanoDownloaded: '¡Gemini Nano descargado con éxito! El diálogo offline ya está activo.',
@@ -2365,6 +2417,7 @@ export const TRANSLATIONS = {
       prayerTitle: 'Oración del Corazón Inmediata:',
     },
     common: {
+      prayNow: 'Rezar ahora',
       close: 'Cerrar',
       save: 'Guardar',
       cancel: 'Cancelar',
@@ -2388,7 +2441,7 @@ export const TRANSLATIONS = {
       prayersCount: 'Oraciones',
       emptyTitle: 'La Primera Página de Tu Alma',
       emptyDesc: 'Escribe una oración, un suspiro, una petición o acción de gracias aquí abajo. Se conservará en privado offline.',
-      bringToJesus: 'Llevar a Jesús',
+      bringToJesus: 'Llevar al Guía',
       deleteTooltip: 'Eliminar oración',
       deleteConfirm: '¿Eliminar esta oración?',
       inputPlaceholder: 'Escribe una oración a Dios (presiona Enter para guardarla en tu diario)...',
@@ -2477,8 +2530,6 @@ export const TRANSLATIONS = {
       traditions: {
         catholicTitle: 'Católico (Romano)',
         catholicDesc: 'Canon bíblico completo, santos y liturgia romana',
-        traditionalTitle: 'Católico Tradicional (1962)',
-        traditionalDesc: 'Misa en latín, Témporas, vigilias y ayunos tradicionales',
         orthodoxTitle: 'Ortodoxo (Oriental)',
         orthodoxDesc: 'Tradición bizantina, Santos Padres y hesicasmo',
         protestantTitle: 'Protestante / Evangélico',
@@ -2560,14 +2611,14 @@ export const TRANSLATIONS = {
     nav: {
       tabBible: 'Bíblia',
       tabPenance: 'Penitência',
-      tabJesus: 'Jesus',
+      tabJesus: 'Guia',
       tabJournal: 'Diário',
       tabTools: 'Ferramentas',
       bible: 'Bíblia',
       brandSub: 'Plataforma Cristã Universal • 100% Offline',
       scripture: 'Escritura',
       penance: 'Penitência e Jejum',
-      jesus: 'Diálogo com Jesus',
+      jesus: 'Diálogo com o Guia',
       journal: 'Diário de Oração',
       saints: 'Santos e Padres',
       focus: 'Meditação Focus',
@@ -2586,14 +2637,14 @@ export const TRANSLATIONS = {
       night: 'Noite / Completas'
     },
     colors: {
-      white: "Sem cruz (Ordinário)",
+      white: "Branco / Ordinário",
       blue: "Azul",
       black: "Preto",
       red: "Vermelho",
-      whiteDesc: "Dias feriais ordinários e memórias simples do sinaxário (sem cruz)",
-      blueDesc: "Festas da Mãe de Deus e Santos Padroeiros Nacionais e Locais de todas as Igrejas (Cruz Azul)",
-      blackDesc: "Santos da Igreja universal com Polieleu ou Grande Doxologia: Padres, Apóstolos e Mártires (Cruz Negra)",
-      redDesc: "Grandes Festas (Praznice) do Senhor e da Mãe de Deus, e Solenidades com Vigília (Cruz Vermelha)"
+      whiteDesc: "Tempo Ordinário, dias feriais e memórias sem cruz",
+      blueDesc: "Festas da Virgem Maria e Santos Padroeiros",
+      blackDesc: "Santos com Polieleu ou Grande Doxologia e memórias litúrgicas",
+      redDesc: "Solenidades de Preceito, Grandes Festas do Senhor e Mártires"
     },
     ranks: {
       solemnity: 'Solenidade',
@@ -2620,6 +2671,7 @@ export const TRANSLATIONS = {
       abstinenceDiscipline: 'Disciplina da Abstinência (Qualidade do Alimento)',
       allowedTable: '✓ Mesa Permitida',
       avoidTable: '✗ Proibido ou Restrito',
+      andMore: 'e mais',
       theologicalMeaning: 'Sentido Teológico e Bíblico',
       prayerOfDay: 'Oração Penitencial do Dia',
       saintsOnThisDay: 'Santos Comemorados Neste Dia',
@@ -2658,9 +2710,20 @@ export const TRANSLATIONS = {
       importanceRank: 'Grau Litúrgico:',
       shareQuote: 'Partilhar Citação',
       meditation: 'Meditação Patrística',
-      scripture: 'Referência Bíblica'
+      scripture: 'Referência Bíblica',
+      allSaints: 'Todos os Santos',
+      searchPlaceholder: 'Pesquisar um santo, festa ou palavra-chave...',
+      noResults: 'Nenhum santo encontrado para esta pesquisa.',
+      clearSearch: 'Limpar pesquisa'
     },
     settings: {
+      monasticNotif: 'Notificações Push e Locais',
+      notifAllowed: '✓ Permitidas',
+      notifPrompt: 'Toque para ativar',
+      monasticBell: 'Sino Monástico',
+      monasticBellDesc: 'Toque de catedral offline',
+      testBell: 'Testar Sino',
+      testNotif: 'Testar Notificação',
       title: 'Definições e Preferências Sagradas',
       subtitle: 'Personalize tradição de fé, idioma, tema circadiano e cópias de segurança',
       language: "Idioma da Interface:",
@@ -2703,7 +2766,6 @@ export const TRANSLATIONS = {
       nativeLangs: 'Línguas Nativas',
       confessions: {
         catholic: 'Católico (Romano)',
-        traditional: 'Católico Tradicional (Latim 1962 / Têmporas)',
         orthodox: 'Ortodoxo (Bizantino Oriental)',
         protestant: 'Protestante / Evangélico',
         ecumenical: 'Ecuménico / Buscador Espiritual'
@@ -2790,7 +2852,7 @@ export const TRANSLATIONS = {
       clearSelection: 'Limpar seleção'
     },
     jesus: {
-      title: 'Diálogo com Jesus',
+      title: 'DIÁLOGO COM O GUIA',
       downloadSuccess: 'Download concluído! O diálogo offline com Cristo está ativo.',
       subtitle: 'Responde a perguntas, dúvidas teológicas e dilemas da vida com a sabedoria do Evangelho',
       geminiNanoOffline: 'Gemini Nano (Offline no dispositivo)',
@@ -2828,7 +2890,7 @@ export const TRANSLATIONS = {
       ask: 'Perguntar',
       reflecting: 'Jesus está a refletir sobre a sua pergunta...',
       you: 'Você',
-      jesusChrist: 'Jesus Cristo',
+      jesusChrist: 'Guia Espiritual',
       confirmClear: 'Limpar todo o histórico de conversação com Jesus?',
       errorCommunicating: 'Erro ao comunicar com o Gemini AI.',
       nanoDownloaded: 'Gemini Nano descarregado com sucesso! O diálogo offline está agora ativo.',
@@ -2850,6 +2912,7 @@ export const TRANSLATIONS = {
       prayerTitle: 'Oração do Coração Imediata:',
     },
     common: {
+      prayNow: 'Orar agora',
       close: 'Fechar',
       save: 'Guardar',
       cancel: 'Cancelar',
@@ -2873,7 +2936,7 @@ export const TRANSLATIONS = {
       prayersCount: 'Orações',
       emptyTitle: 'A Primeira Página da Tua Alma',
       emptyDesc: 'Escreve uma oração, um suspiro, uma súplica ou gratidão abaixo. Ficará guardada em privado offline.',
-      bringToJesus: 'Levar a Jesus',
+      bringToJesus: 'Levar ao Guia',
       deleteTooltip: 'Eliminar oração',
       deleteConfirm: 'Eliminar esta oração?',
       inputPlaceholder: 'Escreve uma oração a Deus (prime Enter para colocar no diário)...',
@@ -2962,8 +3025,6 @@ export const TRANSLATIONS = {
       traditions: {
         catholicTitle: 'Católico (Romano)',
         catholicDesc: 'Cânone bíblico completo, santos e liturgia romana',
-        traditionalTitle: 'Católico Tradicional (1962)',
-        traditionalDesc: 'Missa em latim, Têmporas, vigílias e jejuns tradicionais',
         orthodoxTitle: 'Ortodoxo (Bizantino)',
         orthodoxDesc: 'Tradição oriental, Padres da Igreja e hesicasmo',
         protestantTitle: 'Protestante / Evangélico',
@@ -3045,14 +3106,14 @@ export const TRANSLATIONS = {
     nav: {
       tabBible: 'Bibel',
       tabPenance: 'Buße',
-      tabJesus: 'Jesus',
+      tabJesus: 'Geistlicher Begleiter',
       tabJournal: 'Tagebuch',
       tabTools: 'Werkzeuge',
       bible: 'Bibel',
       brandSub: 'Universelle Christliche Plattform • 100% Offline',
       scripture: 'Schrift',
       penance: 'Buße & Fasten',
-      jesus: 'Dialog mit Jesus',
+      jesus: 'Dialog mit dem Begleiter',
       journal: 'Gebetstagebuch',
       saints: 'Heilige & Väter',
       focus: 'Fokus-Meditation',
@@ -3071,14 +3132,14 @@ export const TRANSLATIONS = {
       night: 'Nacht / Komplet'
     },
     colors: {
-      white: "Ohne Kreuz (Gewöhnlich)",
+      white: "Weiß / Gewöhnlich",
       blue: "Blau",
       black: "Schwarz",
       red: "Rot",
-      whiteDesc: "Gewöhnliche Werktage und einfache Gedenken des Synaxarions (ohne Kreuz)",
-      blueDesc: "Feste der Gottesgebärerin & Nationale und Lokale Schutzpatrone aller Kirchen (Blaues Kreuz)",
-      blackDesc: "Universale Heilige mit Polyeleos oder Großer Doxologie: Kirchenväter, Apostel und Märtyrer (Schwarzes Kreuz)",
-      redDesc: "Große Feste (Praznice) des Herrn und der Gottesmutter, und Hochfeste mit Vigil (Rotes Kreuz)"
+      whiteDesc: "Jahreskreis, Werktage und einfache Gedenken ohne Kreuz",
+      blueDesc: "Marienfeste und Schutzpatrone der Kirche",
+      blackDesc: "Heilige mit Polyeleos oder Großer Doxologie und Gedenktage",
+      redDesc: "Hochfeste (Gebotene Feiertage), Herrenfeste und Märtyrer"
     },
     ranks: {
       solemnity: 'Hochfest',
@@ -3105,6 +3166,7 @@ export const TRANSLATIONS = {
       abstinenceDiscipline: 'Abstinenzdisziplin (Speisenqualität)',
       allowedTable: '✓ Erlaubte Speisen',
       avoidTable: '✗ Verboten oder Eingeschränkt',
+      andMore: 'und mehr',
       theologicalMeaning: 'Theologische & Biblische Bedeutung',
       prayerOfDay: 'Bußgebet des Tages',
       saintsOnThisDay: 'An Diesem Tag Gedachte Heilige',
@@ -3143,9 +3205,20 @@ export const TRANSLATIONS = {
       importanceRank: 'Liturgischer Rang:',
       shareQuote: 'Zitat Teilen',
       meditation: 'Patristische Meditation',
-      scripture: 'Schriftnachweis'
+      scripture: 'Schriftnachweis',
+      allSaints: 'Alle Heiligen',
+      searchPlaceholder: 'Heiligen, Fest oder Stichwort suchen...',
+      noResults: 'Keine Heiligen für diese Suche gefunden.',
+      clearSearch: 'Suche löschen'
     },
     settings: {
+      monasticNotif: 'Push- & lokale Benachrichtigungen',
+      notifAllowed: '✓ Erlaubt',
+      notifPrompt: 'Tippen zum Aktivieren',
+      monasticBell: 'Klosterglocke',
+      monasticBellDesc: 'Offline-Domglockenklang',
+      testBell: 'Glocke testen',
+      testNotif: 'Benachrichtigung testen',
       title: 'Einstellungen & Heilige Vorlieben',
       subtitle: 'Glaubenstradition, Sprache, zirkadianes Farbschema und Offline-Sicherung anpassen',
       language: "Sprache der Benutzeroberfläche:",
@@ -3188,7 +3261,6 @@ export const TRANSLATIONS = {
       nativeLangs: 'Muttersprachen',
       confessions: {
         catholic: 'Katholisch (Römisch)',
-        traditional: 'Traditionell Katholisch (Latein 1962 / Quatembertage)',
         orthodox: 'Orthodox (Östlich Byzantinisch)',
         protestant: 'Protestantisch / Evangelisch',
         ecumenical: 'Ökumenisch / Geistig Suchende'
@@ -3275,7 +3347,7 @@ export const TRANSLATIONS = {
       clearSelection: 'Auswahl aufheben'
     },
     jesus: {
-      title: 'Dialog mit Jesus',
+      title: 'DIALOG MIT DEM BEGLEITER',
       downloadSuccess: 'Download abgeschlossen! Der Offline-Dialog mit Christus ist aktiv.',
       subtitle: 'Beantwortet theologische Fragen, Zweifel und Lebensdilemmata mit evangelischer Weisheit',
       geminiNanoOffline: 'Gemini Nano (Offline auf dem Gerät)',
@@ -3313,7 +3385,7 @@ export const TRANSLATIONS = {
       ask: 'Fragen',
       reflecting: 'Jesus bedenkt Ihre Frage...',
       you: 'Sie',
-      jesusChrist: 'Jesus Christus',
+      jesusChrist: 'Geistlicher Begleiter',
       confirmClear: 'Den gesamten Gesprächsverlauf mit Jesus löschen?',
       errorCommunicating: 'Fehler bei der Kommunikation mit Gemini AI.',
       nanoDownloaded: 'Gemini Nano erfolgreich heruntergeladen! Offline-Dialog ist nun aktiv.',
@@ -3335,6 +3407,7 @@ export const TRANSLATIONS = {
       prayerTitle: 'Sofortiges Herzensgebet:',
     },
     common: {
+      prayNow: 'Jetzt beten',
       close: 'Schließen',
       save: 'Speichern',
       cancel: 'Abbrechen',
@@ -3358,7 +3431,7 @@ export const TRANSLATIONS = {
       prayersCount: 'Gebete',
       emptyTitle: 'Die erste Seite deiner Seele',
       emptyDesc: 'Schreibe ein Gebet, einen Seufzer, eine Bitte oder ein Dankgebet hinein. Es bleibt privat offline bewahrt.',
-      bringToJesus: 'Zu Jesus bringen',
+      bringToJesus: 'Dem Begleiter vorlegen',
       deleteTooltip: 'Gebet löschen',
       deleteConfirm: 'Dieses Gebet löschen?',
       inputPlaceholder: 'Schreibe ein Gebet zu Gott (drücke Enter zum Eintragen)...',
@@ -3396,7 +3469,7 @@ export const TRANSLATIONS = {
       minimize: 'Minimieren',
       sub5: '-5 Minuten',
       add5: '+5 Minuten',
-      start: 'Start',
+      start: 'Starten',
       pause: 'Pause',
       reset: 'Zurücksetzen',
       gentleRain: 'Sanfter Regen',
@@ -3447,8 +3520,6 @@ export const TRANSLATIONS = {
       traditions: {
         catholicTitle: 'Katholisch (Römisch)',
         catholicDesc: 'Vollständiger Bibelkanon, Heiligenverehrung und römische Liturgie',
-        traditionalTitle: 'Traditionell Katholisch (1962)',
-        traditionalDesc: 'Lateinische Messe, Quatembertage, Vigilien und Fastenbräuche',
         orthodoxTitle: 'Orthodox (Östlich)',
         orthodoxDesc: 'Byzantinische Tradition, Kirchenväter und Hesychasmus',
         protestantTitle: 'Protestantisch / Evangelisch',
@@ -3530,14 +3601,14 @@ export const TRANSLATIONS = {
     nav: {
       tabBible: 'Библия',
       tabPenance: 'Покаяние',
-      tabJesus: 'Иисус',
+      tabJesus: 'Наставник',
       tabJournal: 'Дневник',
       tabTools: 'Служба',
       bible: 'Библия',
       brandSub: 'Вселенская Христианская Платформа • 100% Офлайн',
       scripture: 'Писание',
       penance: 'Пост и Покаяние',
-      jesus: 'Беседа со Спасителем',
+      jesus: 'Диалог с Наставником',
       journal: 'Молитвенный Дневник',
       saints: 'Святые и Отцы',
       focus: 'Молитвенное Безмолвие',
@@ -3556,14 +3627,14 @@ export const TRANSLATIONS = {
       night: 'Ночь / Повечерие'
     },
     colors: {
-      white: "Без знака (Рядовой день)",
+      white: "Без знака / Рядовой",
       blue: "Синий",
       black: "Черный",
       red: "Красный",
-      whiteDesc: "Обычные седмичные дни и малые памяти святых по синаксарю (без знака)",
-      blueDesc: "Праздники Пресвятой Богородицы и чтимые святые всех Поместных Православных Церквей (Синий крест)",
-      blackDesc: "Вселенские святые со славословием или полиелеем: Святители, Апостолы и Мученики (Черный крест)",
-      redDesc: "Двунадесятые и великие праздники Господские и Богородичные, и святые с бдением (Красный крест)"
+      whiteDesc: "Обычные седмичные дни и малые памяти святых (без знака)",
+      blueDesc: "Богородичные праздники и чтимые святые",
+      blackDesc: "Праздники святых со славословием или полиелеем (Черный крест)",
+      redDesc: "Двунадесятые праздники и святые с бдением (Красный крест)"
     },
     ranks: {
       solemnity: 'Великий Праздник (Торжество)',
@@ -3590,6 +3661,7 @@ export const TRANSLATIONS = {
       abstinenceDiscipline: 'Чин Воздержания (Качество Пищи)',
       allowedTable: '✓ Разрешённая Трапеза',
       avoidTable: '✗ Запрещённое или Ограниченное',
+      andMore: 'и другое',
       theologicalMeaning: 'Богословский и Библейский Смысл',
       prayerOfDay: 'Покаянная Молитва Дня',
       saintsOnThisDay: 'Святые, Поминаемые в Этот День',
@@ -3601,7 +3673,8 @@ export const TRANSLATIONS = {
       fastingPillarTitle: '2. Телесное Пощение',
       fastingPillarDesc: 'Укрощение страстей и плоти, дабы душа насыщалась Словом Божиим.',
       almsPillarTitle: '3. Чистая Милостыня',
-      almsPillarDesc: 'Разделение хлеба с неимущими, служа Самому Христу в страждущих.',      exemptionsTitle: 'Законные канонические послабления (Кто освобождается?)',
+      almsPillarDesc: 'Разделение хлеба с неимущими, служа Самому Христу в страждущих.',
+      exemptionsTitle: 'Законные канонические послабления (Кто освобождается?)',
       exemptionsDesc: 'Церковь проявляет материнскую заботу. Милости хочу, а не жертвы (Мф 9:13). Болящие, беременные, престарелые и занятые тяжелым физическим трудом освобождаются от телесного поста и призываются к молитве и делам милосердия.',
       prevMonth: 'Предыдущий месяц',
       nextMonth: 'Следующий месяц',
@@ -3627,9 +3700,20 @@ export const TRANSLATIONS = {
       importanceRank: 'Литургический Чин:',
       shareQuote: 'Поделиться Цитатой',
       meditation: 'Отеческое Наставление',
-      scripture: 'Основание в Писании'
+      scripture: 'Основание в Писании',
+      allSaints: 'Все Святые',
+      searchPlaceholder: 'Поиск святого, праздника или ключевого слова...',
+      noResults: 'Святые не найдены по вашему запросу.',
+      clearSearch: 'Очистить поиск'
     },
     settings: {
+      monasticNotif: 'Push- и локальные уведомления',
+      notifAllowed: '✓ Разрешено',
+      notifPrompt: 'Нажмите для включения',
+      monasticBell: 'Монастырский колокол',
+      monasticBellDesc: 'Звон колокола офлайн',
+      testBell: 'Тест колокола',
+      testNotif: 'Тест уведомления',
       title: 'Настройки и Священные Правила',
       subtitle: 'Традиция веры, язык, суточный свет и сохранение данных 100% офлайн',
       language: "Язык Интерфейса:",
@@ -3672,7 +3756,6 @@ export const TRANSLATIONS = {
       nativeLangs: 'Родные языки',
       confessions: {
         catholic: 'Католическая (Римская)',
-        traditional: 'Традиционная Католическая (1962)',
         orthodox: 'Православная (Восточная Византийская)',
         protestant: 'Протестантская / Евангельская',
         ecumenical: 'Экуменическая / Духовные Искатели'
@@ -3759,7 +3842,7 @@ export const TRANSLATIONS = {
       clearSelection: 'Сбросить выделение'
     },
     jesus: {
-      title: 'Диалог с Иисусом',
+      title: 'ДИАЛОГ С НАСТАВНИКОМ',
       downloadSuccess: 'Загрузка завершена! Офлайн-диалог со Христом активен.',
       subtitle: 'Отвечает на вопросы, богословские сомнения и жизненные дилеммы мудростью Евангелия',
       geminiNanoOffline: 'Gemini Nano (Офлайн на устройстве)',
@@ -3795,9 +3878,9 @@ export const TRANSLATIONS = {
       offlineInputDisabled: 'Офлайн ИИ отключен: требуется локальная модель Gemini...',
       connectInputPrompt: 'Подключите Gemini AI вверху, чтобы задать вопрос...',
       ask: 'Спросить',
-      reflecting: 'Иисус размышляет над вашим вопросом...',
+      reflecting: 'Духовный наставник размышляет над вашим вопросом...',
       you: 'Вы',
-      jesusChrist: 'Иисус Христос',
+      jesusChrist: 'Духовный Наставник',
       confirmClear: 'Очистить всю историю беседы с Иисусом?',
       errorCommunicating: 'Ошибка связи с Gemini AI.',
       nanoDownloaded: 'Gemini Nano успешно загружена! Офлайн-диалог активирован.',
@@ -3819,6 +3902,7 @@ export const TRANSLATIONS = {
       prayerTitle: 'Молитва Сердца:',
     },
     common: {
+      prayNow: 'Молиться сейчас',
       close: 'Закрыть',
       save: 'Сохранить',
       cancel: 'Отмена',
@@ -3931,8 +4015,6 @@ export const TRANSLATIONS = {
       traditions: {
         catholicTitle: 'Католическая (Римская)',
         catholicDesc: 'Полный библейский канон, святые и римская литургия',
-        traditionalTitle: 'Традиционная Католическая (1962)',
-        traditionalDesc: 'Латинская месса, Дни четверовременья и посты',
         orthodoxTitle: 'Православная (Восточная)',
         orthodoxDesc: 'Византийское предание, святые отцы и исихазм',
         protestantTitle: 'Протестантская / Евангельская',
@@ -4014,14 +4096,14 @@ export const TRANSLATIONS = {
     nav: {
       tabBible: 'Scriptura',
       tabPenance: 'Poenitentia',
-      tabJesus: 'Iesus',
+      tabJesus: 'Director',
       tabJournal: 'Diarium',
       tabTools: 'Instrumenta',
       bible: 'Biblia Sacra',
       brandSub: 'Suggestus Christianus Universalis • 100% Sine Filo',
       scripture: 'Scriptura Sacra',
       penance: 'Paenitentia et Ieiunium',
-      jesus: 'Colloquium cum Iesu',
+      jesus: 'Colloquium cum Directore',
       journal: 'Diarium Orationis',
       saints: 'Sancti et Patres',
       focus: 'Meditatio Focus',
@@ -4040,14 +4122,14 @@ export const TRANSLATIONS = {
       night: 'Nox / Completorium'
     },
     colors: {
-      white: "Sine cruce (Ordinarium)",
+      white: "Albus / Ordinarium",
       blue: "Caeruleus",
       black: "Niger",
       red: "Ruber",
-      whiteDesc: "Feriae ordinariae et memoriae simplices synaxarii (sine cruce)",
-      blueDesc: "Festa Deiparae ac Sancti Patroni Nationales atque Locales omnium Ecclesiarum (Crux Caerulea)",
-      blackDesc: "Sancti universales cum Polyeleo vel Doxologia Maiori: Patres, Apostoli et Martyres (Crux Nigra)",
-      redDesc: "Sollemnitates Domini et Beatae Mariae Virginis, ac Festa Maiora cum Vigilia (Crux Rubra)"
+      whiteDesc: "Tempus per Annum, feriae et memoriae simplices sine cruce",
+      blueDesc: "Festa Beatae Mariae Virginis atque Sancti Patroni",
+      blackDesc: "Sancti cum Polyeleo vel Doxologia Maiori et memoriae liturgicae",
+      redDesc: "Sollemnitates de Praecepto, Festa Domini atque Martyres"
     },
     ranks: {
       solemnity: 'Sollemnitas',
@@ -4074,6 +4156,7 @@ export const TRANSLATIONS = {
       abstinenceDiscipline: 'Abstinentiae Disciplina (Qualitas Ciborum)',
       allowedTable: '✓ Mensa Permissa',
       avoidTable: '✗ Prohibitum seu Restrictum',
+      andMore: 'et plura',
       theologicalMeaning: 'Sensus Theologicus et Biblicus',
       prayerOfDay: 'Oratio Paenitentialis Hodierna',
       saintsOnThisDay: 'Sancti Hoc Die Commemorati',
@@ -4112,9 +4195,20 @@ export const TRANSLATIONS = {
       importanceRank: 'Gradus Liturgicus:',
       shareQuote: 'Verbum Transmitte',
       meditation: 'Meditatio Patristica',
-      scripture: 'Locus Scripturae'
+      scripture: 'Locus Scripturae',
+      allSaints: 'Omnes Sancti',
+      searchPlaceholder: 'Quaere sanctum, festum vel verbum...',
+      noResults: 'Nulli sancti inventi sunt.',
+      clearSearch: 'Expunge inquisitionem'
     },
     settings: {
+      monasticNotif: 'Notificationes et Nuntii Locales',
+      notifAllowed: '✓ Permissum',
+      notifPrompt: 'Tange ad excitandum',
+      monasticBell: 'Campana Monastica',
+      monasticBellDesc: 'Sonus campanae offline',
+      testBell: 'Proba Campanam',
+      testNotif: 'Proba Notificationem',
       title: 'Optiones et Praecepta Sacra',
       subtitle: 'Configura traditionem, linguam, thema diurnum et tabulas offline',
       language: "Lingua Paginae:",
@@ -4157,7 +4251,6 @@ export const TRANSLATIONS = {
       nativeLangs: 'Linguae Vernaculae',
       confessions: {
         catholic: 'Catholicus (Romanus)',
-        traditional: 'Catholicus Traditionalis (1962 / Quattuor Tempora)',
         orthodox: 'Orthodoxus (Byzantinus Orientalis)',
         protestant: 'Protestans / Evangelicus',
         ecumenical: 'Oecumenicus / Quaestor Spiritualis'
@@ -4244,7 +4337,7 @@ export const TRANSLATIONS = {
       clearSelection: 'Ablue electionem'
     },
     jesus: {
-      title: 'Colloquium cum Jesu',
+      title: 'COLLOQUIUM CUM DIRECTORE',
       downloadSuccess: 'Descensio perfecta! Colloquium cum Christo sine interrete activum est.',
       subtitle: 'Quaestionibus, dubiis theologicis et vitae dilemmatibus Evangelica sapientia respondet',
       geminiNanoOffline: 'Gemini Nano (In aparato offline)',
@@ -4282,7 +4375,7 @@ export const TRANSLATIONS = {
       ask: 'Interroga',
       reflecting: 'Jesus animo volvit verba tua...',
       you: 'Tu',
-      jesusChrist: 'Jesus Christus',
+      jesusChrist: 'Geistlicher Begleiter',
       confirmClear: 'Totam colloquii seriem cum Jesu delere vis?',
       errorCommunicating: 'Error in communicatione cum Gemini AI.',
       nanoDownloaded: 'Gemini Nano feliciter receptus est! Colloquium sine interrete nunc activum est.',
@@ -4304,6 +4397,7 @@ export const TRANSLATIONS = {
       prayerTitle: 'Oratio Cordis Immediata:',
     },
     common: {
+      prayNow: 'Ora nunc',
       close: 'Claudere',
       save: 'Servare',
       cancel: 'Abnuere',
@@ -4416,8 +4510,6 @@ export const TRANSLATIONS = {
       traditions: {
         catholicTitle: 'Catholicus (Romanus)',
         catholicDesc: 'Canon plenus, sanctorum cultus et liturgia romana',
-        traditionalTitle: 'Catholicus Traditionalis (1962)',
-        traditionalDesc: 'Missa latina, Quattuor Tempora et ieiunia maiorum',
         orthodoxTitle: 'Orthodoxus (Orientalis)',
         orthodoxDesc: 'Traditio byzantina, Patres Ecclesiae et hesychasmus',
         protestantTitle: 'Protestans / Evangelicus',
@@ -4476,9 +4568,1030 @@ export const TRANSLATIONS = {
       copyMarkdown: 'Copia Markdown',
       submitAnother: '← Mitte aliam nuntiationem',
       copiedAlert: 'Textus Markdown in cistellam transcriptus est!'
+    },
+    promises: {
+      title: 'Ampulla Promissionum',
+      sub: 'Elige quod cor tuum experitur. Extrahe promissionem fidelem ex archivis canonicis Scripturarum.',
+      wordForYou: 'Verbum pro te:',
+      prayerSurrender: 'Oratio Deditionis (XXX secundae):',
+      drawAnother: 'Extrahe aliam Promissionem',
+      listen: 'Audi',
+      shareCard: 'Communicare Schedam'
+    },
+    evening: {
+      listenPrayer: 'Audi Orationem'
     }
   }
 };
+
+const TRANSLATION_SUPPLEMENTS = {
+  en: {
+    settings: { rerunOnboarding: 'Review Initial Setup' },
+    jesus: { guide: 'Spiritual Guide' },
+    onboarding: {
+      synaxariumTitle: 'Synaxarium & Devotions',
+      hours: 'Hours',
+      free: 'Free'
+    }
+  },
+  it: {
+    settings: { rerunOnboarding: 'Rivedi la configurazione iniziale' },
+    jesus: { guide: 'Guida Spirituale' },
+    onboarding: {
+      synaxariumTitle: 'Sinassario e devozioni',
+      hours: 'Ore',
+      free: 'Libero'
+    }
+  },
+  ro: {
+    nav: { widget: 'Widget cu verset sacru' },
+    settings: {
+      monasticTitle: 'Program monahal și Ceasuri canonice:',
+      monasticSubtitle: 'Configurează Liturghia Ceasurilor, clopotele și notificările de rugăciune.',
+      monasticMode: 'Ritmul rugăciunii:',
+      monasticFull: 'Rânduială monahală completă (6 Ceasuri canonice)',
+      monasticSimple: 'Rânduială zilnică simplă (3 ore: dimineață, Angelus, Pavecerniță)',
+      monasticDisabled: 'Rugăciune liberă (fără ore fixe)',
+      monasticFreeNote: 'Rugăciune liberă activă: nu sunt programate alarme sau clopote.'
+    },
+    tools: {
+      widgetTitle: 'Widget cu verset sacru (iOS și Android)',
+      widgetDesc: 'Widget cu verset biblic actualizat pentru ecranul principal iOS (2×2, 4×2, 4×4)'
+    },
+    reader: {
+      audioBible: 'Biblie audio',
+      listenChapter: 'Ascultă',
+      listenVerse: 'Ascultă',
+      listenFromHere: 'Ascultă de aici',
+      listenSelection: 'Ascultă selecția',
+      pauseAudio: 'Pauză',
+      resumeAudio: 'Reia',
+      stopAudio: 'Oprește',
+      speedSlow: '0,75× Lent (meditativ)',
+      speedCalm: '0,90× Liniștit (monahal)',
+      speedNormal: '1,0× Normal',
+      speedBrisk: '1,15× Alert',
+      voiceSettings: 'Voci de lectură (9 limbi liturgice)',
+      voiceDesc: 'Voce sacră autentică, adaptată pentru fiecare limbă liturgică acceptată.',
+      deviceVoices: 'Alte voci ale sistemului pentru această limbă',
+      playPreview: 'Ascultă previzualizarea vocii',
+      stopPreview: 'Oprește previzualizarea',
+      applyVoice: 'Aplică și confirmă',
+      close: 'Închide',
+      noVoicesFound: 'Nu a fost găsită o voce dedicată. Se va folosi vocea implicită a sistemului.',
+      done: 'Gata',
+      chooseVoice: 'Alege vocea',
+      changeSpeed: 'Viteza lecturii',
+      paused: 'În pauză',
+      prevVerse: 'Versetul precedent',
+      nextVerse: 'Versetul următor',
+      listen: 'Ascultă',
+      of: 'din'
+    },
+    focus: {
+      unlockAudioPrompt: 'Atinge aici pentru a activa sunetul clopotului',
+      unlockAudioSuccess: '✓ Sunetul este activ și pregătit'
+    },
+    onboarding: {
+      step1Title: '1. Limba interfeței și naționalitatea de origine',
+      selectLanguage: 'Limba Scripturii și a aplicației:',
+      selectNationality: 'Naționalitate de origine / rădăcini regionale:',
+      nationalityDesc: 'Personalizează calendarul liturgic cu sfinții ocrotitori și tradițiile ținutului tău.',
+      synaxariumTitle: 'Sinaxar și devoțiuni',
+      monasticQuestion: '4. Ce rânduială de rugăciune monahală dorești să urmezi?',
+      monasticMotto: 'Roagă-te și muncește',
+      hours: 'Ore',
+      free: 'Liber',
+      traditionQuestion: '2. Care este mărturisirea ta de credință sau calea duhovnicească?',
+      nameQuestion: '3. Cum dorești să fii numit în dialogul duhovnicesc?',
+      rhythms: {
+        monasticTitle: 'Rânduială monahală completă (Roagă-te și muncește)',
+        monasticDesc: '06:00 Laude • 09:00 Ceasul al III-lea • 12:00 Ceasul al VI-lea și rugăciunea Îngerului Domnului • 15:00 Ceasul al IX-lea • 18:00 Vecernie • 21:00 Pavecerniță',
+        simpleTitle: 'Rânduială zilnică simplă (familie și activități)',
+        simpleDesc: '07:30 Dimineața • 12:30 Rugăciunea Îngerului Domnului de la amiază • 21:30 Pavecerniță și odihnă',
+        freeTitle: 'Rugăciune liberă (fără alarme fixe)',
+        freeDesc: 'Fără alarme sau clopote programate. Roagă-te liber, când îți dorește inima.',
+      },
+      notifLabel: 'Activează notificările și clopotele mănăstirești',
+      notifSub: 'Clopote la fiecare ceas canonic, cu un verset și un îndemn la reculegere'
+    }
+  },
+  fr: {
+    nav: { widget: 'Widget de verset sacré' },
+    settings: {
+      monasticTitle: 'Rythme monastique et heures canoniales :',
+      monasticSubtitle: 'Configurez la Liturgie des Heures, les cloches et les notifications de prière.',
+      monasticMode: 'Rythme de prière :',
+      monasticFull: 'Rythme monastique complet (6 heures canoniales)',
+      monasticSimple: 'Rythme quotidien simple (3 heures : matin, Angelus, complies)',
+      monasticDisabled: 'Prière libre (sans horaires fixes)',
+      monasticFreeNote: 'Prière libre active : aucune alarme ni sonnerie programmée.'
+    },
+    tools: {
+      widgetTitle: 'Widget de verset sacré (iOS et Android)',
+      widgetDesc: 'Widget de verset biblique en direct pour l’écran d’accueil iOS (2×2, 4×2, 4×4)'
+    },
+    reader: {
+      audioBible: 'Bible audio',
+      listenChapter: 'Écouter',
+      listenVerse: 'Écouter',
+      listenFromHere: 'Écouter à partir d’ici',
+      listenSelection: 'Écouter la sélection',
+      pauseAudio: 'Pause',
+      resumeAudio: 'Reprendre',
+      stopAudio: 'Arrêter',
+      speedSlow: '0,75× Lent (méditatif)',
+      speedCalm: '0,90× Calme (monastique)',
+      speedNormal: '1,0× Normal',
+      speedBrisk: '1,15× Soutenu',
+      voiceSettings: 'Voix de lecture (9 langues liturgiques)',
+      voiceDesc: 'Une voix sacrée authentique, adaptée à chaque langue liturgique prise en charge.',
+      deviceVoices: 'Autres voix système pour cette langue',
+      playPreview: 'Écouter un aperçu de la voix',
+      stopPreview: 'Arrêter l’aperçu',
+      applyVoice: 'Appliquer et confirmer',
+      close: 'Fermer',
+      noVoicesFound: 'Aucune voix spécifique trouvée. La voix système par défaut sera utilisée.',
+      done: 'Terminé',
+      chooseVoice: 'Choisir une voix',
+      changeSpeed: 'Vitesse de lecture',
+      paused: 'En pause',
+      prevVerse: 'Verset précédent',
+      nextVerse: 'Verset suivant',
+      listen: 'Écouter',
+      of: 'sur'
+    },
+    focus: {
+      unlockAudioPrompt: 'Touchez ici pour activer le son de la cloche',
+      unlockAudioSuccess: '✓ Audio activé et prêt'
+    },
+    onboarding: {
+      step1Title: '1. Langue de l’interface et nationalité d’origine',
+      selectLanguage: 'Langue des Écritures et de l’application :',
+      selectNationality: 'Nationalité d’origine / héritage régional :',
+      nationalityDesc: 'Personnalisez le calendrier liturgique avec les saints patrons et les traditions de votre région.',
+      synaxariumTitle: 'Synaxaire et dévotions',
+      monasticQuestion: '4. Quel rythme de prière monastique souhaitez-vous suivre ?',
+      hours: 'heures',
+      free: 'Libre',
+      traditionQuestion: '2. Quelle est votre tradition de foi ou votre chemin spirituel ?',
+      nameQuestion: '3. Comment souhaitez-vous être appelé dans le dialogue spirituel ?',
+      rhythms: {
+        monasticTitle: 'Rythme monastique complet (Ora et Labora)',
+        monasticDesc: '06:00 Laudes • 09:00 Tierce • 12:00 Sexte et Angelus • 15:00 None • 18:00 Vêpres • 21:00 Complies',
+        simpleTitle: 'Rythme quotidien simple (famille et travail)',
+        simpleDesc: '07:30 Matin • 12:30 Angelus de midi • 21:30 Complies et repos',
+        freeTitle: 'Prière libre (sans alarmes fixes)',
+        freeDesc: 'Aucune alarme ni sonnerie programmée. Priez librement, selon votre cœur.',
+      },
+      notifLabel: 'Activer les notifications et les cloches monastiques',
+      notifSub: 'Sonnerie à chaque heure canoniale avec un verset et une invitation au recueillement'
+    }
+  },
+  es: {
+    nav: { widget: 'Widget de versículo sagrado' },
+    settings: {
+      monasticTitle: 'Horario monástico y horas canónicas:',
+      monasticSubtitle: 'Configura la Liturgia de las Horas, las campanas y las notificaciones de oración.',
+      monasticMode: 'Ritmo de oración:',
+      monasticFull: 'Ritmo monástico completo (6 horas canónicas)',
+      monasticSimple: 'Ritmo diario sencillo (3 horas: mañana, Angelus, completas)',
+      monasticDisabled: 'Oración libre (sin horarios fijos)',
+      monasticFreeNote: 'Oración libre activa: no hay alarmas ni campanadas programadas.'
+    },
+    tools: {
+      widgetTitle: 'Widget de versículo sagrado (iOS y Android)',
+      widgetDesc: 'Widget de versículo bíblico en directo para la pantalla de inicio de iOS (2×2, 4×2, 4×4)'
+    },
+    reader: {
+      audioBible: 'Biblia en audio',
+      listenChapter: 'Escuchar',
+      listenVerse: 'Escuchar',
+      listenFromHere: 'Escuchar desde aquí',
+      listenSelection: 'Escuchar selección',
+      pauseAudio: 'Pausar',
+      resumeAudio: 'Reanudar',
+      stopAudio: 'Detener',
+      speedSlow: '0,75× Lenta (meditativa)',
+      speedCalm: '0,90× Serena (monástica)',
+      speedNormal: '1,0× Normal',
+      speedBrisk: '1,15× Ágil',
+      voiceSettings: 'Voces de lectura (9 idiomas litúrgicos)',
+      voiceDesc: 'Voz sagrada auténtica, adaptada a cada idioma litúrgico compatible.',
+      deviceVoices: 'Otras voces del sistema para este idioma',
+      playPreview: 'Escuchar vista previa de la voz',
+      stopPreview: 'Detener vista previa',
+      applyVoice: 'Aplicar y confirmar',
+      close: 'Cerrar',
+      noVoicesFound: 'No se encontró una voz específica. Se usará la voz predeterminada del sistema.',
+      done: 'Listo',
+      chooseVoice: 'Elegir voz',
+      changeSpeed: 'Velocidad de lectura',
+      paused: 'En pausa',
+      prevVerse: 'Versículo anterior',
+      nextVerse: 'Versículo siguiente',
+      listen: 'Escuchar',
+      of: 'de'
+    },
+    focus: {
+      unlockAudioPrompt: 'Toca aquí para activar el sonido de la campana',
+      unlockAudioSuccess: '✓ Audio activado y listo'
+    },
+    onboarding: {
+      step1Title: '1. Idioma de la interfaz y nacionalidad de origen',
+      selectLanguage: 'Idioma de las Escrituras y de la aplicación:',
+      selectNationality: 'Nacionalidad de origen / raíces regionales:',
+      nationalityDesc: 'Personaliza el calendario litúrgico con los santos patronos y las tradiciones de tu tierra.',
+      synaxariumTitle: 'Sinaxario y devociones',
+      monasticQuestion: '4. ¿Qué ritmo de oración monástica deseas seguir?',
+      hours: 'horas',
+      free: 'Libre',
+      traditionQuestion: '2. ¿Cuál es tu tradición de fe o camino espiritual?',
+      nameQuestion: '3. ¿Cómo deseas que te llamen en el diálogo espiritual?',
+      rhythms: {
+        monasticTitle: 'Ritmo monástico completo (Ora et Labora)',
+        monasticDesc: '06:00 Laudes • 09:00 Tercia • 12:00 Sexta y Angelus • 15:00 Nona • 18:00 Vísperas • 21:00 Completas',
+        simpleTitle: 'Ritmo diario sencillo (familia y trabajo)',
+        simpleDesc: '07:30 Mañana • 12:30 Angelus del mediodía • 21:30 Completas y descanso',
+        freeTitle: 'Oración libre (sin alarmas fijas)',
+        freeDesc: 'Sin alarmas ni campanadas programadas. Reza libremente cuando lo desee tu corazón.',
+      },
+      notifLabel: 'Activar notificaciones y campanadas monásticas',
+      notifSub: 'Campanadas en cada hora canónica con un versículo y una invitación al recogimiento'
+    }
+  },
+  pt: {
+    nav: { widget: 'Widget de versículo sagrado' },
+    settings: {
+      monasticTitle: 'Horário monástico e horas canónicas:',
+      monasticSubtitle: 'Configure a Liturgia das Horas, os sinos e as notificações de oração.',
+      monasticMode: 'Ritmo de oração:',
+      monasticFull: 'Ritmo monástico completo (6 horas canónicas)',
+      monasticSimple: 'Ritmo diário simples (3 horas: manhã, Angelus, completas)',
+      monasticDisabled: 'Oração livre (sem horários fixos)',
+      monasticFreeNote: 'Oração livre ativa: não há alarmes nem badaladas programadas.'
+    },
+    tools: {
+      widgetTitle: 'Widget de versículo sagrado (iOS e Android)',
+      widgetDesc: 'Widget de versículo bíblico em direto para o ecrã principal do iOS (2×2, 4×2, 4×4)'
+    },
+    reader: {
+      audioBible: 'Bíblia em áudio',
+      listenChapter: 'Ouvir',
+      listenVerse: 'Ouvir',
+      listenFromHere: 'Ouvir a partir daqui',
+      listenSelection: 'Ouvir seleção',
+      pauseAudio: 'Pausar',
+      resumeAudio: 'Retomar',
+      stopAudio: 'Parar',
+      speedSlow: '0,75× Lenta (meditativa)',
+      speedCalm: '0,90× Serena (monástica)',
+      speedNormal: '1,0× Normal',
+      speedBrisk: '1,15× Rápida',
+      voiceSettings: 'Vozes de leitura (9 idiomas litúrgicos)',
+      voiceDesc: 'Voz sagrada autêntica, adaptada a cada idioma litúrgico suportado.',
+      deviceVoices: 'Outras vozes do sistema para este idioma',
+      playPreview: 'Ouvir pré-visualização da voz',
+      stopPreview: 'Parar pré-visualização',
+      applyVoice: 'Aplicar e confirmar',
+      close: 'Fechar',
+      noVoicesFound: 'Não foi encontrada uma voz específica. Será usada a voz predefinida do sistema.',
+      done: 'Concluído',
+      chooseVoice: 'Escolher voz',
+      changeSpeed: 'Velocidade de leitura',
+      paused: 'Em pausa',
+      prevVerse: 'Versículo anterior',
+      nextVerse: 'Versículo seguinte',
+      listen: 'Ouvir',
+      of: 'de'
+    },
+    focus: {
+      unlockAudioPrompt: 'Toque aqui para ativar o som do sino',
+      unlockAudioSuccess: '✓ Áudio ativado e pronto'
+    },
+    onboarding: {
+      step1Title: '1. Idioma da interface e nacionalidade de origem',
+      selectLanguage: 'Idioma das Escrituras e da aplicação:',
+      selectNationality: 'Nacionalidade de origem / raízes regionais:',
+      nationalityDesc: 'Personalize o calendário litúrgico com os santos padroeiros e as tradições da sua terra.',
+      synaxariumTitle: 'Sinaxário e devoções',
+      monasticQuestion: '4. Que ritmo de oração monástica deseja seguir?',
+      hours: 'horas',
+      free: 'Livre',
+      traditionQuestion: '2. Qual é a sua tradição de fé ou caminho espiritual?',
+      nameQuestion: '3. Como deseja ser tratado no diálogo espiritual?',
+      rhythms: {
+        monasticTitle: 'Ritmo monástico completo (Ora et Labora)',
+        monasticDesc: '06:00 Laudes • 09:00 Terça • 12:00 Sexta e Angelus • 15:00 Noa • 18:00 Vésperas • 21:00 Completas',
+        simpleTitle: 'Ritmo diário simples (família e trabalho)',
+        simpleDesc: '07:30 Manhã • 12:30 Angelus do meio-dia • 21:30 Completas e descanso',
+        freeTitle: 'Oração livre (sem alarmes fixos)',
+        freeDesc: 'Sem alarmes nem badaladas programadas. Reze livremente quando o coração desejar.',
+      },
+      notifLabel: 'Ativar notificações e badaladas monásticas',
+      notifSub: 'Badaladas a cada hora canónica, com um versículo e um convite ao recolhimento'
+    }
+  },
+  de: {
+    nav: { widget: 'Widget mit Bibelvers' },
+    settings: {
+      monasticTitle: 'Mönchszeiten und kanonische Stunden:',
+      monasticSubtitle: 'Liturgie der Stunden, Glocken und Gebetsbenachrichtigungen konfigurieren.',
+      monasticMode: 'Gebetsrhythmus:',
+      monasticFull: 'Vollständiger monastischer Rhythmus (6 kanonische Stunden)',
+      monasticSimple: 'Einfacher Tagesrhythmus (3 Stunden: Morgen, Angelus, Komplet)',
+      monasticDisabled: 'Freies Gebet (keine festen Zeiten)',
+      monasticFreeNote: 'Freies Gebet aktiv: keine geplanten Alarme oder Glockenschläge.'
+    },
+    tools: {
+      widgetTitle: 'Bibelvers-Widget (iOS und Android)',
+      widgetDesc: 'Live-Bibelvers-Widget für den iOS-Startbildschirm (2×2, 4×2, 4×4)'
+    },
+    reader: {
+      audioBible: 'Hörbibel',
+      listenChapter: 'Anhören',
+      listenVerse: 'Anhören',
+      listenFromHere: 'Ab hier anhören',
+      listenSelection: 'Auswahl anhören',
+      pauseAudio: 'Pausieren',
+      resumeAudio: 'Fortsetzen',
+      stopAudio: 'Anhalten',
+      speedSlow: '0,75× Langsam (meditativ)',
+      speedCalm: '0,90× Ruhig (monastisch)',
+      speedNormal: '1,0× Normal',
+      speedBrisk: '1,15× Zügig',
+      voiceSettings: 'Vorlesestimmen (9 liturgische Sprachen)',
+      voiceDesc: 'Authentische geistliche Stimme, abgestimmt auf jede unterstützte liturgische Sprache.',
+      deviceVoices: 'Weitere Systemstimmen für diese Sprache',
+      playPreview: 'Stimmenvorschau anhören',
+      stopPreview: 'Vorschau anhalten',
+      applyVoice: 'Übernehmen und bestätigen',
+      close: 'Schließen',
+      noVoicesFound: 'Keine passende Stimme gefunden. Die Standardsystemstimme wird verwendet.',
+      done: 'Fertig',
+      chooseVoice: 'Stimme auswählen',
+      changeSpeed: 'Lesegeschwindigkeit',
+      paused: 'Pausiert',
+      prevVerse: 'Vorheriger Vers',
+      nextVerse: 'Nächster Vers',
+      listen: 'Anhören',
+      of: 'von'
+    },
+    focus: {
+      unlockAudioPrompt: 'Hier tippen, um den Glockenton zu aktivieren',
+      unlockAudioSuccess: '✓ Audio aktiviert und bereit'
+    },
+    onboarding: {
+      step1Title: '1. Oberflächensprache und ursprüngliche Nationalität',
+      selectLanguage: 'Sprache der Schriften und der Anwendung:',
+      selectNationality: 'Ursprüngliche Nationalität / regionale Herkunft:',
+      nationalityDesc: 'Passe den liturgischen Kalender mit den Schutzheiligen und Traditionen deiner Heimat an.',
+      synaxariumTitle: 'Synaxar und Andachten',
+      monasticQuestion: '4. Welchem monastischen Gebetsrhythmus möchtest du folgen?',
+      hours: 'Stunden',
+      free: 'Frei',
+      traditionQuestion: '2. Was ist deine Glaubenstradition oder dein geistlicher Weg?',
+      nameQuestion: '3. Wie möchtest du im geistlichen Gespräch angesprochen werden?',
+      rhythms: {
+        monasticTitle: 'Vollständiger monastischer Rhythmus (Ora et Labora)',
+        monasticDesc: '06:00 Laudes • 09:00 Terz • 12:00 Sext und Angelus • 15:00 Non • 18:00 Vesper • 21:00 Komplet',
+        simpleTitle: 'Einfacher Tagesrhythmus (Familie und Arbeit)',
+        simpleDesc: '07:30 Morgen • 12:30 Mittags-Angelus • 21:30 Komplet und Ruhe',
+        freeTitle: 'Freies Gebet (ohne feste Alarme)',
+        freeDesc: 'Keine geplanten Alarme oder Glockenschläge. Bete frei, wann immer dein Herz es wünscht.',
+      },
+      notifLabel: 'Benachrichtigungen und monastische Glockenschläge aktivieren',
+      notifSub: 'Glockenschlag zu jeder kanonischen Stunde mit Bibelvers und Einladung zur Stille'
+    }
+  },
+  ru: {
+    nav: { widget: 'Виджет со священным стихом' },
+    settings: {
+      monasticTitle: 'Монашеский распорядок и канонические часы:',
+      monasticSubtitle: 'Настройте Литургию часов, колокольный звон и молитвенные уведомления.',
+      monasticMode: 'Молитвенный ритм:',
+      monasticFull: 'Полный монашеский распорядок (6 канонических часов)',
+      monasticSimple: 'Простой дневной распорядок (3 часа: утро, Ангелус, повечерие)',
+      monasticDisabled: 'Свободная молитва (без фиксированного расписания)',
+      monasticFreeNote: 'Свободная молитва включена: звонки и напоминания не запланированы.'
+    },
+    tools: {
+      widgetTitle: 'Виджет со священным стихом (iOS и Android)',
+      widgetDesc: 'Виджет с библейским стихом для главного экрана iOS (2×2, 4×2, 4×4)'
+    },
+    reader: {
+      audioBible: 'Аудио-Библия',
+      listenChapter: 'Слушать',
+      listenVerse: 'Слушать',
+      listenFromHere: 'Слушать отсюда',
+      listenSelection: 'Слушать выбранное',
+      pauseAudio: 'Пауза',
+      resumeAudio: 'Продолжить',
+      stopAudio: 'Остановить',
+      speedSlow: '0,75× Медленно (для молитвы)',
+      speedCalm: '0,90× Спокойно (монашеский ритм)',
+      speedNormal: '1,0× Обычно',
+      speedBrisk: '1,15× Быстро',
+      voiceSettings: 'Голоса чтения (9 литургических языков)',
+      voiceDesc: 'Особый естественный церковный голос для каждого поддерживаемого литургического языка.',
+      deviceVoices: 'Другие системные голоса для этого языка',
+      playPreview: 'Прослушать образец голоса',
+      stopPreview: 'Остановить прослушивание',
+      applyVoice: 'Применить и подтвердить',
+      close: 'Закрыть',
+      noVoicesFound: 'Подходящий голос не найден. Будет использован системный голос по умолчанию.',
+      done: 'Готово',
+      chooseVoice: 'Выбрать голос',
+      changeSpeed: 'Скорость чтения',
+      paused: 'Приостановлено',
+      prevVerse: 'Предыдущий стих',
+      nextVerse: 'Следующий стих',
+      listen: 'Слушать',
+      of: 'из'
+    },
+    focus: {
+      unlockAudioPrompt: 'Нажмите здесь, чтобы включить звук колокола',
+      unlockAudioSuccess: '✓ Звук включён и готов'
+    },
+    onboarding: {
+      step1Title: '1. Язык интерфейса и национальность',
+      selectLanguage: 'Язык Писания и приложения:',
+      selectNationality: 'Родная страна / региональные корни:',
+      nationalityDesc: 'Настройте литургический календарь по святым покровителям и традициям вашей земли.',
+      synaxariumTitle: 'Синаксарь и молитвенные традиции',
+      monasticQuestion: '4. Какой монашеский молитвенный распорядок вы хотите соблюдать?',
+      hours: 'часов',
+      free: 'Свободно',
+      traditionQuestion: '2. Какова ваша традиция веры или духовный путь?',
+      nameQuestion: '3. Как к вам обращаться в духовной беседе?',
+      rhythms: {
+        monasticTitle: 'Полный монашеский распорядок (Ora et Labora)',
+        monasticDesc: '06:00 Утреня • 09:00 Третий час • 12:00 Шестой час и Ангелус • 15:00 Девятый час • 18:00 Вечерня • 21:00 Повечерие',
+        simpleTitle: 'Простой дневной распорядок (семья и труд)',
+        simpleDesc: '07:30 Утренняя молитва • 12:30 Полуденный Ангелус • 21:30 Повечерие и покой',
+        freeTitle: 'Свободная молитва (без фиксированных сигналов)',
+        freeDesc: 'Без расписания и звонков. Молитесь свободно, когда подсказывает сердце.',
+      },
+      notifLabel: 'Включить уведомления и монастырский колокольный звон',
+      notifSub: 'Звон в каждый канонический час, стих Писания и приглашение к тишине'
+    }
+  },
+  la: {
+    nav: { widget: 'Widget Versiculi Sacri' },
+    settings: {
+      monasticTitle: 'Ordo monasticus et Horae canonicae:',
+      monasticSubtitle: 'Liturgiam Horarum, campanas et monitiones precationis constitue.',
+      monasticMode: 'Rythmi precationis:',
+      monasticFull: 'Ordo monasticus plenus (6 Horae canonicae)',
+      monasticSimple: 'Ordo quotidianus simplex (3 horae: mane, Angelus, Completorium)',
+      monasticDisabled: 'Precatio libera (sine horis statutis)',
+      monasticFreeNote: 'Precatio libera activa: nullae alarmas aut campanae horariae dispositae sunt.'
+    },
+    tools: {
+      widgetTitle: 'Widget Versiculi Sacri (iOS et Android)',
+      widgetDesc: 'Widget vivus versiculi biblici pro pagina prima iOS (2×2, 4×2, 4×4)'
+    },
+    reader: {
+      audioBible: 'Biblia audio',
+      listenChapter: 'Audi',
+      listenVerse: 'Audi',
+      listenFromHere: 'Hinc audi',
+      listenSelection: 'Selectionem audi',
+      pauseAudio: 'Siste paulisper',
+      resumeAudio: 'Perge',
+      stopAudio: 'Siste',
+      speedSlow: '0,75× Tarde (meditative)',
+      speedCalm: '0,90× Placide (monastice)',
+      speedNormal: '1,0× Ordinarie',
+      speedBrisk: '1,15× Celeriter',
+      voiceSettings: 'Voces lectionis (9 linguae liturgicae)',
+      voiceDesc: 'Vox sacra naturalis, cuiusque linguae liturgicae aptata.',
+      deviceVoices: 'Aliae voces systematis pro hac lingua',
+      playPreview: 'Exemplum vocis audi',
+      stopPreview: 'Exemplum siste',
+      applyVoice: 'Adhibe et confirma',
+      close: 'Claude',
+      noVoicesFound: 'Vox propria non inventa est. Vox systematis ordinaria adhibebitur.',
+      done: 'Perfectum',
+      chooseVoice: 'Voca elige',
+      changeSpeed: 'Celeritas lectionis',
+      paused: 'Sistitur',
+      prevVerse: 'Versus prior',
+      nextVerse: 'Versus proximus',
+      listen: 'Audi',
+      of: 'ex'
+    },
+    focus: {
+      unlockAudioPrompt: 'Hic tange ut sonum campanae accendas',
+      unlockAudioSuccess: '✓ Sonus accensus et paratus'
+    },
+    onboarding: {
+      step1Title: '1. Lingua instrumenti et natio originis',
+      selectLanguage: 'Lingua Scripturarum et applicationis:',
+      selectNationality: 'Natio originis / hereditas regionalis:',
+      nationalityDesc: 'Calendarium liturgicum patronis sanctis et traditionibus patriae tuae compone.',
+      synaxariumTitle: 'Synaxarium et pietates',
+      monasticQuestion: '4. Quem precationis monasticae ordinem sequi cupis?',
+      hours: 'Horae',
+      free: 'Liberum',
+      traditionQuestion: '2. Quae est tua fidei traditio vel via spiritualis?',
+      nameQuestion: '3. Quo nomine in colloquio spirituali appellari cupis?',
+      rhythms: {
+        monasticTitle: 'Ordo monasticus plenus (Ora et Labora)',
+        monasticDesc: '06:00 Laudes • 09:00 Tertia • 12:00 Sexta et Angelus • 15:00 Nona • 18:00 Vesperae • 21:00 Completorium',
+        simpleTitle: 'Ordo quotidianus simplex (familia et labor)',
+        simpleDesc: '07:30 Mane • 12:30 Angelus meridianus • 21:30 Completorium et quies',
+        freeTitle: 'Precatio libera (sine horis fixis)',
+        freeDesc: 'Nullae horae aut campanae statutae. Ora libere, cum cor tuum desiderat.',
+      },
+      notifLabel: 'Monitiones et campanas monasticas accende',
+      notifSub: 'Campana singulis horis canonicis cum versu Scripturae et invitatione ad silentium'
+    }
+  }
+};
+
+function mergeTranslations(target, source) {
+  for (const [key, value] of Object.entries(source)) {
+    if (value && typeof value === 'object' && !Array.isArray(value)) {
+      target[key] ||= {};
+      mergeTranslations(target[key], value);
+    } else {
+      target[key] = value;
+    }
+  }
+}
+
+for (const [language, additions] of Object.entries(TRANSLATION_SUPPLEMENTS)) {
+  mergeTranslations(TRANSLATIONS[language], additions);
+}
+
+const WIDGET_MODAL_KEYS = [
+  'homeTab', 'lockScreenTab', 'shortcutsTab', 'small', 'medium', 'large',
+  'cathedral', 'parchment', 'tinted', 'tapToRead', 'newVerse', 'readInBible',
+  'installTitle', 'installDescription', 'install', 'installStep1', 'installStep2',
+  'installStep3', 'lockTitle', 'lockDescription', 'sendNow', 'hapticTitle',
+  'hapticDescription', 'dailyVerse', 'candleRain', 'guideChat', 'shortcutsTitle',
+  'shortcutsDescription', 'copyVerse', 'notificationsUnsupported', 'notificationsDenied',
+  'verseSent', 'verseCopied', 'copyManually'
+];
+
+const WIDGET_MODAL_COPY = {
+  en: [
+    'Home Screen', 'Lock Screen', 'Shortcuts', 'Small', 'Medium', 'Large',
+    'Cathedral', 'Parchment', 'iOS 18 Tinted', 'Tap to read', 'New Verse', 'Read in Bible',
+    'Add the Widget to iPhone in 3 Taps', 'Create the dedicated widget icon directly from Safari', 'Install',
+    'Tap Share in Safari', 'Choose “Add to Home Screen”', 'Your widget is ready on the Home Screen!',
+    'Verse on the Lock Screen', 'Receive a sacred verse each morning on your iPhone Lock Screen',
+    'Send Verse to Lock Screen Now', 'Long Press (Haptic Touch on Home Screen)',
+    'On your iPhone Home Screen, press and hold the Aura Sacra icon. The pop-up menu includes these quick actions:',
+    'Verse of the Day (Widget)', 'Candle & Rain', 'Talk with the Guide',
+    'Apple Shortcuts Integration', 'Copy the current verse to use in personal automations or third-party widgets such as Widgy or Scriptable:',
+    'Copy Formatted Verse for iOS Widget', 'Web notifications are not supported in this browser.',
+    'Notification permission was denied. Enable it in iOS Settings.',
+    '✓ Verse sent! Lock your iPhone screen to see it appear.', '✓ Verse copied to clipboard!', 'Select and copy manually.'
+  ],
+  it: [
+    'Schermata Home', 'Schermata di blocco', 'Comandi rapidi', 'Piccolo', 'Medio', 'Grande',
+    'Cattedrale', 'Pergamena', 'Colori iOS 18', 'Tocca per leggere', 'Nuovo versetto', 'Leggi nella Bibbia',
+    'Aggiungi il widget su iPhone in 3 tocchi', 'Crea l’icona del widget direttamente da Safari', 'Installa',
+    'Tocca Condividi in Safari', 'Scegli «Aggiungi alla schermata Home»', 'Il widget è pronto sulla schermata Home!',
+    'Versetto sulla schermata di blocco', 'Ricevi ogni mattina un versetto sacro sulla schermata di blocco del tuo iPhone',
+    'Invia ora il versetto alla schermata di blocco', 'Pressione prolungata (Haptic Touch sulla schermata Home)',
+    'Tieni premuta per un istante l’icona di Aura Sacra sulla schermata Home. Il menu contiene queste azioni rapide:',
+    'Versetto del giorno (Widget)', 'Candela e pioggia', 'Dialoga con la Guida',
+    'Integrazione con Comandi Rapidi di Apple', 'Copia il versetto corrente per usarlo nelle automazioni personali o in widget di terze parti come Widgy o Scriptable:',
+    'Copia il versetto formattato per il widget iOS', 'Le notifiche web non sono supportate da questo browser.',
+    'Permesso di notifica negato. Attivalo nelle Impostazioni di iOS.',
+    '✓ Versetto inviato! Blocca lo schermo dell’iPhone per visualizzarlo.', '✓ Versetto copiato negli appunti!', 'Seleziona e copia manualmente.'
+  ],
+  ro: [
+    'Ecran principal', 'Ecran de blocare', 'Scurtături', 'Mic', 'Mediu', 'Mare',
+    'Catedrală', 'Pergament', 'Nuanțe iOS 18', 'Atinge pentru a citi', 'Verset nou', 'Citește în Biblie',
+    'Adaugă widgetul pe iPhone în 3 atingeri', 'Creează pictograma widgetului direct din Safari', 'Instalează',
+    'Atinge Partajare în Safari', 'Alege „Adaugă la ecranul principal”', 'Widgetul este gata pe ecranul principal!',
+    'Verset pe ecranul de blocare', 'Primește în fiecare dimineață un verset sacru pe ecranul de blocare al iPhone-ului',
+    'Trimite versetul pe ecranul de blocare acum', 'Apăsare lungă (Haptic Touch pe ecranul principal)',
+    'Ține apăsată pictograma Aura Sacra de pe ecranul principal. Meniul afișează aceste scurtături:',
+    'Versetul zilei (Widget)', 'Lumânare și ploaie', 'Dialog cu Îndrumătorul',
+    'Integrare cu Scurtături Apple', 'Copiază versetul curent pentru automatizări personale sau widgeturi terțe, precum Widgy ori Scriptable:',
+    'Copiază versetul formatat pentru widgetul iOS', 'Acest browser nu acceptă notificări web.',
+    'Permisiunea pentru notificări a fost refuzată. Activeaz-o în Setările iOS.',
+    '✓ Verset trimis! Blochează ecranul iPhone-ului pentru a-l vedea.', '✓ Verset copiat în clipboard!', 'Selectează și copiază manual.'
+  ],
+  fr: [
+    'Écran d’accueil', 'Écran verrouillé', 'Raccourcis', 'Petit', 'Moyen', 'Grand',
+    'Cathédrale', 'Parchemin', 'Teinté iOS 18', 'Touchez pour lire', 'Nouveau verset', 'Lire dans la Bible',
+    'Ajouter le widget sur iPhone en 3 gestes', 'Créez l’icône du widget directement depuis Safari', 'Installer',
+    'Touchez Partager dans Safari', 'Choisissez « Ajouter à l’écran d’accueil »', 'Votre widget est prêt sur l’écran d’accueil !',
+    'Verset sur l’écran verrouillé', 'Recevez chaque matin un verset sacré sur l’écran verrouillé de votre iPhone',
+    'Envoyer le verset sur l’écran verrouillé', 'Appui long (Haptic Touch sur l’écran d’accueil)',
+    'Sur l’écran d’accueil, maintenez l’icône Aura Sacra. Le menu affiche ces raccourcis :',
+    'Verset du jour (widget)', 'Bougie et pluie', 'Dialogue avec le Guide',
+    'Intégration avec Raccourcis Apple', 'Copiez le verset actuel pour vos automatisations ou des widgets tiers comme Widgy ou Scriptable :',
+    'Copier le verset formaté pour le widget iOS', 'Ce navigateur ne prend pas en charge les notifications web.',
+    'Autorisation de notification refusée. Activez-la dans les réglages iOS.',
+    '✓ Verset envoyé ! Verrouillez votre iPhone pour le voir.', '✓ Verset copié dans le presse-papiers !', 'Sélectionnez et copiez manuellement.'
+  ],
+  es: [
+    'Pantalla de inicio', 'Pantalla de bloqueo', 'Atajos', 'Pequeño', 'Mediano', 'Grande',
+    'Catedral', 'Pergamino', 'Tintado de iOS 18', 'Toca para leer', 'Nuevo versículo', 'Leer en la Biblia',
+    'Añade el widget al iPhone en 3 toques', 'Crea el icono del widget directamente desde Safari', 'Instalar',
+    'Toca Compartir en Safari', 'Elige «Añadir a pantalla de inicio»', '¡El widget está listo en la pantalla de inicio!',
+    'Versículo en la pantalla de bloqueo', 'Recibe cada mañana un versículo sagrado en la pantalla de bloqueo del iPhone',
+    'Enviar ahora el versículo a la pantalla de bloqueo', 'Mantén pulsado (Haptic Touch en la pantalla de inicio)',
+    'Mantén pulsado el icono de Aura Sacra en la pantalla de inicio. El menú contiene estos atajos:',
+    'Versículo del día (Widget)', 'Vela y lluvia', 'Diálogo con la Guía',
+    'Integración con Atajos de Apple', 'Copia el versículo actual para automatizaciones personales o widgets de terceros como Widgy o Scriptable:',
+    'Copiar versículo con formato para widget de iOS', 'Este navegador no admite notificaciones web.',
+    'Se denegó el permiso de notificaciones. Actívalo en los Ajustes de iOS.',
+    '✓ ¡Versículo enviado! Bloquea la pantalla del iPhone para verlo.', '✓ ¡Versículo copiado al portapapeles!', 'Selecciona y copia manualmente.'
+  ],
+  pt: [
+    'Ecrã principal', 'Ecrã bloqueado', 'Atalhos', 'Pequeno', 'Médio', 'Grande',
+    'Catedral', 'Pergaminho', 'Tons iOS 18', 'Toque para ler', 'Novo versículo', 'Ler na Bíblia',
+    'Adicione o widget ao iPhone em 3 toques', 'Crie o ícone do widget diretamente no Safari', 'Instalar',
+    'Toque em Partilhar no Safari', 'Escolha «Adicionar ao ecrã principal»', 'O widget está pronto no ecrã principal!',
+    'Versículo no ecrã bloqueado', 'Receba todas as manhãs um versículo sagrado no ecrã bloqueado do iPhone',
+    'Enviar agora o versículo para o ecrã bloqueado', 'Toque prolongado (Haptic Touch no ecrã principal)',
+    'No ecrã principal, mantenha premido o ícone Aura Sacra. O menu inclui estes atalhos:',
+    'Versículo do dia (Widget)', 'Vela e chuva', 'Diálogo com o Guia',
+    'Integração com Atalhos da Apple', 'Copie o versículo atual para automatizações pessoais ou widgets de terceiros, como Widgy ou Scriptable:',
+    'Copiar versículo formatado para widget iOS', 'Este navegador não suporta notificações web.',
+    'A permissão para notificações foi recusada. Ative-a nas Definições do iOS.',
+    '✓ Versículo enviado! Bloqueie o ecrã do iPhone para o ver.', '✓ Versículo copiado para a área de transferência!', 'Selecione e copie manualmente.'
+  ],
+  de: [
+    'Home-Bildschirm', 'Sperrbildschirm', 'Kurzbefehle', 'Klein', 'Mittel', 'Groß',
+    'Kathedrale', 'Pergament', 'iOS 18 getönt', 'Zum Lesen antippen', 'Neuer Vers', 'In der Bibel lesen',
+    'Widget in 3 Schritten zum iPhone hinzufügen', 'Erstellen Sie das Widget-Symbol direkt in Safari', 'Installieren',
+    'In Safari auf Teilen tippen', '„Zum Home-Bildschirm“ auswählen', 'Das Widget ist auf dem Home-Bildschirm bereit!',
+    'Vers auf dem Sperrbildschirm', 'Erhalte jeden Morgen einen Bibelvers auf dem iPhone-Sperrbildschirm',
+    'Vers jetzt an den Sperrbildschirm senden', 'Langer Druck (Haptic Touch auf dem Home-Bildschirm)',
+    'Halte das Aura-Sacra-Symbol auf dem Home-Bildschirm gedrückt. Das Menü enthält diese Kurzbefehle:',
+    'Vers des Tages (Widget)', 'Kerze und Regen', 'Gespräch mit dem geistlichen Begleiter',
+    'Integration mit Apple Kurzbefehle', 'Kopiere den aktuellen Vers für persönliche Automationen oder Widgets von Drittanbietern wie Widgy oder Scriptable:',
+    'Formatierten Vers für iOS-Widget kopieren', 'Dieser Browser unterstützt keine Webbenachrichtigungen.',
+    'Die Benachrichtigungsberechtigung wurde verweigert. Aktiviere sie in den iOS-Einstellungen.',
+    '✓ Vers gesendet! Sperre deinen iPhone-Bildschirm, um ihn zu sehen.', '✓ Vers in die Zwischenablage kopiert!', 'Manuell auswählen und kopieren.'
+  ],
+  ru: [
+    'Главный экран', 'Экран блокировки', 'Быстрые команды', 'Маленький', 'Средний', 'Большой',
+    'Собор', 'Пергамент', 'Тонировка iOS 18', 'Нажмите, чтобы прочитать', 'Новый стих', 'Открыть в Библии',
+    'Добавьте виджет на iPhone в 3 касания', 'Создайте значок виджета прямо в Safari', 'Установить',
+    'Нажмите «Поделиться» в Safari', 'Выберите «На экран Домой»', 'Виджет готов на главном экране!',
+    'Стих на экране блокировки', 'Получайте священный стих каждое утро на экране блокировки iPhone',
+    'Отправить стих на экран блокировки сейчас', 'Долгое нажатие (Haptic Touch на главном экране)',
+    'Нажмите и удерживайте значок Aura Sacra на главном экране. В меню доступны быстрые команды:',
+    'Стих дня (виджет)', 'Свеча и дождь', 'Беседа с Наставником',
+    'Интеграция с Быстрыми командами Apple', 'Скопируйте текущий стих для личной автоматизации или сторонних виджетов, например Widgy или Scriptable:',
+    'Скопировать стих для виджета iOS', 'Этот браузер не поддерживает веб-уведомления.',
+    'Разрешение на уведомления отклонено. Включите его в настройках iOS.',
+    '✓ Стих отправлен! Заблокируйте экран iPhone, чтобы увидеть его.', '✓ Стих скопирован в буфер обмена!', 'Выделите и скопируйте вручную.'
+  ],
+  la: [
+    'Domus velum', 'Velum clausum', 'Compendia', 'Parvum', 'Medius', 'Magnum',
+    'Cathedralis', 'Pergamenum', 'Coloribus iOS 18', 'Tange ad legendum', 'Versus novus', 'In Biblia lege',
+    'Widget in iPhone tribus tactibus adde', 'Iconem widgeti directe in Safari crea', 'Installa',
+    'In Safari Communica tange', '«Ad Domum Adde» elige', 'Widget in Domus velo paratum est!',
+    'Versus in velo clauso', 'Singulis matutinis versum sacrum in velo clauso iPhone accipe',
+    'Versum nunc ad velum clausum mitte', 'Diu preme (Haptic Touch in Domus velo)',
+    'Iconem Aura Sacra in Domus velo diu preme. Haec compendia in menu invenies:',
+    'Versus diei (Widget)', 'Candela et pluvia', 'Cum Ductore colloquere',
+    'Integratio cum Compendiis Apple', 'Versum currentem ad usum in automationibus vel widgetis externis, ut Widgy aut Scriptable, copia:',
+    'Versum formatum pro widget iOS copia', 'Hic navigator notificationes interretiales non sustinet.',
+    'Permissio notificationum negata est. In Optiones iOS eam permitte.',
+    '✓ Versus missus est! Velum iPhone claude ut eum videas.', '✓ Versus in tabulam transitoriam copiatus est!', 'Manu selige et copia.'
+  ]
+};
+
+const SITEWIDE_UI_SUPPLEMENTS = {
+  en: {
+    app: { starting: 'Starting Aura Sacra...', reloading: 'Reloading the platform...', refreshCache: 'Refresh cache and restart' },
+    common: { now: 'Now', sharedFrom: 'Shared from Aura Sacra' },
+    focus: { candleTitle: 'Living Candle — Focus Timer' },
+    settings: { notifDenied: 'Permission not granted' },
+    jesus: { nanoOffline: 'Offline Nano', offlineStatus: 'Offline', apiKeyShort: 'API Key' },
+    scheduleModal: {
+      tabMonastic: 'Canonical Hours', tabFocus: 'Study & Work', nextCanonicalHour: 'Next Canonical Hour',
+      countdownIn: 'in', noHoursScheduled: 'No monastic hours scheduled (free mode).',
+      activeRhythm: 'Active prayer rhythm:', hourlyNotifications: 'Hourly notifications',
+      pushAndLocal: 'Push and local', bronzeCathedralBell: 'Bronze cathedral bell',
+      scheduledHours: 'Scheduled Canonical Hours:', schoolWorkLabel: 'School / Work Focus',
+      hoursAbbr: 'h', minutesAbbr: 'min'
+    },
+    widgetPage: {
+      night: 'Night', openVerse: 'Tap to open this verse in the Bible',
+      shareVerse: 'Share verse as a graphic card',
+      readDescription: 'Tap the widget to open the verse in the Bible, highlighted with a golden glow. <strong>Share</strong> creates an artistic card for WhatsApp and Instagram.',
+      setupTitle: 'Set it up as an iPhone Widget:', setupStep1: 'In Safari, tap the Share button <strong style="color: #ffb300; font-size: 13px;">📤</strong>',
+      setupStep2: 'Scroll and tap <strong style="color: #fff;">“Add to Home Screen”</strong>',
+      setupStep3: 'Confirm <strong>“Add”</strong> to create a full-screen widget!'
+    },
+    monasticHours: {
+      lauds: { name: 'Morning Lauds', sub: 'Dawn Praise • Christ’s Resurrection' },
+      terce: { name: 'Terce (Third Hour)', sub: 'Descent of the Holy Spirit • Wisdom & Fortitude' },
+      sext: { name: 'Sext & Midday Angelus', sub: 'Crucifixion of Christ • Angelus Memorial' },
+      none: { name: 'None (Ninth Hour)', sub: 'Death of Christ on the Cross • Hour of Divine Mercy' },
+      vespers: { name: 'Evening Vespers', sub: 'Evening Light • Thanksgiving' },
+      compline: { name: 'Compline & Night Exam', sub: 'Night Peace • Examination of Conscience & Rest' },
+      morning: { name: 'Morning Prayer', sub: 'Offering of the Day to God' },
+      midday: { name: 'Midday Angelus', sub: 'Incarnation Memorial & Sacred Pause' },
+      evening: { name: 'Night Prayer (Compline)', sub: 'Thanksgiving & Peaceful Rest in Christ' }
+    }
+  },
+  it: {
+    app: { starting: 'Caricamento di Aura Sacra...', reloading: 'Ricaricamento della piattaforma...', refreshCache: 'Aggiorna la cache e riavvia' },
+    common: { now: 'Adesso', sharedFrom: 'Condiviso da Aura Sacra' },
+    focus: { candleTitle: 'Candela viva — Timer di concentrazione' },
+    settings: { notifDenied: 'Permesso non concesso' },
+    jesus: { nanoOffline: 'Nano offline', offlineStatus: 'Non in linea', apiKeyShort: 'Chiave API' },
+    scheduleModal: {
+      tabMonastic: 'Ore canoniche', tabFocus: 'Studio e lavoro', nextCanonicalHour: 'Prossima ora canonica',
+      countdownIn: 'tra', noHoursScheduled: 'Nessuna ora monastica programmata (modalità libera).',
+      activeRhythm: 'Ritmo di preghiera attivo:', hourlyNotifications: 'Notifiche orarie',
+      pushAndLocal: 'Push e locali', bronzeCathedralBell: 'Campana di bronzo della cattedrale',
+      scheduledHours: 'Ore canoniche programmate:', schoolWorkLabel: 'Studio / Lavoro',
+      hoursAbbr: 'h', minutesAbbr: 'min'
+    },
+    widgetPage: {
+      night: 'Notte', openVerse: 'Tocca per aprire questo versetto nella Bibbia',
+      shareVerse: 'Condividi il versetto come scheda grafica',
+      readDescription: 'Toccando il widget si apre il versetto nella Bibbia, evidenziato da un alone dorato. <strong>Condividi</strong> crea una scheda artistica per WhatsApp e Instagram.',
+      setupTitle: 'Come impostarlo come widget su iPhone:', setupStep1: 'In Safari, tocca il pulsante Condividi <strong style="color: #ffb300; font-size: 13px;">📤</strong>',
+      setupStep2: 'Scorri e tocca <strong style="color: #fff;">«Aggiungi alla schermata Home»</strong>',
+      setupStep3: 'Conferma <strong>«Aggiungi»</strong> per creare un widget a tutto schermo!'
+    },
+    monasticHours: {
+      lauds: { name: 'Lodi mattutine', sub: 'Preghiera dell’aurora • Risurrezione di Cristo' },
+      terce: { name: 'Ora terza', sub: 'Discesa dello Spirito Santo • Sapienza e fortezza' },
+      sext: { name: 'Ora sesta e Angelus', sub: 'Crocifissione del Signore • Angelus Domini' },
+      none: { name: 'Ora nona', sub: 'Morte di Cristo in croce • Ora della Divina Misericordia' },
+      vespers: { name: 'Vespri della sera', sub: 'Luce serale • Rendimento di grazie' },
+      compline: { name: 'Compieta ed esame di coscienza', sub: 'Pace della notte • Esame di coscienza e affidamento' },
+      morning: { name: 'Preghiera del mattino', sub: 'Consacrazione del giorno e offerta a Dio' },
+      midday: { name: 'Angelus di mezzogiorno', sub: 'Memoria dell’Incarnazione • Pausa sacra' },
+      evening: { name: 'Preghiera della sera (Compieta)', sub: 'Rendimento di grazie e riposo in Cristo' }
+    }
+  },
+  ro: {
+    app: { starting: 'Se încarcă Aura Sacra...', reloading: 'Se reîncarcă platforma...', refreshCache: 'Reîmprospătează memoria cache și repornește' },
+    common: { now: 'Acum', sharedFrom: 'Partajat din Aura Sacra' },
+    focus: { candleTitle: 'Lumânare vie — Cronometru de concentrare' },
+    settings: { notifDenied: 'Permisiunea nu a fost acordată' },
+    jesus: { guide: 'Îndrumător spiritual', nanoOffline: 'Nano offline', offlineStatus: 'Deconectat', apiKeyShort: 'Cheie API' },
+    scheduleModal: {
+      tabMonastic: 'Ceasuri canonice', tabFocus: 'Studiu și lucru', nextCanonicalHour: 'Următorul ceas canonic',
+      countdownIn: 'în', noHoursScheduled: 'Nu sunt programate ceasuri monahale (mod liber).',
+      activeRhythm: 'Rânduiala de rugăciune activă:', hourlyNotifications: 'Notificări orare',
+      pushAndLocal: 'Push și locale', bronzeCathedralBell: 'Clopot de bronz al catedralei',
+      scheduledHours: 'Ceasuri canonice programate:', schoolWorkLabel: 'Studiu / Lucru',
+      hoursAbbr: 'h', minutesAbbr: 'min'
+    },
+    widgetPage: {
+      night: 'Noapte', openVerse: 'Atinge pentru a deschide versetul în Biblie',
+      shareVerse: 'Partajează versetul ca imagine',
+      readDescription: 'Atinge widgetul pentru a deschide versetul în Biblie, evidențiat cu o strălucire aurie. <strong>Partajare</strong> creează o imagine artistică pentru WhatsApp și Instagram.',
+      setupTitle: 'Configurează-l ca widget pe iPhone:', setupStep1: 'În Safari, atinge butonul Partajare <strong style="color: #ffb300; font-size: 13px;">📤</strong>',
+      setupStep2: 'Derulează și atinge <strong style="color: #fff;">„Adaugă la ecranul principal”</strong>',
+      setupStep3: 'Confirmă <strong>„Adaugă”</strong> pentru un widget pe tot ecranul!'
+    },
+    monasticHours: {
+      lauds: { name: 'Utrenia', sub: 'Lauda zorilor • Învierea lui Hristos' },
+      terce: { name: 'Ceasul al treilea', sub: 'Pogorârea Duhului Sfânt • Înțelepciune și tărie' },
+      sext: { name: 'Ceasul al șaselea și Angelus', sub: 'Răstignirea Domnului • Amintirea Angelusului' },
+      none: { name: 'Ceasul al nouălea', sub: 'Moartea lui Hristos pe cruce • Ceasul Milostivirii Divine' },
+      vespers: { name: 'Vecernia', sub: 'Lumina serii • Mulțumire' },
+      compline: { name: 'Pavecernița și cercetarea conștiinței', sub: 'Pacea nopții • Cercetarea conștiinței și încredințare' },
+      morning: { name: 'Rugăciunea de dimineață', sub: 'Dăruirea zilei lui Dumnezeu' },
+      midday: { name: 'Angelusul de la amiază', sub: 'Amintirea Întrupării • Pauză sfântă' },
+      evening: { name: 'Rugăciunea de seară (Pavecerniță)', sub: 'Mulțumire și odihnă în Hristos' }
+    }
+  },
+  fr: {
+    app: { starting: 'Démarrage d’Aura Sacra...', reloading: 'Rechargement de la plateforme...', refreshCache: 'Actualiser le cache et redémarrer' },
+    common: { now: 'Maintenant', sharedFrom: 'Partagé depuis Aura Sacra' },
+    focus: { candleTitle: 'Bougie vivante — Minuteur de concentration' },
+    settings: { notifDenied: 'Autorisation non accordée' },
+    jesus: { guide: 'Guide spirituel', nanoOffline: 'Nano hors ligne', offlineStatus: 'Hors ligne', apiKeyShort: 'Clé API' },
+    scheduleModal: {
+      tabMonastic: 'Heures canoniales', tabFocus: 'Études et travail', nextCanonicalHour: 'Prochaine heure canoniale',
+      countdownIn: 'dans', noHoursScheduled: 'Aucune heure monastique prévue (mode libre).',
+      activeRhythm: 'Rythme de prière actif :', hourlyNotifications: 'Notifications horaires',
+      pushAndLocal: 'Push et locales', bronzeCathedralBell: 'Cloche de bronze de la cathédrale',
+      scheduledHours: 'Heures canoniales prévues :', schoolWorkLabel: 'Études / Travail',
+      hoursAbbr: 'h', minutesAbbr: 'min'
+    },
+    widgetPage: {
+      night: 'Nuit', openVerse: 'Touchez pour ouvrir ce verset dans la Bible',
+      shareVerse: 'Partager le verset sous forme de carte',
+      readDescription: 'Touchez le widget pour ouvrir le verset dans la Bible, mis en évidence par un halo doré. <strong>Partager</strong> crée une carte artistique pour WhatsApp et Instagram.',
+      setupTitle: 'Configurer comme widget sur iPhone :', setupStep1: 'Dans Safari, touchez le bouton Partager <strong style="color: #ffb300; font-size: 13px;">📤</strong>',
+      setupStep2: 'Faites défiler puis touchez <strong style="color: #fff;">« Ajouter à l’écran d’accueil »</strong>',
+      setupStep3: 'Confirmez <strong>« Ajouter »</strong> pour créer un widget plein écran !'
+    },
+    monasticHours: {
+      lauds: { name: 'Laudes du matin', sub: 'Louange de l’aube • Résurrection du Christ' },
+      terce: { name: 'Tierce', sub: 'Descente du Saint-Esprit • Sagesse et force' },
+      sext: { name: 'Sexte et Angelus de midi', sub: 'Crucifixion du Seigneur • Mémoire de l’Angelus' },
+      none: { name: 'None', sub: 'Mort du Christ en croix • Heure de la Miséricorde divine' },
+      vespers: { name: 'Vêpres du soir', sub: 'Lumière du soir • Action de grâce' },
+      compline: { name: 'Complies et examen de conscience', sub: 'Paix de la nuit • Examen de conscience et abandon' },
+      morning: { name: 'Prière du matin', sub: 'Offrande du jour à Dieu' },
+      midday: { name: 'Angelus de midi', sub: 'Mémoire de l’Incarnation • Pause sacrée' },
+      evening: { name: 'Prière du soir (Complies)', sub: 'Action de grâce et repos en Christ' }
+    }
+  },
+  es: {
+    app: { starting: 'Iniciando Aura Sacra...', reloading: 'Recargando la plataforma...', refreshCache: 'Actualizar caché y reiniciar' },
+    common: { now: 'Ahora', sharedFrom: 'Compartido desde Aura Sacra' },
+    focus: { candleTitle: 'Vela viva — Temporizador de concentración' },
+    settings: { notifDenied: 'Permiso no concedido' },
+    jesus: { guide: 'Guía espiritual', nanoOffline: 'Nano sin conexión', offlineStatus: 'Sin conexión', apiKeyShort: 'Clave API' },
+    scheduleModal: {
+      tabMonastic: 'Horas canónicas', tabFocus: 'Estudio y trabajo', nextCanonicalHour: 'Próxima hora canónica',
+      countdownIn: 'en', noHoursScheduled: 'No hay horas monásticas programadas (modo libre).',
+      activeRhythm: 'Ritmo de oración activo:', hourlyNotifications: 'Notificaciones cada hora',
+      pushAndLocal: 'Push y locales', bronzeCathedralBell: 'Campana de bronce de la catedral',
+      scheduledHours: 'Horas canónicas programadas:', schoolWorkLabel: 'Estudio / Trabajo',
+      hoursAbbr: 'h', minutesAbbr: 'min'
+    },
+    widgetPage: {
+      night: 'Noche', openVerse: 'Toca para abrir este versículo en la Biblia',
+      shareVerse: 'Compartir versículo como tarjeta gráfica',
+      readDescription: 'Toca el widget para abrir el versículo en la Biblia, resaltado con un halo dorado. <strong>Compartir</strong> crea una tarjeta artística para WhatsApp e Instagram.',
+      setupTitle: 'Configúralo como widget en iPhone:', setupStep1: 'En Safari, toca el botón Compartir <strong style="color: #ffb300; font-size: 13px;">📤</strong>',
+      setupStep2: 'Desplázate y toca <strong style="color: #fff;">«Añadir a pantalla de inicio»</strong>',
+      setupStep3: 'Confirma <strong>«Añadir»</strong> para crear un widget a pantalla completa.'
+    },
+    monasticHours: {
+      lauds: { name: 'Laudes matutinas', sub: 'Alabanza del alba • Resurrección de Cristo' },
+      terce: { name: 'Tercia', sub: 'Descenso del Espíritu Santo • Sabiduría y fortaleza' },
+      sext: { name: 'Sexta y Angelus del mediodía', sub: 'Crucifixión del Señor • Recuerdo del Angelus' },
+      none: { name: 'Nona', sub: 'Muerte de Cristo en la cruz • Hora de la Divina Misericordia' },
+      vespers: { name: 'Vísperas', sub: 'Luz vespertina • Acción de gracias' },
+      compline: { name: 'Completas y examen de conciencia', sub: 'Paz nocturna • Examen de conciencia y descanso' },
+      morning: { name: 'Oración de la mañana', sub: 'Ofrenda del día a Dios' },
+      midday: { name: 'Angelus del mediodía', sub: 'Memoria de la Encarnación • Pausa sagrada' },
+      evening: { name: 'Oración de la noche (Completas)', sub: 'Acción de gracias y descanso en Cristo' }
+    }
+  },
+  pt: {
+    app: { starting: 'A iniciar Aura Sacra...', reloading: 'A recarregar a plataforma...', refreshCache: 'Atualizar cache e reiniciar' },
+    common: { now: 'Agora', sharedFrom: 'Partilhado de Aura Sacra' },
+    focus: { candleTitle: 'Vela viva — Temporizador de concentração' },
+    settings: { notifDenied: 'Permissão não concedida' },
+    jesus: { guide: 'Guia espiritual', nanoOffline: 'Nano offline', offlineStatus: 'Desconectado', apiKeyShort: 'Chave API' },
+    scheduleModal: {
+      tabMonastic: 'Horas canónicas', tabFocus: 'Estudo e trabalho', nextCanonicalHour: 'Próxima hora canónica',
+      countdownIn: 'daqui a', noHoursScheduled: 'Não há horas monásticas programadas (modo livre).',
+      activeRhythm: 'Ritmo de oração ativo:', hourlyNotifications: 'Notificações horárias',
+      pushAndLocal: 'Push e locais', bronzeCathedralBell: 'Sino de bronze da catedral',
+      scheduledHours: 'Horas canónicas programadas:', schoolWorkLabel: 'Estudo / Trabalho',
+      hoursAbbr: 'h', minutesAbbr: 'min'
+    },
+    widgetPage: {
+      night: 'Noite', openVerse: 'Toque para abrir este versículo na Bíblia',
+      shareVerse: 'Partilhar versículo como cartão gráfico',
+      readDescription: 'Toque no widget para abrir o versículo na Bíblia, realçado por um halo dourado. <strong>Partilhar</strong> cria um cartão artístico para WhatsApp e Instagram.',
+      setupTitle: 'Configure-o como widget no iPhone:', setupStep1: 'No Safari, toque no botão Partilhar <strong style="color: #ffb300; font-size: 13px;">📤</strong>',
+      setupStep2: 'Desloque e toque em <strong style="color: #fff;">«Adicionar ao ecrã principal»</strong>',
+      setupStep3: 'Confirme <strong>«Adicionar»</strong> para criar um widget em ecrã inteiro!'
+    },
+    monasticHours: {
+      lauds: { name: 'Laudes matinas', sub: 'Louvor da aurora • Ressurreição de Cristo' },
+      terce: { name: 'Terça', sub: 'Descida do Espírito Santo • Sabedoria e fortaleza' },
+      sext: { name: 'Sexta e Angelus do meio-dia', sub: 'Crucificação do Senhor • Memória do Angelus' },
+      none: { name: 'Noa', sub: 'Morte de Cristo na cruz • Hora da Divina Misericórdia' },
+      vespers: { name: 'Vésperas', sub: 'Luz da tarde • Ação de graças' },
+      compline: { name: 'Completas e exame de consciência', sub: 'Paz da noite • Exame de consciência e entrega' },
+      morning: { name: 'Oração da manhã', sub: 'Oferecimento do dia a Deus' },
+      midday: { name: 'Angelus do meio-dia', sub: 'Memória da Encarnação • Pausa sagrada' },
+      evening: { name: 'Oração da noite (Completas)', sub: 'Ação de graças e repouso em Cristo' }
+    }
+  },
+  de: {
+    app: { starting: 'Aura Sacra wird gestartet...', reloading: 'Plattform wird neu geladen...', refreshCache: 'Cache erneuern und neu starten' },
+    common: { now: 'Jetzt', sharedFrom: 'Geteilt von Aura Sacra' },
+    focus: { candleTitle: 'Lebendige Kerze — Konzentrationstimer' },
+    settings: { notifDenied: 'Berechtigung nicht erteilt' },
+    jesus: { guide: 'Geistlicher Begleiter', nanoOffline: 'Nano offline', offlineStatus: 'Nicht verbunden', apiKeyShort: 'API-Schlüssel' },
+    scheduleModal: {
+      tabMonastic: 'Kanonische Stunden', tabFocus: 'Studium und Arbeit', nextCanonicalHour: 'Nächste kanonische Stunde',
+      countdownIn: 'in', noHoursScheduled: 'Keine monastischen Stunden geplant (freier Modus).',
+      activeRhythm: 'Aktiver Gebetsrhythmus:', hourlyNotifications: 'Stündliche Benachrichtigungen',
+      pushAndLocal: 'Push und lokal', bronzeCathedralBell: 'Bronzeglocke der Kathedrale',
+      scheduledHours: 'Geplante kanonische Stunden:', schoolWorkLabel: 'Studium / Arbeit',
+      hoursAbbr: ' Std.', minutesAbbr: 'Min.'
+    },
+    widgetPage: {
+      night: 'Nacht', openVerse: 'Tippen, um diesen Vers in der Bibel zu öffnen',
+      shareVerse: 'Vers als Bildkarte teilen',
+      readDescription: 'Tippe auf das Widget, um den Vers mit goldenem Leuchten in der Bibel zu öffnen. <strong>Teilen</strong> erstellt eine kunstvolle Karte für WhatsApp und Instagram.',
+      setupTitle: 'Als iPhone-Widget einrichten:', setupStep1: 'Tippe in Safari auf „Teilen“ <strong style="color: #ffb300; font-size: 13px;">📤</strong>',
+      setupStep2: 'Scrolle und tippe auf <strong style="color: #fff;">„Zum Home-Bildschirm“</strong>',
+      setupStep3: 'Bestätige <strong>„Hinzufügen“</strong>, um ein Widget im Vollbild zu erstellen!'
+    },
+    monasticHours: {
+      lauds: { name: 'Morgenlaudes', sub: 'Lobpreis der Morgendämmerung • Auferstehung Christi' },
+      terce: { name: 'Terz (Dritte Stunde)', sub: 'Herabkunft des Heiligen Geistes • Weisheit und Stärke' },
+      sext: { name: 'Sext und Mittags-Angelus', sub: 'Kreuzigung des Herrn • Gedenken des Angelus' },
+      none: { name: 'Non (Neunte Stunde)', sub: 'Tod Christi am Kreuz • Stunde der göttlichen Barmherzigkeit' },
+      vespers: { name: 'Abendvesper', sub: 'Abendlicht • Dank' },
+      compline: { name: 'Komplet und Gewissenserforschung', sub: 'Nächtlicher Friede • Gewissenserforschung und Ruhe' },
+      morning: { name: 'Morgengebet', sub: 'Darbringung des Tages an Gott' },
+      midday: { name: 'Mittags-Angelus', sub: 'Gedenken der Menschwerdung • Heilige Pause' },
+      evening: { name: 'Nachtgebet (Komplet)', sub: 'Dank und friedvolle Ruhe in Christus' }
+    }
+  },
+  ru: {
+    app: { starting: 'Запуск Aura Sacra...', reloading: 'Перезагрузка платформы...', refreshCache: 'Обновить кэш и перезапустить' },
+    common: { now: 'Сейчас', sharedFrom: 'Опубликовано в Aura Sacra' },
+    focus: { candleTitle: 'Живая свеча — таймер сосредоточения' },
+    settings: { notifDenied: 'Разрешение не предоставлено' },
+    jesus: { guide: 'Духовный наставник', nanoOffline: 'Nano офлайн', offlineStatus: 'Офлайн', apiKeyShort: 'Ключ API' },
+    scheduleModal: {
+      tabMonastic: 'Канонические часы', tabFocus: 'Учёба и работа', nextCanonicalHour: 'Следующий канонический час',
+      countdownIn: 'через', noHoursScheduled: 'Монашеские часы не запланированы (свободный режим).',
+      activeRhythm: 'Текущий молитвенный распорядок:', hourlyNotifications: 'Почасовые уведомления',
+      pushAndLocal: 'Push и локальные', bronzeCathedralBell: 'Бронзовый соборный колокол',
+      scheduledHours: 'Запланированные канонические часы:', schoolWorkLabel: 'Учёба / Работа',
+      hoursAbbr: 'ч', minutesAbbr: 'мин'
+    },
+    widgetPage: {
+      night: 'Ночь', openVerse: 'Нажмите, чтобы открыть стих в Библии',
+      shareVerse: 'Поделиться стихом в виде открытки',
+      readDescription: 'Нажмите на виджет, чтобы открыть стих в Библии, выделенный золотым сиянием. <strong>Поделиться</strong> создаст художественную открытку для WhatsApp и Instagram.',
+      setupTitle: 'Настройте виджет на iPhone:', setupStep1: 'В Safari нажмите «Поделиться» <strong style="color: #ffb300; font-size: 13px;">📤</strong>',
+      setupStep2: 'Прокрутите и нажмите <strong style="color: #fff;">«На экран Домой»</strong>',
+      setupStep3: 'Подтвердите <strong>«Добавить»</strong>, чтобы создать виджет на весь экран!'
+    },
+    monasticHours: {
+      lauds: { name: 'Утреня', sub: 'Хвала на рассвете • Воскресение Христово' },
+      terce: { name: 'Третий час', sub: 'Сошествие Святого Духа • Премудрость и сила' },
+      sext: { name: 'Шестой час и Ангелус', sub: 'Распятие Господа • Память об Ангелусе' },
+      none: { name: 'Девятый час', sub: 'Смерть Христа на кресте • Час Божественного милосердия' },
+      vespers: { name: 'Вечерня', sub: 'Вечерний свет • Благодарение' },
+      compline: { name: 'Повечерие и испытание совести', sub: 'Ночной покой • Испытание совести и упование' },
+      morning: { name: 'Утренняя молитва', sub: 'Посвящение дня Богу' },
+      midday: { name: 'Полуденный Ангелус', sub: 'Память о Воплощении • Священная пауза' },
+      evening: { name: 'Вечерняя молитва (Повечерие)', sub: 'Благодарение и покой во Христе' }
+    }
+  },
+  la: {
+    app: { starting: 'Aura Sacra incipitur...', reloading: 'Suggestus renovatur...', refreshCache: 'Cache renova et rursus incipe' },
+    common: { now: 'Nunc', sharedFrom: 'Communicatum ex Aura Sacra' },
+    focus: { candleTitle: 'Candela viva — Horologium attentionis' },
+    settings: { notifDenied: 'Permissio non concessa' },
+    jesus: { guide: 'Ductor spiritualis', nanoOffline: 'Nano sine filo', offlineStatus: 'Sine filo', apiKeyShort: 'Clavis API' },
+    scheduleModal: {
+      tabMonastic: 'Horae canonicae', tabFocus: 'Studium et labor', nextCanonicalHour: 'Proxima hora canonica',
+      countdownIn: 'post', noHoursScheduled: 'Horae monasticae non ordinatae (modus liber).',
+      activeRhythm: 'Ordo precationis activus:', hourlyNotifications: 'Monitiones singulis horis',
+      pushAndLocal: 'Push et locales', bronzeCathedralBell: 'Campana aenea cathedralis',
+      scheduledHours: 'Horae canonicae ordinatae:', schoolWorkLabel: 'Studium / Labor',
+      hoursAbbr: 'h', minutesAbbr: 'min'
+    },
+    widgetPage: {
+      night: 'Nox', openVerse: 'Tange ut hunc versum in Biblia aperias',
+      shareVerse: 'Versum ut tabulam pictam communica',
+      readDescription: 'Widget tange ut versum in Biblia aperias, aureo splendore notatum. <strong>Communica</strong> tabulam artificiosam pro WhatsApp et Instagram creat.',
+      setupTitle: 'Widget in iPhone para:', setupStep1: 'In Safari tange Communica <strong style="color: #ffb300; font-size: 13px;">📤</strong>',
+      setupStep2: 'Voluta et <strong style="color: #fff;">«Ad Domum Adde»</strong> tange',
+      setupStep3: '<strong>«Adde»</strong> confirma ut widget totum velum occupet!'
+    },
+    monasticHours: {
+      lauds: { name: 'Laudes matutinae', sub: 'Laus aurorae • Resurrectio Christi' },
+      terce: { name: 'Tertia', sub: 'Descensus Spiritus Sancti • Sapientia et fortitudo' },
+      sext: { name: 'Sexta et Angelus meridianus', sub: 'Crucifixio Domini • Memoria Angelus' },
+      none: { name: 'Nona', sub: 'Mors Christi in cruce • Hora Misericordiae Divinae' },
+      vespers: { name: 'Vesperae', sub: 'Lux vespertina • Gratiarum actio' },
+      compline: { name: 'Completorium et examen conscientiae', sub: 'Pax noctis • Examen conscientiae et quies' },
+      morning: { name: 'Precatio matutina', sub: 'Oblatio diei Deo' },
+      midday: { name: 'Angelus meridianus', sub: 'Memoria Incarnationis • Mora sacra' },
+      evening: { name: 'Precatio vespertina (Completorium)', sub: 'Gratiarum actio et quies in Christo' }
+    }
+  }
+};
+
+const WIDGET_NOTIFICATION_TITLES = {
+  en: '⛪ Aura Sacra • Verse of the Day',
+  it: '⛪ Aura Sacra • Versetto del Giorno',
+  ro: '⛪ Aura Sacra • Versetul zilei',
+  fr: '⛪ Aura Sacra • Verset du jour',
+  es: '⛪ Aura Sacra • Versículo del día',
+  pt: '⛪ Aura Sacra • Versículo do dia',
+  de: '⛪ Aura Sacra • Vers des Tages',
+  ru: '⛪ Aura Sacra • Стих дня',
+  la: '⛪ Aura Sacra • Versus diei'
+};
+
+for (const [language, additions] of Object.entries(SITEWIDE_UI_SUPPLEMENTS)) {
+  const widgetModal = Object.fromEntries(WIDGET_MODAL_KEYS.map((key, index) => [key, WIDGET_MODAL_COPY[language][index]]));
+  mergeTranslations(TRANSLATIONS[language], {
+    ...additions,
+    widgetModal: { ...widgetModal, notificationTitle: WIDGET_NOTIFICATION_TITLES[language] }
+  });
+}
 
 // Initialize language preference from storage or browser detection
 export async function initI18n() {

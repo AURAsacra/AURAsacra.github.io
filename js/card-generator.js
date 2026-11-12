@@ -1,4 +1,5 @@
 // HTML5 Canvas Parchment Scripture Card Generator for WhatsApp, Telegram, iMessage, and Socials
+import { t } from './i18n.js';
 
 export async function generateParchmentCard(quoteText, citation = 'Holy Scripture') {
   return new Promise((resolve) => {
@@ -151,7 +152,7 @@ export async function generateParchmentCard(quoteText, citation = 'Holy Scriptur
     // 9. Footer Seal
     ctx.font = '18px "EB Garamond", Georgia, serif';
     ctx.fillStyle = '#8a7c6d';
-    ctx.fillText('Shared from Aura Sacra • Universal Christian Platform', 540, 960);
+    ctx.fillText(t('common.sharedFrom', 'Shared from Aura Sacra'), 540, 960);
 
     canvas.toBlob((blob) => {
       resolve({ blob, dataUrl: canvas.toDataURL('image/png') });

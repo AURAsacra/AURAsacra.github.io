@@ -16,7 +16,7 @@ Operates **100% offline**, requires no account registration, contains zero adver
 
 ## 🌍 Multilingual & Ecumenical Heritage
 
-Aura Sacra is localized across **9 languages** with native translations for user interfaces, liturgical definitions, fasting rules, and theological reflections:
+Aura Sacra is localized across **9 languages** with native translations for user interfaces, liturgical definitions, fasting rules, saint names, and theological reflections:
 
 | Language | Native Name | Code | Default Historical Bible |
 |---|---|---|---|
@@ -56,9 +56,9 @@ Aura Sacra is localized across **9 languages** with native translations for user
   - **Protestant / Evangelical**: Ash Wednesday and Good Friday solemnities, the biblical Daniel Fast, personal prayerful fasting, and liberty of conscience (*Romans 14:5*).
   - **Ecumenical / Spiritual Seeker**: Shared Christian asceticism, fasting from sin and malice, silence before God, and solidarity with the poor.
 - **Day Inspector**: Localized breakdown of fasting rules (quantity of meals), meat abstinence (quality of foods), permitted tables, restricted foods, patristic theology, scripture verses, and daily penitential prayers.
-- **Liturgical Saints & Feasts Integration**: Correlated daily commemorations with liturgical colors (White, Blue, Red), liturgical ranks (*Solemnity, Feast, Memorial, Commemoration*), spiritual quotes, and biographies.
+- **Liturgical Saints & Feasts Integration**: Daily commemorations are grouped by Christian tradition, with saint names localized in all 9 supported languages, liturgical colors (White, Blue, Red), liturgical ranks (*Solemnity, Feast, Memorial, Commemoration*), spiritual quotes, and biographies.
 
-### 🕊️ Spiritual Dialogue with Jesus (Google Gemini)
+### 🕊️ Spiritual Guide Chat with Jesus (Google Gemini)
 - A peaceful sanctuary to ask biblical questions, clarify doubts, explore the parables, and seek solace in times of trial.
 - **Personal Sovereign Privacy**: Interfaces directly with **Google Gemini 3** using your personal API key or on-device local models (*Chrome Gemini Nano*). No intermediary proxy servers or external analytics.
 - **Offline Guard**: Clearly displays offline state when no on-device model is available, preventing simulated answers or hallucinations.

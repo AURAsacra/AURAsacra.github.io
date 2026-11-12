@@ -4,7 +4,7 @@ import { t } from './i18n.js';
 
 const DEFAULT_SCHEDULE = {
   enabled: true,
-  label: 'School / Work Focus',
+  label: '',
   busyStart: '08:30',
   busyEnd: '16:30',
   breakStart: '12:30',
@@ -84,9 +84,10 @@ export function getCurrentScheduleStatus() {
 
   // Inside Busy Hours (Classes or Work)
   if (currentMinutes >= busyStartMin && currentMinutes < busyEndMin) {
+    const scheduleLabel = activeSchedule.label || t('scheduleModal.schoolWorkLabel', 'School / Work Focus');
     return {
       status: 'busy',
-      label: `${activeSchedule.label || ''} (${t('scheduleModal.statusBusyLabel', 'Quiet Mode')})`.trim(),
+      label: `${scheduleLabel} (${t('scheduleModal.statusBusyLabel', 'Quiet Mode')})`.trim(),
       description: t('scheduleModal.statusBusyDesc', 'Audio chimes silenced so you stay focused without disruption.'),
       canPrayNow: false,
       color: 'red'

@@ -394,11 +394,11 @@ export function getFriendlyVoiceName(voice, langTag = null) {
   const rawName = typeof voice === 'object' && voice.name ? voice.name : rawURI;
   const lower = rawName.toLowerCase();
 
-  if (lower.includes('natural') || lower.includes('neural')) return `${rawName} (Neurale)`;
+  if (lower.includes('natural') || lower.includes('neural')) return `${rawName} (Neural HD)`;
   if (lower.includes('google')) return `${rawName} (Google)`;
   if (lower.includes('siri')) return `${rawName} (Apple Siri)`;
   if (lower.includes('alice') || lower.includes('federica') || lower.includes('cosimo') || lower.includes('elsa')) {
-    return `${rawName} (Alta Qualità)`;
+    return `${rawName} (Premium)`;
   }
 
   return rawName;

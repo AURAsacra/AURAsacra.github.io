@@ -249,9 +249,17 @@ export function getActiveMonasticHours() {
     return customHours;
   }
   if (MONASTIC_HOURS_PRESETS[mode]) {
-    return MONASTIC_HOURS_PRESETS[mode].hours;
+    return MONASTIC_HOURS_PRESETS[mode].hours.map((hour) => ({
+      ...hour,
+      name: t(`monasticHours.${hour.id}.name`, hour.nameEn),
+      sub: t(`monasticHours.${hour.id}.sub`, hour.subEn)
+    }));
   }
-  return MONASTIC_HOURS_PRESETS.monastic.hours;
+  return MONASTIC_HOURS_PRESETS.monastic.hours.map((hour) => ({
+    ...hour,
+    name: t(`monasticHours.${hour.id}.name`, hour.nameEn),
+    sub: t(`monasticHours.${hour.id}.sub`, hour.subEn)
+  }));
 }
 
 // Check if current time matches any active canonical hour
@@ -353,8 +361,8 @@ function sendSystemNotification(hourObj) {
     vibrate: [300, 150, 300, 150, 600],
     data: deepLink,
     actions: [
-      { action: 'pray', title: '🙏 Prega Ora' },
-      { action: 'close', title: '✕ Chiudi' }
+      { action: 'pray', title: `🙏 ${t('common.prayNow', 'Pray Now')}` },
+      { action: 'close', title: `✕ ${t('common.close', 'Close')}` }
     ]
   };
 
@@ -430,7 +438,11 @@ export function getNextMonasticHour() {
   const next = sorted[0];
   const hoursLeft = Math.floor(next.diffMinutes / 60);
   const minsLeft = next.diffMinutes % 60;
-  const countdownStr = hoursLeft > 0 ? `${hoursLeft}h ${minsLeft}m` : `${minsLeft} min`;
+  const hourUnit = t('scheduleModal.hoursAbbr', 'h');
+  const minuteUnit = t('scheduleModal.minutesAbbr', 'min');
+  const countdownStr = hoursLeft > 0
+    ? `${hoursLeft}${hourUnit} ${minsLeft} ${minuteUnit}`
+    : `${minsLeft} ${minuteUnit}`;
 
   return {
     hour: next,

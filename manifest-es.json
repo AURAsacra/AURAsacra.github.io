@@ -1,0 +1,21 @@
+{
+  "name": "Aura Sacra — Plataforma cristiana universal",
+  "short_name": "Aura Sacra",
+  "lang": "es",
+  "description": "Plataforma espiritual ecuménica, totalmente sin conexión, con las Escrituras, un diario de oración, temas litúrgicos y una guía espiritual.",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#141416",
+  "theme_color": "#c49a45",
+  "orientation": "any",
+  "icons": [
+    { "src": "./icons/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any maskable" },
+    { "src": "./icons/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any maskable" }
+  ],
+  "shortcuts": [
+    { "name": "Versículo del día", "short_name": "Biblia", "description": "Lee y medita la Sagrada Escritura", "url": "./index.html?tab=bible", "icons": [{ "src": "./icons/icon-192.png", "sizes": "192x192" }] },
+    { "name": "Vela y lluvia", "short_name": "Vela", "description": "Sesión de estudio y oración con la vela sagrada", "url": "./index.html?tab=focus", "icons": [{ "src": "./icons/icon-192.png", "sizes": "192x192" }] },
+    { "name": "Diálogo con la Guía", "short_name": "Guía", "description": "Diálogo espiritual centrado en Cristo", "url": "./index.html?tab=chat", "icons": [{ "src": "./icons/icon-192.png", "sizes": "192x192" }] },
+    { "name": "Versículo aleatorio", "short_name": "Inspiración", "description": "Recibe un versículo bíblico aleatorio para meditar", "url": "./index.html?tab=bible&random=1", "icons": [{ "src": "./icons/icon-192.png", "sizes": "192x192" }] }
+  ]
+}

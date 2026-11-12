@@ -38,7 +38,7 @@ export async function getDB() {
           hlStore.createIndex('book_chapter', ['bookId', 'chapter'], { unique: false });
         }
 
-        // Jesus Chat History
+        // Guide Chat History
         if (!db.objectStoreNames.contains('chat_messages')) {
           const chatStore = db.createObjectStore('chat_messages', { keyPath: 'id', autoIncrement: true });
           chatStore.createIndex('timestamp', 'timestamp', { unique: false });
@@ -51,7 +51,8 @@ export async function getDB() {
       };
 
       request.onerror = (event) => {
-        console.warn('IndexedDB warning:', event.target.error);
+        console.warn('IndexedDB warning:', event.target?.error);
+        dbInstance = null;
         dbPromise = null;
         resolve(null);
       };
@@ -129,142 +130,192 @@ export const saveSetting = setSetting;
 // Prayer Journal Helpers
 export async function getJournalEntries() {
   const db = await getDB();
+  if (!db) return [];
   return new Promise((resolve) => {
-    const tx = db.transaction('journal', 'readonly');
-    const store = tx.objectStore('journal');
-    const req = store.getAll();
-    req.onsuccess = () => resolve(req.result || []);
-    req.onerror = () => resolve([]);
+    try {
+      const tx = db.transaction('journal', 'readonly');
+      const store = tx.objectStore('journal');
+      const req = store.getAll();
+      req.onsuccess = () => resolve(req.result || []);
+      req.onerror = () => resolve([]);
+    } catch (e) {
+      resolve([]);
+    }
   });
 }
 
 export async function addJournalEntry(text) {
   const db = await getDB();
+  const entry = {
+    text,
+    createdAt: new Date().toISOString(),
+    sentToJesus: false
+  };
+  if (!db) return { id: Date.now(), ...entry };
   return new Promise((resolve, reject) => {
-    const tx = db.transaction('journal', 'readwrite');
-    const store = tx.objectStore('journal');
-    const entry = {
-      text,
-      createdAt: new Date().toISOString(),
-      sentToJesus: false
-    };
-    const req = store.add(entry);
-    req.onsuccess = () => resolve({ id: req.result, ...entry });
-    req.onerror = () => reject(req.error);
+    try {
+      const tx = db.transaction('journal', 'readwrite');
+      const store = tx.objectStore('journal');
+      const req = store.add(entry);
+      req.onsuccess = () => resolve({ id: req.result, ...entry });
+      req.onerror = () => reject(req.error);
+    } catch (e) {
+      resolve({ id: Date.now(), ...entry });
+    }
   });
 }
 
 export async function deleteJournalEntry(id) {
   const db = await getDB();
+  if (!db) return;
   return new Promise((resolve, reject) => {
-    const tx = db.transaction('journal', 'readwrite');
-    const store = tx.objectStore('journal');
-    const req = store.delete(Number(id));
-    req.onsuccess = () => resolve();
-    req.onerror = () => reject(req.error);
+    try {
+      const tx = db.transaction('journal', 'readwrite');
+      const store = tx.objectStore('journal');
+      const req = store.delete(Number(id));
+      req.onsuccess = () => resolve();
+      req.onerror = () => reject(req.error);
+    } catch (e) {
+      resolve();
+    }
   });
 }
 
 export async function markJournalEntrySentToJesus(id) {
   const db = await getDB();
+  if (!db) return;
   return new Promise((resolve) => {
-    const tx = db.transaction('journal', 'readwrite');
-    const store = tx.objectStore('journal');
-    const req = store.get(Number(id));
-    req.onsuccess = () => {
-      if (req.result) {
-        const updated = { ...req.result, sentToJesus: true };
-        store.put(updated);
-      }
+    try {
+      const tx = db.transaction('journal', 'readwrite');
+      const store = tx.objectStore('journal');
+      const req = store.get(Number(id));
+      req.onsuccess = () => {
+        if (req.result) {
+          const updated = { ...req.result, sentToJesus: true };
+          store.put(updated);
+        }
+        resolve();
+      };
+      req.onerror = () => resolve();
+    } catch (e) {
       resolve();
-    };
-    req.onerror = () => resolve();
+    }
   });
 }
 
 // Bible Highlights Helpers
 export async function getHighlights(bookId, chapter) {
   const db = await getDB();
+  if (!db) return [];
   return new Promise((resolve) => {
-    const tx = db.transaction('highlights', 'readonly');
-    const store = tx.objectStore('highlights');
-    const index = store.index('book_chapter');
-    const req = index.getAll([bookId, Number(chapter)]);
-    req.onsuccess = () => resolve(req.result || []);
-    req.onerror = () => resolve([]);
+    try {
+      const tx = db.transaction('highlights', 'readonly');
+      const store = tx.objectStore('highlights');
+      const index = store.index('book_chapter');
+      const req = index.getAll([bookId, Number(chapter)]);
+      req.onsuccess = () => resolve(req.result || []);
+      req.onerror = () => resolve([]);
+    } catch (e) {
+      resolve([]);
+    }
   });
 }
 
 export async function saveHighlight(bookId, chapter, verse, color, note = '') {
   const db = await getDB();
   const id = `${bookId}_${chapter}_${verse}`;
+  const item = {
+    id,
+    bookId,
+    chapter: Number(chapter),
+    verse: Number(verse),
+    color,
+    note,
+    updatedAt: new Date().toISOString()
+  };
+  if (!db) return item;
   return new Promise((resolve, reject) => {
-    const tx = db.transaction('highlights', 'readwrite');
-    const store = tx.objectStore('highlights');
-    const item = {
-      id,
-      bookId,
-      chapter: Number(chapter),
-      verse: Number(verse),
-      color,
-      note,
-      updatedAt: new Date().toISOString()
-    };
-    const req = store.put(item);
-    req.onsuccess = () => resolve(item);
-    req.onerror = () => reject(req.error);
+    try {
+      const tx = db.transaction('highlights', 'readwrite');
+      const store = tx.objectStore('highlights');
+      const req = store.put(item);
+      req.onsuccess = () => resolve(item);
+      req.onerror = () => reject(req.error);
+    } catch (e) {
+      resolve(item);
+    }
   });
 }
 
 export async function removeHighlight(bookId, chapter, verse) {
   const db = await getDB();
+  if (!db) return;
   const id = `${bookId}_${chapter}_${verse}`;
   return new Promise((resolve, reject) => {
-    const tx = db.transaction('highlights', 'readwrite');
-    const store = tx.objectStore('highlights');
-    const req = store.delete(id);
-    req.onsuccess = () => resolve();
-    req.onerror = () => reject(req.error);
+    try {
+      const tx = db.transaction('highlights', 'readwrite');
+      const store = tx.objectStore('highlights');
+      const req = store.delete(id);
+      req.onsuccess = () => resolve();
+      req.onerror = () => reject(req.error);
+    } catch (e) {
+      resolve();
+    }
   });
 }
 
-// Jesus Chat Helpers (Persistent History)
+// Guide Chat Helpers (Persistent History)
 export async function getChatMessages() {
   const db = await getDB();
+  if (!db) return [];
   return new Promise((resolve) => {
-    const tx = db.transaction('chat_messages', 'readonly');
-    const store = tx.objectStore('chat_messages');
-    const req = store.getAll();
-    req.onsuccess = () => resolve(req.result || []);
-    req.onerror = () => resolve([]);
+    try {
+      const tx = db.transaction('chat_messages', 'readonly');
+      const store = tx.objectStore('chat_messages');
+      const req = store.getAll();
+      req.onsuccess = () => resolve(req.result || []);
+      req.onerror = () => resolve([]);
+    } catch (e) {
+      resolve([]);
+    }
   });
 }
 
 export async function addChatMessage(sender, text, scriptureRefs = []) {
   const db = await getDB();
+  const msg = {
+    sender,
+    text,
+    scriptureRefs,
+    timestamp: new Date().toISOString()
+  };
+  if (!db) return { id: Date.now(), ...msg };
   return new Promise((resolve, reject) => {
-    const tx = db.transaction('chat_messages', 'readwrite');
-    const store = tx.objectStore('chat_messages');
-    const msg = {
-      sender,
-      text,
-      scriptureRefs,
-      timestamp: new Date().toISOString()
-    };
-    const req = store.add(msg);
-    req.onsuccess = () => resolve({ id: req.result, ...msg });
-    req.onerror = () => reject(req.error);
+    try {
+      const tx = db.transaction('chat_messages', 'readwrite');
+      const store = tx.objectStore('chat_messages');
+      const req = store.add(msg);
+      req.onsuccess = () => resolve({ id: req.result, ...msg });
+      req.onerror = () => reject(req.error);
+    } catch (e) {
+      resolve({ id: Date.now(), ...msg });
+    }
   });
 }
 
 export async function clearChatHistory() {
   const db = await getDB();
+  if (!db) return;
   return new Promise((resolve, reject) => {
-    const tx = db.transaction('chat_messages', 'readwrite');
-    const store = tx.objectStore('chat_messages');
-    const req = store.clear();
-    req.onsuccess = () => resolve();
-    req.onerror = () => reject(req.error);
+    try {
+      const tx = db.transaction('chat_messages', 'readwrite');
+      const store = tx.objectStore('chat_messages');
+      const req = store.clear();
+      req.onsuccess = () => resolve();
+      req.onerror = () => reject(req.error);
+    } catch (e) {
+      resolve();
+    }
   });
 }
 
@@ -280,13 +331,19 @@ export async function exportAllData() {
     chat_messages: []
   };
 
+  if (!db) return JSON.stringify(exportData, null, 2);
+
   const getStoreData = (storeName) => {
     return new Promise((resolve) => {
-      const tx = db.transaction(storeName, 'readonly');
-      const store = tx.objectStore(storeName);
-      const req = store.getAll();
-      req.onsuccess = () => resolve(req.result || []);
-      req.onerror = () => resolve([]);
+      try {
+        const tx = db.transaction(storeName, 'readonly');
+        const store = tx.objectStore(storeName);
+        const req = store.getAll();
+        req.onsuccess = () => resolve(req.result || []);
+        req.onerror = () => resolve([]);
+      } catch (e) {
+        resolve([]);
+      }
     });
   };
 
@@ -299,18 +356,30 @@ export async function exportAllData() {
 }
 
 export async function importAllData(jsonStr) {
-  const data = JSON.parse(jsonStr);
+  let data;
+  try {
+    data = JSON.parse(jsonStr);
+  } catch (parseErr) {
+    console.error('Failed to parse backup JSON:', parseErr);
+    return false;
+  }
+
   const db = await getDB();
+  if (!db) return false;
 
   const restoreStore = (storeName, items) => {
     if (!items || !Array.isArray(items)) return Promise.resolve();
     return new Promise((resolve, reject) => {
-      const tx = db.transaction(storeName, 'readwrite');
-      const store = tx.objectStore(storeName);
-      store.clear();
-      items.forEach((item) => store.put(item));
-      tx.oncomplete = () => resolve();
-      tx.onerror = () => reject(tx.error);
+      try {
+        const tx = db.transaction(storeName, 'readwrite');
+        const store = tx.objectStore(storeName);
+        store.clear();
+        items.forEach((item) => store.put(item));
+        tx.oncomplete = () => resolve();
+        tx.onerror = () => reject(tx.error);
+      } catch (e) {
+        resolve();
+      }
     });
   };
 

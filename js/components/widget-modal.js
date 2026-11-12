@@ -18,7 +18,7 @@ export async function renderWidgetModal(container, onClose, onNavigate, onOpenSh
         <div class="bg-[var(--bg-card)] border-2 border-amber-600/70 rounded-2xl sm:rounded-3xl max-w-2xl w-full max-h-[92dvh] sm:max-h-[90vh] overflow-y-auto overscroll-contain p-4 sm:p-6 shadow-2xl relative space-y-5 parchment-border my-auto custom-scrollbar">
           
           <!-- Close Button -->
-          <button id="btn-close-widget-modal" class="absolute top-4 right-4 text-stone-400 hover:text-[var(--text-primary)] p-1.5 rounded-lg transition cursor-pointer" title="Chiudi">
+          <button id="btn-close-widget-modal" class="absolute top-4 right-4 text-stone-400 hover:text-[var(--text-primary)] p-1.5 rounded-lg transition cursor-pointer" title="${t('common.close', 'Close')}">
             ${icons.close('w-5 h-5')}
           </button>
 
@@ -26,13 +26,13 @@ export async function renderWidgetModal(container, onClose, onNavigate, onOpenSh
           <div class="text-center space-y-1">
             <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-amber-600/15 border border-amber-600/30 text-amber-500 font-sans font-bold text-xs">
               <span>🍏</span>
-              <span>Widget iOS 18 & Android</span>
+              <span>${t('tools.widgetTitle', 'iOS 18 & Android Widget')}</span>
             </div>
             <h2 class="text-xl sm:text-2xl font-bold font-display text-[var(--accent-vermilion)]">
-              Widget Sacro del Versetto
+              ${t('nav.widget', 'Sacred Verse Widget')}
             </h2>
             <p class="text-xs sm:text-sm text-[var(--text-muted)] italic font-serif">
-              Visualizza la Parola di Dio sulla Schermata Home e di Blocco del tuo iPhone
+              ${t('tools.widgetDesc', 'Display the Word of God on your iPhone Home and Lock Screens')}
             </p>
           </div>
 
@@ -42,19 +42,19 @@ export async function renderWidgetModal(container, onClose, onNavigate, onOpenSh
               activeTab === 'home' ? 'bg-amber-600 text-white shadow-xs' : 'text-[var(--text-secondary)] hover:text-[var(--text-primary)]'
             }">
               <span>📱</span>
-              <span>Schermata Home</span>
+              <span>${t('widgetModal.homeTab', 'Home Screen')}</span>
             </button>
             <button id="tab-btn-lockscreen" class="flex-1 py-2 px-2.5 rounded-lg transition cursor-pointer flex items-center justify-center gap-1.5 ${
               activeTab === 'lockscreen' ? 'bg-amber-600 text-white shadow-xs' : 'text-[var(--text-secondary)] hover:text-[var(--text-primary)]'
             }">
               <span>🔒</span>
-              <span>Schermata di Blocco</span>
+              <span>${t('widgetModal.lockScreenTab', 'Lock Screen')}</span>
             </button>
             <button id="tab-btn-shortcuts" class="flex-1 py-2 px-2.5 rounded-lg transition cursor-pointer flex items-center justify-center gap-1.5 ${
               activeTab === 'shortcuts' ? 'bg-amber-600 text-white shadow-xs' : 'text-[var(--text-secondary)] hover:text-[var(--text-primary)]'
             }">
               <span>⚡</span>
-              <span>Comandi Rapidi</span>
+              <span>${t('widgetModal.shortcutsTab', 'Shortcuts')}</span>
             </button>
           </div>
 
@@ -70,17 +70,17 @@ export async function renderWidgetModal(container, onClose, onNavigate, onOpenSh
                   <button type="button" data-size="small" class="size-btn flex-1 sm:flex-none px-2.5 py-1.5 rounded-lg font-bold transition cursor-pointer ${
                     currentSize === 'small' ? 'bg-amber-600 text-white shadow-xs' : 'text-[var(--text-secondary)]'
                   }">
-                    Piccolo 2x2
+                    ${t('widgetModal.small', 'Small')} 2×2
                   </button>
                   <button type="button" data-size="medium" class="size-btn flex-1 sm:flex-none px-2.5 py-1.5 rounded-lg font-bold transition cursor-pointer ${
                     currentSize === 'medium' ? 'bg-amber-600 text-white shadow-xs' : 'text-[var(--text-secondary)]'
                   }">
-                    Medio 4x2
+                    ${t('widgetModal.medium', 'Medium')} 4×2
                   </button>
                   <button type="button" data-size="large" class="size-btn flex-1 sm:flex-none px-2.5 py-1.5 rounded-lg font-bold transition cursor-pointer ${
                     currentSize === 'large' ? 'bg-amber-600 text-white shadow-xs' : 'text-[var(--text-secondary)]'
                   }">
-                    Grande 4x4
+                    ${t('widgetModal.large', 'Large')} 4×4
                   </button>
                 </div>
 
@@ -89,17 +89,17 @@ export async function renderWidgetModal(container, onClose, onNavigate, onOpenSh
                   <button type="button" data-theme="dark" class="theme-btn px-2 py-1.5 rounded-lg transition cursor-pointer ${
                     currentTheme === 'dark' ? 'bg-amber-600 text-white font-bold' : 'text-[var(--text-secondary)]'
                   }">
-                    🌙 Cattedrale
+                    🌙 ${t('widgetModal.cathedral', 'Cathedral')}
                   </button>
                   <button type="button" data-theme="light" class="theme-btn px-2 py-1.5 rounded-lg transition cursor-pointer ${
                     currentTheme === 'light' ? 'bg-amber-600 text-white font-bold' : 'text-[var(--text-secondary)]'
                   }">
-                    ☀️ Pergamena
+                    ☀️ ${t('widgetModal.parchment', 'Parchment')}
                   </button>
                   <button type="button" data-theme="tinted" class="theme-btn px-2 py-1.5 rounded-lg transition cursor-pointer ${
                     currentTheme === 'tinted' ? 'bg-amber-600 text-white font-bold' : 'text-[var(--text-secondary)]'
                   }">
-                    ✨ iOS 18 Tinted
+                    ✨ ${t('widgetModal.tinted', 'iOS 18 Tinted')}
                   </button>
                 </div>
 
@@ -161,7 +161,7 @@ export async function renderWidgetModal(container, onClose, onNavigate, onOpenSh
                       }">
                         ${verseData.citation}
                       </span>
-                      <span class="text-[8px] opacity-60">Tocca per leggere ↗</span>
+                      <span class="text-[8px] opacity-60">${t('widgetModal.tapToRead', 'Tap to read')} ↗</span>
                     </div>
                   </div>
                 </div>
@@ -170,19 +170,19 @@ export async function renderWidgetModal(container, onClose, onNavigate, onOpenSh
                 <div class="grid grid-cols-4 gap-2 pt-2 px-1 text-center opacity-60">
                   <div class="space-y-1">
                     <div class="w-10 h-10 mx-auto rounded-xl bg-amber-600/30 border border-amber-600/40 flex items-center justify-center text-sm">📖</div>
-                    <span class="text-[8px] text-stone-400 block truncate">Bibbia</span>
+                    <span class="text-[8px] text-stone-400 block truncate">                    ${t('nav.bible', 'Bible')}</span>
                   </div>
                   <div class="space-y-1">
                     <div class="w-10 h-10 mx-auto rounded-xl bg-blue-600/30 border border-blue-600/40 flex items-center justify-center text-sm">🕊️</div>
-                    <span class="text-[8px] text-stone-400 block truncate">Preghiera</span>
+                    <span class="text-[8px] text-stone-400 block truncate">                    ${t('nav.journal', 'Prayer')}</span>
                   </div>
                   <div class="space-y-1">
                     <div class="w-10 h-10 mx-auto rounded-xl bg-orange-600/30 border border-orange-600/40 flex items-center justify-center text-sm">🕯️</div>
-                    <span class="text-[8px] text-stone-400 block truncate">Candela</span>
+                    <span class="text-[8px] text-stone-400 block truncate">                    ${t('floatingCandle.candle', 'Candle')}</span>
                   </div>
                   <div class="space-y-1">
                     <div class="w-10 h-10 mx-auto rounded-xl bg-purple-600/30 border border-purple-600/40 flex items-center justify-center text-sm">⚙️</div>
-                    <span class="text-[8px] text-stone-400 block truncate">Opzioni</span>
+                    <span class="text-[8px] text-stone-400 block truncate">                    ${t('nav.settings', 'Settings')}</span>
                   </div>
                 </div>
 
@@ -192,15 +192,15 @@ export async function renderWidgetModal(container, onClose, onNavigate, onOpenSh
               <div class="flex flex-wrap items-center justify-center gap-2 text-xs">
                 <button type="button" id="btn-refresh-verse" class="px-3 py-1.5 rounded-xl bg-amber-600/15 hover:bg-amber-600/25 text-amber-500 border border-amber-600/30 font-semibold flex items-center gap-1.5 transition cursor-pointer">
                   <span>🔄</span>
-                  <span>Nuovo Versetto</span>
+                  <span>${t('widgetModal.newVerse', 'New Verse')}</span>
                 </button>
                 <button type="button" id="btn-read-verse" class="px-3 py-1.5 rounded-xl bg-stone-700/40 hover:bg-stone-700/60 text-stone-200 border border-stone-600/50 font-semibold flex items-center gap-1.5 transition cursor-pointer">
                   <span>📖</span>
-                  <span>Leggi nella Bibbia</span>
+                  <span>${t('widgetModal.readInBible', 'Read in Bible')}</span>
                 </button>
                 <button type="button" id="btn-share-verse" class="px-3 py-1.5 rounded-xl bg-stone-700/40 hover:bg-stone-700/60 text-stone-200 border border-stone-600/50 font-semibold flex items-center gap-1.5 transition cursor-pointer">
                   <span>📤</span>
-                  <span>Condividi</span>
+                  <span>${t('common.share', 'Share')}</span>
                 </button>
               </div>
 
@@ -210,12 +210,12 @@ export async function renderWidgetModal(container, onClose, onNavigate, onOpenSh
                   <div class="flex items-center gap-2">
                     <span class="text-xl">📲</span>
                     <div>
-                      <h4 class="text-xs sm:text-sm font-bold text-[var(--text-primary)] font-display">Aggiungi Widget su iPhone in 3 Tocchi</h4>
-                      <p class="text-[11px] text-[var(--text-muted)]">Crea l'icona widget dedicata direttamente da Safari</p>
+                      <h4 class="text-xs sm:text-sm font-bold text-[var(--text-primary)] font-display">${t('widgetModal.installTitle', 'Add the Widget to iPhone in 3 Taps')}</h4>
+                      <p class="text-[11px] text-[var(--text-muted)]">${t('widgetModal.installDescription', 'Create the dedicated widget icon directly from Safari')}</p>
                     </div>
                   </div>
                   <a href="./widget.html" target="_blank" class="px-3 py-2 rounded-xl bg-amber-600 hover:bg-amber-700 text-white font-bold text-xs shadow-md transition flex items-center gap-1 flex-shrink-0 cursor-pointer">
-                    <span>Installa</span>
+                    <span>${t('widgetModal.install', 'Install')}</span>
                     <span>↗</span>
                   </a>
                 </div>
@@ -223,15 +223,15 @@ export async function renderWidgetModal(container, onClose, onNavigate, onOpenSh
                 <div class="grid grid-cols-3 gap-2 pt-2 text-[11px] text-stone-300 font-sans border-t border-amber-600/20">
                   <div class="p-2 rounded-xl bg-black/30 text-center space-y-1">
                     <span class="text-base block">1️⃣ 📤</span>
-                    <span class="block text-[10px] leading-tight">Tocca <strong>Condividi</strong> in Safari</span>
+                    <span class="block text-[10px] leading-tight">${t('widgetModal.installStep1', 'Tap Share in Safari')}</span>
                   </div>
                   <div class="p-2 rounded-xl bg-black/30 text-center space-y-1">
                     <span class="text-base block">2️⃣ ➕</span>
-                    <span class="block text-[10px] leading-tight">Scegli <strong>«Aggiungi a Home»</strong></span>
+                    <span class="block text-[10px] leading-tight">${t('widgetModal.installStep2', 'Choose “Add to Home Screen”')}</span>
                   </div>
                   <div class="p-2 rounded-xl bg-black/30 text-center space-y-1">
                     <span class="text-base block">3️⃣ ⛪</span>
-                    <span class="block text-[10px] leading-tight">Widget pronto sulla Home!</span>
+                    <span class="block text-[10px] leading-tight">${t('widgetModal.installStep3', 'Your widget is ready on the Home Screen!')}</span>
                   </div>
                 </div>
               </div>
@@ -245,8 +245,8 @@ export async function renderWidgetModal(container, onClose, onNavigate, onOpenSh
                 <div class="flex items-center gap-2.5">
                   <span class="p-2 rounded-xl bg-amber-600/10 text-amber-600 text-xl">🔒</span>
                   <div>
-                    <h4 class="text-sm font-bold text-[var(--text-primary)] font-display">Versetto su Schermata di Blocco (iOS Lock Screen)</h4>
-                    <p class="text-xs text-[var(--text-muted)]">Ricevi il versetto sacro ogni mattina direttamente nella schermata di sblocco dell'iPhone</p>
+                    <h4 class="text-sm font-bold text-[var(--text-primary)] font-display">${t('widgetModal.lockTitle', 'Verse on the Lock Screen')}</h4>
+                    <p class="text-xs text-[var(--text-muted)]">${t('widgetModal.lockDescription', 'Receive a sacred verse each morning on your iPhone Lock Screen')}</p>
                   </div>
                 </div>
 
@@ -257,7 +257,7 @@ export async function renderWidgetModal(container, onClose, onNavigate, onOpenSh
                       <img src="./icons/icon-192.png" alt="Aura Sacra" class="w-4 h-4 rounded-md">
                       <span class="font-bold text-stone-200">AURA SACRA</span>
                     </div>
-                    <span>Adesso</span>
+                    <span>${t('common.now', 'Now')}</span>
                   </div>
                   <p class="text-xs font-serif italic text-stone-100 leading-snug">
                     ${verseData.text}
@@ -270,7 +270,7 @@ export async function renderWidgetModal(container, onClose, onNavigate, onOpenSh
                 <!-- Test Lock Screen Notification Button -->
                 <button type="button" id="btn-test-lockscreen" class="w-full py-2.5 rounded-xl bg-amber-600 hover:bg-amber-700 active:bg-amber-800 text-white font-bold text-xs shadow-md transition flex items-center justify-center gap-2 cursor-pointer">
                   <span>🔔</span>
-                  <span>Invia Versetto sulla Schermata di Blocco Adesso</span>
+                  <span>${t('widgetModal.sendNow', 'Send Verse to Lock Screen Now')}</span>
                 </button>
 
                 <p id="lockscreen-status" class="text-[11px] font-sans text-center text-amber-600">${lockScreenFeedback}</p>
@@ -285,23 +285,23 @@ export async function renderWidgetModal(container, onClose, onNavigate, onOpenSh
               <div class="p-4 bg-[var(--bg-secondary)] rounded-2xl border border-stone-200 dark:border-stone-800 space-y-2.5">
                 <div class="flex items-center gap-2">
                   <span class="text-xl">⚡</span>
-                  <h4 class="text-sm font-bold text-[var(--text-primary)] font-display">Pressione Prolungata (Haptic Touch su Schermata Home)</h4>
+                  <h4 class="text-sm font-bold text-[var(--text-primary)] font-display">${t('widgetModal.hapticTitle', 'Long Press (Haptic Touch on Home Screen)')}</h4>
                 </div>
                 <p class="text-xs text-[var(--text-muted)] leading-relaxed">
-                  Sulla schermata Home del tuo iPhone, <strong>tieni premuta l'icona di Aura Sacra per un istante</strong>. Nel menu a comparsa troverai il comando rapido:
+                  ${t('widgetModal.hapticDescription', 'On your iPhone Home Screen, press and hold the Aura Sacra icon. The pop-up menu includes these quick actions:')}
                 </p>
 
                 <div class="p-3 bg-stone-900/80 rounded-xl border border-stone-700/80 space-y-2 max-w-xs mx-auto text-xs font-sans">
                   <div class="flex items-center justify-between text-stone-200 py-1 border-b border-stone-800">
-                    <span class="font-semibold">📖 Versetto del Giorno (Widget)</span>
+                    <span class="font-semibold">📖 ${t('widgetModal.dailyVerse', 'Verse of the Day (Widget)')}</span>
                     <span class="text-stone-400">↗</span>
                   </div>
                   <div class="flex items-center justify-between text-stone-200 py-1 border-b border-stone-800">
-                    <span class="font-semibold">🕯️ Candela & Pioggia</span>
+                    <span class="font-semibold">🕯️ ${t('widgetModal.candleRain', 'Candle & Rain')}</span>
                     <span class="text-stone-400">↗</span>
                   </div>
                   <div class="flex items-center justify-between text-stone-200 py-1">
-                    <span class="font-semibold">💬 Dialogo con Gesù</span>
+                    <span class="font-semibold">💬 ${t('widgetModal.guideChat', 'Talk with the Guide')}</span>
                     <span class="text-stone-400">↗</span>
                   </div>
                 </div>
@@ -311,14 +311,14 @@ export async function renderWidgetModal(container, onClose, onNavigate, onOpenSh
               <div class="p-4 bg-[var(--bg-secondary)] rounded-2xl border border-stone-200 dark:border-stone-800 space-y-2.5">
                 <div class="flex items-center gap-2">
                   <span class="text-xl">🍏</span>
-                  <h4 class="text-sm font-bold text-[var(--text-primary)] font-display">Integrazione con l'App Comandi Rapidi di Apple</h4>
+                  <h4 class="text-sm font-bold text-[var(--text-primary)] font-display">${t('widgetModal.shortcutsTitle', 'Apple Shortcuts Integration')}</h4>
                 </div>
                 <p class="text-xs text-[var(--text-muted)] leading-relaxed">
-                  Puoi copiare il versetto corrente negli appunti per usarlo in qualsiasi automazione personale o widget di terze parti (come Widgy o Scriptable):
+                  ${t('widgetModal.shortcutsDescription', 'Copy the current verse to use in personal automations or third-party widgets such as Widgy or Scriptable:')}
                 </p>
                 <button type="button" id="btn-copy-verse-text" class="w-full py-2.5 rounded-xl bg-amber-600/15 hover:bg-amber-600/25 text-amber-500 border border-amber-600/40 text-xs font-bold transition flex items-center justify-center gap-1.5 cursor-pointer">
                   <span>📋</span>
-                  <span>Copia Versetto Formattato per Widget iOS</span>
+                  <span>${t('widgetModal.copyVerse', 'Copy Formatted Verse for iOS Widget')}</span>
                 </button>
                 <span id="copy-status" class="text-[11px] font-sans text-emerald-500 block text-center"></span>
               </div>
@@ -329,7 +329,7 @@ export async function renderWidgetModal(container, onClose, onNavigate, onOpenSh
           <!-- Footer Button -->
           <div class="pt-2 border-t border-stone-200 dark:border-stone-800">
             <button id="btn-close-bottom" class="w-full py-3 rounded-xl bg-amber-600 hover:bg-amber-700 active:bg-amber-800 text-white font-bold text-sm shadow-md transition cursor-pointer">
-              Chiudi
+              ${t('common.close', 'Close')}
             </button>
           </div>
 
@@ -407,19 +407,19 @@ export async function renderWidgetModal(container, onClose, onNavigate, onOpenSh
 
       testLockBtn?.addEventListener('click', async () => {
         if (!('Notification' in window)) {
-          if (statusEl) statusEl.textContent = 'Le notifiche web non sono supportate in questo browser.';
+          if (statusEl) statusEl.textContent = t('widgetModal.notificationsUnsupported', 'Web notifications are not supported in this browser.');
           return;
         }
 
         if (Notification.permission !== 'granted') {
           const perm = await Notification.requestPermission();
           if (perm !== 'granted') {
-            if (statusEl) statusEl.textContent = 'Permesso notifiche non concesso. Abilitalo nelle Impostazioni di iOS.';
+            if (statusEl) statusEl.textContent = t('widgetModal.notificationsDenied', 'Notification permission was denied. Enable it in iOS Settings.');
             return;
           }
         }
 
-        const title = `⛪ Aura Sacra • Versetto del Giorno`;
+        const title = t('widgetModal.notificationTitle', '⛪ Aura Sacra • Verse of the Day');
         const options = {
           body: `«${verseData.text}»\n${verseData.citation}`,
           icon: './icons/icon-192.png',
@@ -437,7 +437,7 @@ export async function renderWidgetModal(container, onClose, onNavigate, onOpenSh
         }
 
         if (statusEl) {
-          statusEl.textContent = '✓ Versetto inviato! Blocca lo schermo del tuo iPhone per vederlo apparire.';
+          statusEl.textContent = t('widgetModal.verseSent', '✓ Verse sent! Lock your iPhone screen to see it appear.');
           statusEl.className = 'text-[11px] font-sans text-center text-emerald-500 font-bold';
         }
       });
@@ -449,9 +449,9 @@ export async function renderWidgetModal(container, onClose, onNavigate, onOpenSh
         const textToCopy = `«${verseData.text}» — ${verseData.citation}`;
         try {
           await navigator.clipboard.writeText(textToCopy);
-          if (copyStatusEl) copyStatusEl.textContent = '✓ Versetto copiato negli appunti!';
+          if (copyStatusEl) copyStatusEl.textContent = t('widgetModal.verseCopied', '✓ Verse copied to clipboard!');
         } catch (e) {
-          if (copyStatusEl) copyStatusEl.textContent = 'Seleziona e copia manualmente.';
+          if (copyStatusEl) copyStatusEl.textContent = t('widgetModal.copyManually', 'Select and copy manually.');
         }
       });
     }

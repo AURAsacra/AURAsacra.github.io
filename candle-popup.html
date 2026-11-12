@@ -181,6 +181,7 @@
     } from './js/candle-timer.js';
 
     await initI18n();
+    document.title = `Aura Sacra — ${t('focus.candleTitle', 'Living Candle — Focus Timer')}`;
 
     const display = document.getElementById('popup-timer-display');
     const toggleBtn = document.getElementById('btn-popup-toggle');
@@ -258,6 +259,9 @@
     if (add5Btn) add5Btn.title = t('focus.add5Tooltip', 'Add 5 minutes');
     if (resetBtn) resetBtn.textContent = t('focus.reset', 'Reset');
     if (rainVol) rainVol.title = t('focus.volume', 'Volume:');
+    if (rainText) rainText.textContent = t('focus.rainOff', 'Rain: Off');
+    if (completionText) completionText.textContent = t('focus.sessionFinished', 'Session complete. Praise God.');
+    if (audioUnlockBanner) audioUnlockBanner.title = t('focus.unlockAudioPrompt', 'Tap here to enable the bell audio');
 
     function update(state) {
       if (!state) state = getTimerState();

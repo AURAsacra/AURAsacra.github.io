@@ -1,0 +1,21 @@
+{
+  "name": "Aura Sacra — Plateforme chrétienne universelle",
+  "short_name": "Aura Sacra",
+  "lang": "fr",
+  "description": "Une plateforme spirituelle œcuménique, entièrement hors ligne, avec les Écritures, un journal de prière, des thèmes liturgiques et un guide spirituel.",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#141416",
+  "theme_color": "#c49a45",
+  "orientation": "any",
+  "icons": [
+    { "src": "./icons/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any maskable" },
+    { "src": "./icons/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any maskable" }
+  ],
+  "shortcuts": [
+    { "name": "Verset du jour", "short_name": "Bible", "description": "Lire et méditer les Saintes Écritures", "url": "./index.html?tab=bible", "icons": [{ "src": "./icons/icon-192.png", "sizes": "192x192" }] },
+    { "name": "Bougie et pluie", "short_name": "Bougie", "description": "Une séance d’étude et de prière avec la bougie sacrée", "url": "./index.html?tab=focus", "icons": [{ "src": "./icons/icon-192.png", "sizes": "192x192" }] },
+    { "name": "Dialogue avec le Guide", "short_name": "Guide", "description": "Un dialogue spirituel centré sur le Christ", "url": "./index.html?tab=chat", "icons": [{ "src": "./icons/icon-192.png", "sizes": "192x192" }] },
+    { "name": "Verset aléatoire", "short_name": "Inspiration", "description": "Recevoir un verset biblique aléatoire pour la méditation", "url": "./index.html?tab=bible&random=1", "icons": [{ "src": "./icons/icon-192.png", "sizes": "192x192" }] }
+  ]
+}

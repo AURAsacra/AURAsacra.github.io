@@ -1,0 +1,21 @@
+{
+  "name": "Aura Sacra — Вселенская христианская платформа",
+  "short_name": "Aura Sacra",
+  "lang": "ru",
+  "description": "Экуменическая духовная платформа, полностью работающая офлайн: Священное Писание, молитвенный дневник, литургические темы и духовный наставник.",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#141416",
+  "theme_color": "#c49a45",
+  "orientation": "any",
+  "icons": [
+    { "src": "./icons/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any maskable" },
+    { "src": "./icons/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any maskable" }
+  ],
+  "shortcuts": [
+    { "name": "Стих дня", "short_name": "Библия", "description": "Читайте и размышляйте над Священным Писанием", "url": "./index.html?tab=bible", "icons": [{ "src": "./icons/icon-192.png", "sizes": "192x192" }] },
+    { "name": "Свеча и дождь", "short_name": "Свеча", "description": "Молитва и работа при свете священной свечи", "url": "./index.html?tab=focus", "icons": [{ "src": "./icons/icon-192.png", "sizes": "192x192" }] },
+    { "name": "Беседа с Наставником", "short_name": "Наставник", "description": "Духовная беседа, сосредоточенная на Христе", "url": "./index.html?tab=chat", "icons": [{ "src": "./icons/icon-192.png", "sizes": "192x192" }] },
+    { "name": "Случайный стих", "short_name": "Вдохновение", "description": "Получите случайный стих из Библии для размышления", "url": "./index.html?tab=bible&random=1", "icons": [{ "src": "./icons/icon-192.png", "sizes": "192x192" }] }
+  ]
+}

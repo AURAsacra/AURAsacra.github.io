@@ -112,12 +112,13 @@ export async function downloadLocalGemini(onProgress) {
   const currentLang = typeof getLanguage === 'function' ? getLanguage() : 'it';
   const langConfig = LANG_MAP[currentLang] || LANG_MAP.en;
 
-  const systemPrompt = `You are Jesus Christ engaging in a wise, compassionate, intellectually deep, and empathetic spiritual dialogue.
+  const systemPrompt = `You are a wise, compassionate, intellectually deep, and empathetic Christian Spiritual Guide (Guida Spirituale) engaged in dialogue with a soul (${currentLang}).
 CRITICAL RULES:
-1. You are NOT just a devotional prayer assistant: you MUST answer REAL QUESTIONS, explain theological, philosophical, and biblical concepts, address specific doubts, give practical guidance for everyday life dilemmas, and engage in genuine conversation.
-2. If the user asks a question or shares a doubt, directly answer their question with clarity, empathy, reason, and Gospel wisdom. Do NOT assume everything is a prayer.
-3. The user's active application interface language is ${langConfig.name}. Reply fluently and eloquently in ${langConfig.name} (or match the user's language if they write in another tongue).
-4. Conclude every response with 1 to 3 relevant Holy Scripture chapter and verse citations formatted as:
+1. You are a humble and faithful Spiritual Guide pointing always to God, Jesus Christ, and the Holy Scriptures. You NEVER claim to be Jesus Christ or speak in His first person ("I am Jesus"). You speak respectfully and pastorally as an experienced spiritual mentor and guide.
+2. You are NOT just a devotional prayer assistant: you MUST answer REAL QUESTIONS, explain theological, philosophical, and biblical concepts, address specific doubts, give practical guidance for everyday life dilemmas, and engage in genuine conversation.
+3. If the user asks a question or shares a doubt, directly answer their question with clarity, empathy, reason, and Gospel wisdom. Do NOT assume everything is a prayer.
+4. The user's active application interface language is ${langConfig.name}. Reply fluently and eloquently in ${langConfig.name} (or match the user's language if they write in another tongue).
+5. Conclude every response with 1 to 3 relevant Holy Scripture chapter and verse citations formatted as:
 ${langConfig.header}
 • [Book Chapter:Verse]`;
 
@@ -250,18 +251,19 @@ export async function testGeminiApiKey(candidateKey) {
   throw lastErr || new Error('Could not verify Gemini API key with Google servers.');
 }
 
-// System Instruction for Jesus Christ Dialogue
+// System Instruction for Spiritual Guide Dialogue
 function getSystemInstruction(userName) {
   const currentLang = typeof getLanguage === 'function' ? getLanguage() : 'it';
   const langConfig = LANG_MAP[currentLang] || LANG_MAP.en;
 
-  return `You are Jesus Christ in a wise, compassionate, intellectually profound, and empathetic dialogue with a soul (${userName}).
+  return `You are a wise, compassionate, intellectually profound, and empathetic Christian Spiritual Guide (Guida Spirituale) in dialogue with a soul (${userName}).
 CRITICAL INSTRUCTIONS:
-1. You are NOT merely a devotional prayer bot. You MUST answer REAL QUESTIONS and address REAL DOUBTS directly!
-2. When the user asks a question (e.g., "Why does God allow suffering?", "Does God exist?", "What is the meaning of salvation?", "How should I make this career decision?", "Why did this happen?"), provide a direct, deep, intellectually rigorous, and compassionate answer grounded in Gospel truth, philosophical depth, and divine love. Do NOT treat their question as a devotional prayer.
-3. If the user shares an everyday dilemma, doubt about faith, fear, or conflict, answer them thoughtfully, addressing the specific dilemma with empathy and practical wisdom.
-4. The user's active application interface language is ${langConfig.name}. You MUST formulate your response fluently and eloquently in ${langConfig.name}, unless the user specifically and explicitly writes to you in another language (in which case match the user's language).
-5. Conclude your response with 1 to 3 relevant Holy Scripture chapter and verse citations formatted strictly as:
+1. You are a loving spiritual mentor and companion who guides the soul toward Christ, the Gospel, and holiness. You NEVER impersonate Jesus Christ or speak in the first person as Christ ("I am Jesus"). You speak as a wise, reverent, and humble spiritual director, referencing the words of Christ, the Apostles, and Church wisdom with deep respect.
+2. You are NOT merely a devotional prayer bot. You MUST answer REAL QUESTIONS and address REAL DOUBTS directly!
+3. When the user asks a question (e.g., "Why does God allow suffering?", "Does God exist?", "What is the meaning of salvation?", "How should I make this career decision?", "Why did this happen?"), provide a direct, deep, intellectually rigorous, and compassionate answer grounded in Gospel truth, philosophical depth, and Christian love. Do NOT treat their question as a devotional prayer.
+4. If the user shares an everyday dilemma, doubt about faith, fear, or conflict, answer them thoughtfully, addressing the specific dilemma with empathy and practical wisdom.
+5. The user's active application interface language is ${langConfig.name}. You MUST formulate your response fluently and eloquently in ${langConfig.name}, unless the user specifically and explicitly writes to you in another language (in which case match the user's language).
+6. Conclude your response with 1 to 3 relevant Holy Scripture chapter and verse citations formatted strictly as:
 ${langConfig.header}
 • [Book Chapter:Verse]`;
 }
@@ -410,69 +412,72 @@ async function callCloudGemini(apiKey, userMessage, userName, history = []) {
     'gemini-2.0-flash',
     'gemini-1.5-flash',
     'gemini-3.7-flash',
-    'gemini-3.8-flash',
-    'gemini-3.5-flash',
-    'gemini-2.5-flash-lite'
+    'gemini-3.8-flash'
   ];
-  const candidateModels = [
+  const modelsToTry = [
     selectedModel,
-    ...allKnownModels.filter(m => m !== selectedModel)
+    ...allKnownModels.filter((m) => m !== selectedModel)
   ];
 
   let lastError = null;
-
-  for (const model of candidateModels) {
+  for (const model of modelsToTry) {
     try {
-      // 25-second timeout per attempt allowing complete detailed responses
+      // 25-second timeout per attempt allowing complete responses
       return await callGenerateContentApi(apiKey, model, userMessage, userName, history, 25000);
     } catch (err) {
       console.warn(`Model ${model} failed, attempting next model in pipeline:`, err.message);
       lastError = err;
 
-      // Fail fast on definitely invalid API key
-      if (err.message && (err.message.includes('API_KEY_INVALID') || err.message.includes('API key not valid') || err.message.includes('API key expired') || err.message.includes('PERMISSION_DENIED'))) {
+      // Fail fast on definite invalid API key
+      if (
+        err.message && (
+          err.message.includes('API_KEY_INVALID') ||
+          err.message.includes('API key not valid') ||
+          err.message.includes('API key expired') ||
+          err.message.includes('PERMISSION_DENIED')
+        )
+      ) {
         throw err;
       }
-      // Continue to next model for 503, 500, 429, 404, or timeouts
+      // Continue to next model for 429, 503, 404, timeouts, etc.
     }
   }
 
-  throw lastError || new Error('Nessun modello Gemini ha risposto.');
+  throw lastError || new Error('Nessun modello Gemini disponibile al momento.');
 }
 
-// Local Gemini Prompt Call
+// Local Gemini Prompt API Call
 async function callLocalGemini(session, userMessage) {
-  const prompt = `The user writes to you: "${userMessage}".
-Remember your instructions:
-- You are Jesus Christ answering with divine love, gentle authority, and profound Gospel wisdom.
-- Answer their question, doubt, or dilemma DIRECTLY and thoroughly. Do NOT assume it is a prayer.
-- Reply in the EXACT SAME LANGUAGE the user wrote in.
-- End with 1 to 3 scripture references (book chapter:verse).`;
-
+  const prompt = `The user writes to you: "${userMessage}"
+(Remember your instructions:
+- You are a Christian Spiritual Guide (Guida Spirituale): answer with pastoral wisdom, compassion, intellectual depth, and reverent Gospel guidance pointing to Christ and Scripture. You never impersonate Jesus Christ.
+- Answer their question, doubt, or dilemma directly and thoroughly. Do NOT assume it is a prayer.
+- Reply in the EXACT SAME LANGUAGE the user wrote in, and conclude with 1 to 3 Holy Scripture citations.)`;
   const response = await session.prompt(prompt);
-  return response.trim();
+  return response;
 }
 
 // Extract Scripture Citations from AI Response
 function extractCitations(responseText) {
   const citations = [];
-  const regex = /\b([1-3]?\s?[A-Za-z]+)\s+(\d+):(\d+(?:-\d+)?)\b/g;
+  // Matches references such as "Giovanni 3:16" or "[1 Corinzi 13:4-7]"
+  const regex = /\[?((?:[1-3]\s?)?[A-Za-zÀ-ÿĂăÂâÎîȘșȚț]+(?:\s[A-Za-zÀ-ÿĂăÂâÎîȘșȚț]+)*)\s+(\d+):(\d+(?:-\d+)?)\]?/g;
   let match;
-  while ((match = regex.exec(responseText)) !== null) {
-    citations.push(match[0]);
+  while ((match = regex.exec(responseText || '')) !== null) {
+    citations.push(match[0].replace(/^\[|\]$/g, '').trim());
   }
   return [...new Set(citations)];
 }
 
 // Main Send Function
 export async function sendMessageToJesus(messageText, userName = 'Child of God') {
-  const trimmed = messageText.trim();
+  const trimmed = (messageText || '').trim();
   if (!trimmed) throw new Error('Message cannot be empty.');
 
   // 1. Check AI availability status
   const status = await checkAiStatus();
 
-  // 2. Strict Offline Mandate: Unusable offline if local Gemini is not downloaded!
+  // 2. STRICT Offline Mandate: unusable offline if local Gemini is not downloaded
   if (!status.isOnline && status.localGeminiStatus !== 'ready') {
     throw new Error(
       'OFFLINE_GEMINI_REQUIRED: Offline AI is unavailable because the local Gemini model is not downloaded on this device. ' +
@@ -485,15 +490,15 @@ export async function sendMessageToJesus(messageText, userName = 'Child of God')
   if (status.isOnline && !status.canChat) {
     throw new Error(
       'GEMINI_SETUP_REQUIRED: To enable intelligent answers to your questions and doubts, ' +
-      'please connect your free Google Gemini API Key in Settings or download Gemini Nano in Chrome.'
+      'please configure your Gemini API Key in Settings or download the local Gemini Nano model.'
     );
   }
 
-  // 4. Save user message to IndexedDB
+  // 4. Save the user message
   await addChatMessage('user', trimmed);
   const history = await getChatMessages();
 
-  // 5. Generate AI Response via Gemini
+  // 5. Generate AI response via Gemini
   let aiText = '';
 
   if (status.localGeminiStatus === 'ready') {
@@ -516,9 +521,10 @@ export async function sendMessageToJesus(messageText, userName = 'Child of God')
 }
 
 // Alias for backwards compatibility
+export const sendMessageToGuide = sendMessageToJesus;
 export const sendPrayerToJesus = sendMessageToJesus;
 
-// Load History
+// Load history
 export async function loadConversationHistory() {
   return await getChatMessages();
 }

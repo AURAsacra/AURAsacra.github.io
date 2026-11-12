@@ -1,12 +1,20 @@
 // Aura Sacra Service Worker - 100% Offline & Airplane Mode Resilient
 // Cross-platform auto-update support for iOS Safari Web App, Android PWA & Desktop
-const CACHE_NAME = 'aura-sacra-v1.8.8';
+const CACHE_NAME = 'aura-sacra-v1.9.7';
 const ASSETS_TO_CACHE = [
   './',
   './index.html',
   './candle-popup.html',
   './widget.html',
   './manifest.json',
+  './manifest-en.json',
+  './manifest-ro.json',
+  './manifest-fr.json',
+  './manifest-es.json',
+  './manifest-pt.json',
+  './manifest-de.json',
+  './manifest-ru.json',
+  './manifest-la.json',
   './css/style.css',
   './js/tailwindcss.js',
   './js/app.js',
@@ -42,6 +50,7 @@ const ASSETS_TO_CACHE = [
   './js/data/saints.js',
   './js/data/saints-i18n.js',
   './js/data/daily-saints.js',
+  './js/data/catholic-saints.js',
   './js/data/orthodox-saints.js',
   './js/data/national-calendars.js',
   './js/components/navbar.js',
@@ -50,7 +59,7 @@ const ASSETS_TO_CACHE = [
   './js/components/penance-calendar.js',
   './js/components/tools-modal.js',
   './js/components/bible-reader.js',
-  './js/components/jesus-chat.js',
+  './js/components/guide-chat.js',
   './js/components/prayer-journal.js',
   './js/components/saints-view.js',
   './js/components/focus-mode.js',
@@ -176,7 +185,7 @@ self.addEventListener('fetch', (event) => {
     url.pathname.endsWith('.html') ||
     url.pathname.endsWith('.js') ||
     url.pathname.endsWith('.css') ||
-    url.pathname.endsWith('manifest.json');
+    /^\/manifest(?:-[a-z]{2})?\.json$/.test(url.pathname);
 
   if (isCodeOrMarkup) {
     event.respondWith(

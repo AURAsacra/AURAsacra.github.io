@@ -6,7 +6,7 @@ export function renderBottomNav(container, activeTab, onNavigate, onOpenModal) {
   const tabs = [
     { id: 'bible', label: t('nav.tabBible', 'Bible'), icon: 'book', isTab: true },
     { id: 'penance', label: t('nav.tabPenance', 'Penance'), icon: 'calendar', isTab: true },
-    { id: 'chat', label: t('nav.tabJesus', 'Jesus'), icon: 'message', isTab: true },
+    { id: 'chat', label: t('nav.tabJesus', 'Guida'), icon: 'message', isTab: true },
     { id: 'journal', label: t('nav.tabJournal', 'Journal'), icon: 'heart', isTab: true },
     { id: 'tools', label: t('nav.tabTools', 'Tools'), icon: 'grid', isModal: true }
   ];

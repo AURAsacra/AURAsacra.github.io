@@ -15,12 +15,6 @@ export const TRADITIONS = [
     description: 'Ash Wednesday, Good Friday, and all Fridays of the year (with solemnity dispensations).'
   },
   {
-    id: 'traditional',
-    name: 'Traditional Catholic (1962)',
-    subtitle: 'Historic Missal & 1917 Canon Law',
-    description: 'Includes Ember Days (Quatuor Tempora), traditional Vigils, and full Lenten daily fasts.'
-  },
-  {
     id: 'orthodox',
     name: 'Orthodox (Eastern Byzantine)',
     subtitle: 'Great Lent, Fasting Seasons & Weekly Fasts',

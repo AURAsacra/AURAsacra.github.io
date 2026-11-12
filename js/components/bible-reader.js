@@ -1,5 +1,5 @@
 // Sacred Scripture Bible Reader for Aura Sacra
-import { BIBLE_BOOKS, SCRIPTURE_TEXTS, ensureFullBibleLoaded, getLoadedBibleBooks } from '../data/scriptures.js';
+import { BIBLE_BOOKS, SCRIPTURE_TEXTS, ensureFullBibleLoaded, getLoadedBibleBooks, getChapterFromBible } from '../data/scriptures.js';
 import { SUPPORTED_BIBLES, getDefaultBibleForLanguage, getArchivalChapter } from '../data/scripture-archives.js';
 import { icons } from '../icons.js';
 import { getHighlights, saveHighlight, removeHighlight, getSetting, saveSetting } from '../db.js';
@@ -56,9 +56,12 @@ export async function renderBibleReader(container, onOpenShareCard, deepLinkOpti
     activeBibleVersion = getDefaultBibleForLanguage(currentLang);
   }
   lastLoadedLang = currentLang;
-  if (!activeCanon) {
+  const savedCanon = await getSetting('preferred_canon', null);
+  if (savedCanon) {
+    activeCanon = savedCanon;
+  } else {
     const userConfession = await getSetting('user_confession', 'ecumenical');
-    if (userConfession === 'catholic' || userConfession === 'traditional') {
+    if (userConfession === 'catholic') {
       activeCanon = 'catholic';
     } else if (userConfession === 'orthodox') {
       activeCanon = 'orthodox';
@@ -219,38 +222,30 @@ export async function renderBibleReader(container, onOpenShareCard, deepLinkOpti
         <!-- Header & Scripture Selector Toolbar -->
         <div class="bg-[var(--bg-card)] border border-stone-300 dark:border-stone-800 rounded-2xl p-3 sm:p-4 shadow-sm space-y-3">
           
-          <!-- Top Row: Bible Version & Status Badge -->
-          <div class="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-2.5 sm:gap-4">
-            
-            <!-- Version & Canon Selectors with Icon -->
-            <div class="flex flex-wrap sm:flex-nowrap items-center gap-2 flex-1 min-w-0">
-              <span class="text-amber-600 flex-shrink-0">${icons.book('w-5 h-5')}</span>
-              <select id="select-bible-version" class="flex-1 min-w-[130px] bg-[var(--bg-secondary)] border border-stone-300 dark:border-stone-700 rounded-xl px-2.5 py-2 text-xs font-semibold text-[var(--text-primary)] focus:outline-none focus:border-amber-600 cursor-pointer shadow-sm truncate notranslate" translate="no" title="${t('nav.bible', 'Bible')}">
-                ${SUPPORTED_BIBLES.map((b) => `
-                  <option value="${b.id}" ${b.id === activeBibleVersion ? 'selected' : ''}>
-                    ${b.flag} ${b.label} — ${b.name}
-                  </option>
-                `).join('')}
-              </select>
-              <select id="select-bible-canon" class="w-auto min-w-[130px] bg-[var(--bg-secondary)] border border-stone-300 dark:border-stone-700 rounded-xl px-2.5 py-2 text-xs font-semibold text-[var(--text-primary)] focus:outline-none focus:border-amber-600 cursor-pointer shadow-sm truncate notranslate" translate="no" title="${t('reader.canon', 'Scripture Canon')}">
-                <option value="catholic" ${activeCanon === 'catholic' ? 'selected' : ''}>🕊️ ${t('reader.canonCatholic', 'Catholic (73)')}</option>
-                <option value="orthodox" ${activeCanon === 'orthodox' ? 'selected' : ''}>☦️ ${t('reader.canonOrthodox', 'Orthodox (78)')}</option>
-                <option value="protestant" ${activeCanon === 'protestant' ? 'selected' : ''}>📖 ${t('reader.canonProtestant', 'Protestant (66)')}</option>
-                <option value="all" ${activeCanon === 'all' ? 'selected' : ''}>🏛️ ${t('reader.canonAll', 'All Books (80)')}</option>
-              </select>
-            </div>
+          <!-- Row 1: Bible Version & Scripture Canon -->
+          <div class="flex items-center gap-2 w-full">
+            <span class="text-amber-600 flex-shrink-0">${icons.book('w-5 h-5')}</span>
+            <select id="select-bible-version" class="flex-1 min-w-0 bg-[var(--bg-secondary)] border border-stone-300 dark:border-stone-700 rounded-xl px-2.5 py-2 text-xs font-semibold text-[var(--text-primary)] focus:outline-none focus:border-amber-600 cursor-pointer shadow-sm truncate notranslate" translate="no" title="${t('nav.bible', 'Bible')}">
+              ${SUPPORTED_BIBLES.map((b) => `
+                <option value="${b.id}" ${b.id === activeBibleVersion ? 'selected' : ''}>
+                  ${b.flag} ${b.label} — ${b.name}
+                </option>
+              `).join('')}
+            </select>
+            <select id="select-bible-canon" class="w-auto min-w-[120px] max-w-[160px] bg-[var(--bg-secondary)] border border-stone-300 dark:border-stone-700 rounded-xl px-2.5 py-2 text-xs font-semibold text-[var(--text-primary)] focus:outline-none focus:border-amber-600 cursor-pointer shadow-sm truncate notranslate" translate="no" title="${t('reader.canon', 'Scripture Canon')}">
+              <option value="catholic" ${activeCanon === 'catholic' ? 'selected' : ''}>🕊️ ${t('reader.canonCatholic', 'Catholic (73)')}</option>
+              <option value="orthodox" ${activeCanon === 'orthodox' ? 'selected' : ''}>☦️ ${t('reader.canonOrthodox', 'Orthodox (78)')}</option>
+              <option value="protestant" ${activeCanon === 'protestant' ? 'selected' : ''}>📖 ${t('reader.canonProtestant', 'Protestant (66)')}</option>
+              <option value="all" ${activeCanon === 'all' ? 'selected' : ''}>🏛️ ${t('reader.canonAll', 'All Books (80)')}</option>
+            </select>
+          </div>
 
-            <!-- Audio Bible & Selection Badge -->
-            <div class="flex items-center justify-between sm:justify-end gap-2 flex-shrink-0 flex-wrap">
-              <button id="btn-audio-bible-chapter" class="flex items-center gap-1.5 text-xs font-sans font-semibold text-white bg-amber-600 hover:bg-amber-700 active:bg-amber-800 px-3 py-1.5 rounded-xl shadow-sm transition transform active:scale-95 cursor-pointer flex-shrink-0" title="${t('reader.listenChapter', 'Ascolta questo capitolo con Audio-Bibbia')}">
-                ${icons.speaker('w-3.5 h-3.5')}
-                <span id="btn-audio-bible-chapter-label">${t('reader.listenChapter', 'Ascolta')}</span>
-              </button>
-              <button id="btn-toggle-select-all" class="text-xs font-sans font-medium text-amber-600 hover:text-amber-700 px-2.5 py-1.5 rounded-lg border border-amber-600/40 hover:bg-amber-600/10 transition cursor-pointer flex-shrink-0">
-                ${selectedCount === chapterData.verses.length ? t('reader.deselectAll', 'Deselect All') : t('reader.selectChapter', 'Select Chapter')}
-              </button>
-            </div>
-
+          <!-- Row 2: Dedicated Full-Width Audio Bible Button -->
+          <div class="w-full">
+            <button id="btn-audio-bible-chapter" class="w-full flex items-center justify-center gap-2 text-xs sm:text-sm font-sans font-semibold text-white bg-amber-600 hover:bg-amber-700 active:bg-amber-800 px-4 py-2 sm:py-2.5 rounded-xl shadow-sm transition transform active:scale-[0.99] cursor-pointer" title="${t('reader.listenChapter', 'Ascolta questo capitolo con Audio-Bibbia')}">
+              ${icons.speaker('w-4 h-4')}
+              <span id="btn-audio-bible-chapter-label">${t('reader.listenChapter', 'Ascolta')}</span>
+            </button>
           </div>
 
           <!-- Bottom Row: Book, Chapter, and Steppers -->
@@ -428,7 +423,7 @@ export async function renderBibleReader(container, onOpenShareCard, deepLinkOpti
         ${
           selectedCount > 0
             ? `
-          <div class="fixed bottom-28 sm:bottom-24 md:bottom-6 left-1/2 -translate-x-1/2 z-40 bg-[var(--bg-card)]/95 backdrop-blur-md border-2 border-amber-600/80 shadow-2xl rounded-2xl px-4 py-3 flex flex-wrap items-center justify-between gap-3 max-w-xl w-[92%] animate-fade-in parchment-border">
+          <div class="fixed bottom-28 sm:bottom-24 md:bottom-6 left-1/2 -translate-x-1/2 z-50 bg-[var(--bg-card)]/95 backdrop-blur-md border-2 border-amber-600/80 shadow-2xl rounded-2xl px-4 py-3 flex flex-wrap items-center justify-between gap-3 max-w-xl w-[92%] animate-fade-in parchment-border">
             
             <div class="flex items-center gap-2">
               <span class="bg-amber-600 text-white font-bold text-xs px-2.5 py-1 rounded-full shadow-sm">
@@ -509,26 +504,32 @@ export async function renderBibleReader(container, onOpenShareCard, deepLinkOpti
     }
 
     // 1. Book Selector Change
-    container.querySelector('#select-bible-book').addEventListener('change', async (e) => {
-      stop();
-      activeBookId = e.target.value;
-      const allAvailableBooks = getLoadedBibleBooks(activeBibleVersion) || BIBLE_BOOKS;
-      const currentActiveBooks = filterBooksByCanon(allAvailableBooks, activeCanon);
-      const targetBook = currentActiveBooks.find((b) => b.id === activeBookId) || allAvailableBooks.find((b) => b.id === activeBookId);
-      activeChapter = targetBook?.chapters?.[0] || 1;
-      selectedVerses.clear();
-      activeHighlights = await getHighlights(activeBookId, activeChapter);
-      await updateView();
-    });
+    const bookSelect = container.querySelector('#select-bible-book');
+    if (bookSelect) {
+      bookSelect.addEventListener('change', async (e) => {
+        stop();
+        activeBookId = e.target.value;
+        const allAvailableBooks = getLoadedBibleBooks(activeBibleVersion) || BIBLE_BOOKS;
+        const currentActiveBooks = filterBooksByCanon(allAvailableBooks, activeCanon);
+        const targetBook = currentActiveBooks.find((b) => b.id === activeBookId) || allAvailableBooks.find((b) => b.id === activeBookId);
+        activeChapter = targetBook?.chapters?.[0] || 1;
+        selectedVerses.clear();
+        activeHighlights = await getHighlights(activeBookId, activeChapter);
+        await updateView();
+      });
+    }
 
     // 2. Chapter Selector Change
-    container.querySelector('#select-bible-chapter').addEventListener('change', async (e) => {
-      stop();
-      activeChapter = parseInt(e.target.value, 10);
-      selectedVerses.clear();
-      activeHighlights = await getHighlights(activeBookId, activeChapter);
-      await updateView();
-    });
+    const chapterSelect = container.querySelector('#select-bible-chapter');
+    if (chapterSelect) {
+      chapterSelect.addEventListener('change', async (e) => {
+        stop();
+        activeChapter = parseInt(e.target.value, 10);
+        selectedVerses.clear();
+        activeHighlights = await getHighlights(activeBookId, activeChapter);
+        await updateView();
+      });
+    }
 
     // 3. Previous Chapter
     const prevBtn = container.querySelector('#btn-prev-chapter');

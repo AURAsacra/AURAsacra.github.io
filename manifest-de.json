@@ -1,0 +1,21 @@
+{
+  "name": "Aura Sacra — Universelle christliche Plattform",
+  "short_name": "Aura Sacra",
+  "lang": "de",
+  "description": "Eine ökumenische, vollständig offline nutzbare spirituelle Plattform mit Bibel, Gebetstagebuch, liturgischen Themen und geistlicher Begleitung.",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#141416",
+  "theme_color": "#c49a45",
+  "orientation": "any",
+  "icons": [
+    { "src": "./icons/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any maskable" },
+    { "src": "./icons/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any maskable" }
+  ],
+  "shortcuts": [
+    { "name": "Vers des Tages", "short_name": "Bibel", "description": "Die Heilige Schrift lesen und betrachten", "url": "./index.html?tab=bible", "icons": [{ "src": "./icons/icon-192.png", "sizes": "192x192" }] },
+    { "name": "Kerze und Regen", "short_name": "Kerze", "description": "Eine Gebets- und Arbeitssitzung mit der heiligen Kerze", "url": "./index.html?tab=focus", "icons": [{ "src": "./icons/icon-192.png", "sizes": "192x192" }] },
+    { "name": "Gespräch mit dem Begleiter", "short_name": "Begleiter", "description": "Ein geistliches Gespräch mit Christus im Mittelpunkt", "url": "./index.html?tab=chat", "icons": [{ "src": "./icons/icon-192.png", "sizes": "192x192" }] },
+    { "name": "Zufälliger Vers", "short_name": "Inspiration", "description": "Erhalte einen zufälligen Bibelvers zur Betrachtung", "url": "./index.html?tab=bible&random=1", "icons": [{ "src": "./icons/icon-192.png", "sizes": "192x192" }] }
+  ]
+}
